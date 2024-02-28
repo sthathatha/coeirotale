@@ -33,7 +33,7 @@ public class PlayerScript : CharacterScript
     /// </summary>
     override protected void Update()
     {
-        if (ManagerSceneScript.GetInstance().SceneState != ManagerSceneScript.State.Main) { return; }
+        if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
         if (field.FieldState != MainScriptBase.State.Idle) { return; }
 
         if (InputManager.GetInstance().GetKeyPress(InputManager.Keys.South))

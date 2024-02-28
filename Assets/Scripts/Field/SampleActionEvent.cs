@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SampleActionEvent : ActionEventBase
 {
+    /// <summary>パラメータ</summary>
+    public int param1;
+
     // テスト
     protected override IEnumerator Exec()
     {
@@ -11,21 +14,29 @@ public class SampleActionEvent : ActionEventBase
         var window = manager.GetMessageWindow();
 
         //メッセージあ
-        window.Open();
-        window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列ああああああ");
+        //window.Open();
+        //window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列ああああああ");
 
-        yield return window.WaitForMessageEnd();
-        window.Close();
+        //yield return window.WaitForMessageEnd();
+        //window.Close();
 
         //ゲームシーン呼び出し
-        manager.StartGame("SampleGameScene");
+        var sceneName = "";
+        switch (param1)
+        {
+            case 0: sceneName = "GameSceneMenderuA";
+                break;
+            case 1: sceneName = "GameScenePierreA";
+                break;
+        }
+        manager.StartGame(sceneName);
         yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
 
         //終わったらメッセージい
-        window.Open();
-        window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列いいいいい");
+        //window.Open();
+        //window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列いいいいい");
 
-        yield return window.WaitForMessageEnd();
-        window.Close();
+        //yield return window.WaitForMessageEnd();
+        //window.Close();
     }
 }

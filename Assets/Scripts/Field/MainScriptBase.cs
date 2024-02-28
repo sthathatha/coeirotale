@@ -67,4 +67,22 @@ public class MainScriptBase : MonoBehaviour
     {
         objectParent?.SetActive(true);
     }
+
+    /// <summary>
+    /// フェードイン直前にやること
+    /// </summary>
+    /// <returns></returns>
+    virtual public IEnumerator BeforeFadeIn()
+    {
+        yield break;
+    }
+
+    /// <summary>
+    /// フェードイン終わったらやること
+    /// </summary>
+    /// <returns></returns>
+    virtual public IEnumerator AfterFadeIn()
+    {
+        yield break;
+    }
 }

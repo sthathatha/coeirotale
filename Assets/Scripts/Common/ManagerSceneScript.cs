@@ -39,6 +39,9 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>メッセージウィンドウ</summary>
     public GameObject messageWindow = null;
 
+    /// <summary>ミニゲーム説明ウィンドウ</summary>
+    public GameObject minigameTutorialWindow = null;
+
     /// <summary>フェーダ</summary>
     public CanvasGroup fader = null;
 
@@ -84,6 +87,13 @@ public class ManagerSceneScript : MonoBehaviour
     public MessageWindow GetMessageWindow()
     {
         return messageWindow.GetComponent<MessageWindow>();
+    }
+
+    /// <summary>ミニゲーム説明ウィンドウ</summary>
+    /// <returns></returns>
+    public MinigameTutorialWindow GetMinigameTutorialWindow()
+    {
+        return minigameTutorialWindow.GetComponent<MinigameTutorialWindow>();
     }
     #endregion
 
@@ -148,9 +158,12 @@ public class ManagerSceneScript : MonoBehaviour
             mainScript = null;
         }
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        yield return new WaitUntil(()=>mainScript != null);
 
         yield return FadeIn();
-        SceneState = State.Game;
+        yield return mainScript.AfterFadeIn();
+
+        SceneState = State.Main;
     }
 
     /// <summary>
@@ -174,7 +187,9 @@ public class ManagerSceneScript : MonoBehaviour
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         yield return new WaitWhile(() => gameScript == null);
+
         yield return FadeIn();
+        yield return gameScript.AfterFadeIn();
 
         SceneState = State.Game;
     }
@@ -199,8 +214,9 @@ public class ManagerSceneScript : MonoBehaviour
         //メインシーンを復帰
         mainScript.Awake();
 
+        yield return mainScript.BeforeFadeIn();
         yield return FadeIn();
-
+        yield return mainScript.AfterFadeIn();
         SceneState = State.Main;
     }
     #endregion

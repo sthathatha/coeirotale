@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Util
@@ -39,5 +40,55 @@ public class Util
     public static float CalcBetweenFloat(float _rate, float _val1, float _val2)
     {
         return _val1 + (_val2 - _val1) * _rate;
+    }
+
+    /// <summary>
+    /// ランダム整数
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static int RandomInt(int min, int max)
+    {
+        return Random.Range(min, max);
+    }
+
+    /// <summary>
+    /// ランダム小数
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static float RandomFloat(float min, float max)
+    {
+        return Random.Range(min, max);
+    }
+
+    /// <summary>
+    /// 重複しないランダム整数（並びもランダム）
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <param name="count">個数 多すぎると足りなくなるので禁止</param>
+    /// <returns></returns>
+    public static List<int> RandomUniqueIntList(int min, int max, int count)
+    {
+        if (max - min + 1 < count) { throw new System.Exception("RandomUniqueIntListのcountが多すぎ"); }
+
+        var list = new List<int>();
+        for (int i = min; i <= max; ++i)
+        {
+            list.Add(i);
+        }
+
+        var ret = new List<int>();
+        for (int i = 0; i < count; ++i)
+        {
+            var rand = RandomInt(0, list.Count - 1);
+            ret.Add(list[rand]);
+            list.RemoveAt(rand);
+        }
+
+        return ret;
     }
 }

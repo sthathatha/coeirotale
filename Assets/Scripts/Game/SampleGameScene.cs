@@ -5,9 +5,9 @@ using UnityEngine;
 public class SampleGameScene : GameSceneScriptBase
 {
     // Start is called before the first frame update
-    override public void Start()
+    override public IEnumerator Start()
     {
-        base.Start();
+        yield return base.Start();
     }
 
     // Update is called once per frame
