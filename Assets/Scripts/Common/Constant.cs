@@ -19,4 +19,8 @@ public class Constant
         /// <summary>‰ÁŒ¸‘¬</summary>
         Both,
     }
+
+    public const float SCREEN_WIDTH = 1280f;
+
+
 }

@@ -154,7 +154,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
 
-        //todo: æU‚©ŒãUH
+        // æU
         yield return PlayerTurnStartCoroutine(true);
     }
 

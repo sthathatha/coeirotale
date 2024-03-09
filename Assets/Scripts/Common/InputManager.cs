@@ -59,7 +59,7 @@ public class InputManager
             case Keys.Down:
                 return (keyboard?.downArrowKey.isPressed == true ||
                     gamepad?.leftStick.down.isPressed == true ||
-                    gamepad?.dpad.left.isPressed == true);
+                    gamepad?.dpad.down.isPressed == true);
             case Keys.Right:
                 return (keyboard?.rightArrowKey.isPressed == true ||
                     gamepad?.leftStick.right.isPressed == true ||
@@ -104,7 +104,7 @@ public class InputManager
             case Keys.Down:
                 return (keyboard?.downArrowKey.wasPressedThisFrame == true ||
                     gamepad?.leftStick.down.wasPressedThisFrame == true ||
-                    gamepad?.dpad.left.wasPressedThisFrame == true);
+                    gamepad?.dpad.down.wasPressedThisFrame == true);
             case Keys.Right:
                 return (keyboard?.rightArrowKey.wasPressedThisFrame == true ||
                     gamepad?.leftStick.right.wasPressedThisFrame == true ||

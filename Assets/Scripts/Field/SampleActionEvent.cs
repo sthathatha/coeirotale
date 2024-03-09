@@ -21,14 +21,12 @@ public class SampleActionEvent : ActionEventBase
         //window.Close();
 
         //ゲームシーン呼び出し
-        var sceneName = "";
-        switch (param1)
+        var sceneName = param1 switch
         {
-            case 0: sceneName = "GameSceneMenderuA";
-                break;
-            case 1: sceneName = "GameScenePierreA";
-                break;
-        }
+            0 => "GameSceneMenderuA",
+            1 => "GameScenePierreA",
+            _ => "",
+        };
         manager.StartGame(sceneName);
         yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
 
