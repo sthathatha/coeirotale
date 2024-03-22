@@ -15,6 +15,9 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <summary>ピエール接触中フラグ</summary>
     private bool pierreHitting = false;
 
+    /// <summary>当たり保留ボール</summary>
+    private PierreGameBall hitWaitBall = null;
+
     private enum PlayerAction : int
     {
         Run = 0,
@@ -23,6 +26,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <summary>動作中</summary>
     private PlayerAction action;
 
+    /// <summary>体力</summary>
     private int hp = 1;
 
     /// <summary>
@@ -79,6 +83,13 @@ public class PierreGamePlayerA : PierreGameRoadObject
             {
                 system.TatchPierre();
             }
+
+            // 横からボールに触る
+            if (hitWaitBall && hitWaitBall.IsHit(this))
+            {
+                CheckBallHit(hitWaitBall);
+                hitWaitBall = null;
+            }
         }
         finally
         {
@@ -93,8 +104,6 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var rigid = GetComponent<Rigidbody2D>();
-
         var obj = collision.gameObject;
         var ballScript = obj.GetComponent<PierreGameBall>();
         var pierreScript = obj.GetComponent<PierreGamePierreA>();
@@ -103,31 +112,47 @@ public class PierreGamePlayerA : PierreGameRoadObject
         {
             // ボール
             if (action == PlayerAction.Down) { return; }
-            if (!ballScript.IsHit(this)) { return; }
-
-            var closest = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
-            if (closest.y > collision.transform.position.y + collision.offset.y)
+            if (!ballScript.IsHit(this))
             {
-                // 踏んだ処理
-                var v = rigid.velocity;
-                v.y = 800f;
-                v.x = -300f;
-                rigid.velocity = v;
-            }
-            else
-            {
-                // やられる処理
-                action = PlayerAction.Down;
-                StartCoroutine(DownAction());
+                hitWaitBall = ballScript;
+                return;
             }
 
-            ballScript.GoOut();
+            CheckBallHit(ballScript);
         }
         else if (pierreScript != null)
         {
             // ピエールタッチ
             pierreHitting = true;
         }
+    }
+
+    /// <summary>
+    /// ボールに当たった時の挙動
+    /// </summary>
+    /// <param name="ballScript"></param>
+    private void CheckBallHit(PierreGameBall ballScript)
+    {
+        var rigid = GetComponent<Rigidbody2D>();
+        var collision = ballScript.gameObject.GetComponent<Collider2D>();
+
+        var closest = collision.ClosestPoint(new Vector2(transform.position.x, transform.position.y));
+        if (closest.y > collision.transform.position.y + collision.offset.y)
+        {
+            // 踏んだ処理
+            var v = rigid.velocity;
+            v.y = 800f;
+            v.x = -300f;
+            rigid.velocity = v;
+        }
+        else
+        {
+            // やられる処理
+            action = PlayerAction.Down;
+            StartCoroutine(DownAction());
+        }
+
+        ballScript.GoOut();
     }
 
     /// <summary>
@@ -161,7 +186,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
         }
         else
         {
-        action = PlayerAction.Run;
+            action = PlayerAction.Run;
         }
     }
 
@@ -177,6 +202,13 @@ public class PierreGamePlayerA : PierreGameRoadObject
         {
             // ピエールタッチ
             pierreHitting = false;
+            return;
+        }
+
+        var ballScript = obj.GetComponent<PierreGameBall>();
+        if (ballScript == hitWaitBall)
+        {
+            hitWaitBall = null;
         }
     }
 }
