@@ -102,7 +102,7 @@ public class MessageWindow : MonoBehaviour
         txt.SetText(message);
 
         // ê∫ÇÃçƒê∂
-        ManagerSceneScript.GetInstance().SoundManager.PlayVoice(voice);
+        ManagerSceneScript.GetInstance().soundManager.PlayVoice(voice);
     }
 
     /// <summary>

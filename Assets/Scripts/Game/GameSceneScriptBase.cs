@@ -9,6 +9,7 @@ public class GameSceneScriptBase : MonoBehaviour
     // Start is called before the first frame update
     virtual public IEnumerator Start()
     {
+        SetGameResult(false);
         ManagerSceneScript.GetInstance().SetGameScript(this);
         yield break;
     }
@@ -34,9 +35,14 @@ public class GameSceneScriptBase : MonoBehaviour
     /// <returns></returns>
     protected int GetLoseCount()
     {
-        //todo:
-        return 5;
+        return Global.GetTemporaryData().loseCount;
     }
 
     virtual public AudioClip GetBgmClip() { return  bgmClip; }
+
+
+    protected void SetGameResult(bool _win)
+    {
+        Global.GetTemporaryData().gameWon = _win;
+    }
 }

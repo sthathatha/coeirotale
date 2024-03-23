@@ -1219,7 +1219,7 @@ MonoBehaviour:
   dialogWindow: {fileID: 860336524}
   minigameTutorialWindow: {fileID: 1192616315}
   fader: {fileID: 1992069004}
-  SoundManager: {fileID: 1537035261}
+  soundManager: {fileID: 1537035261}
 --- !u!4 &808918196
 Transform:
   m_ObjectHideFlags: 0

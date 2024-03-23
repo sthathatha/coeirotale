@@ -181,7 +181,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             menderuMouth.SetBool("talking", false);
         }
 
-        var sound = ManagerSceneScript.GetInstance().SoundManager;
+        var sound = ManagerSceneScript.GetInstance().soundManager;
         var input = InputManager.GetInstance();
 
         if (input.GetKeyPress(InputManager.Keys.Up))
@@ -293,7 +293,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     private IEnumerator SelectCoroutine()
     {
         var manager = ManagerSceneScript.GetInstance();
-        var sound = manager.SoundManager;
+        var sound = manager.soundManager;
 
         if (cursorCol >= 5)
         {
@@ -376,7 +376,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator EnemyTurnCoroutine()
     {
-        var sound = ManagerSceneScript.GetInstance().SoundManager;
+        var sound = ManagerSceneScript.GetInstance().soundManager;
 
         GrowUp();
         yield return new WaitForSeconds(1f);

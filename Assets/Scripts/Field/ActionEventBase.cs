@@ -10,6 +10,8 @@ public abstract class ActionEventBase : MonoBehaviour
     /// <summary>フィールド</summary>
     public MainScriptBase field;
 
+    public virtual void Start() { }
+
     /// <summary>
     /// イベント実行
     /// </summary>

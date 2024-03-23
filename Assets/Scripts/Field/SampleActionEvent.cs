@@ -10,12 +10,21 @@ public class SampleActionEvent : ActionEventBase
     /// <summary>ボイス</summary>
     public AudioClip voiceClip;
 
+    private int loseCount;
+
+    public override void Start()
+    {
+        base.Start();
+        loseCount = 0;
+    }
+
     // テスト
     protected override IEnumerator Exec()
     {
         var manager = ManagerSceneScript.GetInstance();
         var msg = manager.GetMessageWindow();
         var dialog = manager.GetDialogWindow();
+        var tmpData = Global.GetTemporaryData();
 
         msg.Open();
         switch (param1)
@@ -45,8 +54,14 @@ public class SampleActionEvent : ActionEventBase
                 _ => "",
             };
 
+            tmpData.loseCount = loseCount;
             manager.StartGame(sceneName);
             yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
+
+            if (!tmpData.gameWon)
+            {
+                if (loseCount < 100) loseCount++;
+            }
         }
     }
 }

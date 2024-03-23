@@ -192,8 +192,8 @@ public class IkusautaGameSystemA : GameSceneScriptBase
                 yield break;
             }
 
-            waitTime -= Time.deltaTime;
             yield return null;
+            waitTime -= Time.deltaTime;
         }
 
         // ！出る
@@ -204,15 +204,16 @@ public class IkusautaGameSystemA : GameSceneScriptBase
 
         while (matiTime > 0f)
         {
+            yield return null;
+            
             if (input.GetKeyPress(InputManager.Keys.South))
             {
                 // マチより早かったら勝ち
                 StartCoroutine(TukuyomiWinCoroutine());
                 yield break;
             }
-
+            
             matiTime -= Time.deltaTime;
-            yield return null;
         }
 
         // マチの勝ち
@@ -241,6 +242,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         if (matiWinCount >= 2)
         {
             // 終了してフィールドに戻る
+            SetGameResult(false);
             ManagerSceneScript.GetInstance().ExitGame();
             yield break;
         }
@@ -281,6 +283,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         if (tukuyomiWinCount >= 2)
         {
             // 終了してフィールドに戻る
+            SetGameResult(true);
             ManagerSceneScript.GetInstance().ExitGame();
             yield break;
         }
@@ -321,6 +324,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         if (matiWinCount >= 2)
         {
             // 終了してフィールドに戻る
+            SetGameResult(false);
             ManagerSceneScript.GetInstance().ExitGame();
             yield break;
         }
@@ -431,7 +435,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
 
     private void PlaySE(AudioClip se)
     {
-        ManagerSceneScript.GetInstance().SoundManager.PlaySE(se);
+        ManagerSceneScript.GetInstance().soundManager.PlaySE(se);
     }
     #endregion
 }

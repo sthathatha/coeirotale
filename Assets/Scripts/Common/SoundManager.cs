@@ -65,9 +65,9 @@ public class SoundManager : MonoBehaviour
     /// SEボリューム設定
     /// </summary>
     /// <param name="v"></param>
-    public void SetSeVolume(float v)
+    public void UpdateSeVolume()
     {
-        seDummy.GetComponent<AudioSource>().volume = v;
+        seDummy.GetComponent<AudioSource>().volume = CalcSeVolume();
     }
 
     /// <summary>
@@ -99,6 +99,16 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region BGM管理
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UpdateBgmVolume()
+    {
+        var vol = CalcBgmVolume();
+        fieldBgmSource.GetComponent<AudioSource>().volume = vol;
+        gameBgmSource.GetComponent<AudioSource>().volume = vol;
+    }
+
     /// <summary>
     /// フィールド読み込み時のBGM再生
     /// </summary>
@@ -241,10 +251,9 @@ public class SoundManager : MonoBehaviour
     /// <summary>
     /// ボイスボリューム設定
     /// </summary>
-    /// <param name="v"></param>
-    public void SetVoiceVolume(float v)
+    public void UpdateVoiceVolume()
     {
-        voiceSource.volume = v;
+        voiceSource.volume = CalcVoiceVolume();
     }
 
     /// <summary>
@@ -277,7 +286,8 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcBgmVolume()
     {
-        return 0.2f;
+        var optionVol = Global.GetSaveData().option.bgmVolume;
+        return 0.2f * optionVol / 10;
     }
     /// <summary>
     /// SESourceの再生ボリューム
@@ -285,7 +295,8 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcSeVolume()
     {
-        return 1f;
+        var optionVol = Global.GetSaveData().option.seVolume;
+        return 1f * optionVol / 10;
     }
     /// <summary>
     /// VoiceSourceの再生ボリューム
@@ -293,7 +304,8 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcVoiceVolume()
     {
-        return 1f;
+        var optionVol = Global.GetSaveData().option.voiceVolume;
+        return 1f * optionVol / 10;
     }
     #endregion
 }

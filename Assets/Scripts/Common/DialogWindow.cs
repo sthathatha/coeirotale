@@ -33,7 +33,7 @@ public class DialogWindow : MonoBehaviour
     public IEnumerator OpenDialog()
     {
         var input = InputManager.GetInstance();
-        var sound = ManagerSceneScript.GetInstance().SoundManager;
+        var sound = ManagerSceneScript.GetInstance().soundManager;
 
         UpdateCursor(Result.Yes);
         gameObject.SetActive(true);

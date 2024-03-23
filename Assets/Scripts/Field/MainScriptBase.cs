@@ -50,7 +50,7 @@ public class MainScriptBase : MonoBehaviour
 
         // BGMØ‚è‘Ö‚¦
         var bgmSetting = GetBgm();
-        yield return ManagerSceneScript.GetInstance().SoundManager.PlayFieldBgm(bgmSetting.Item1, bgmSetting.Item2);
+        yield return ManagerSceneScript.GetInstance().soundManager.PlayFieldBgm(bgmSetting.Item1, bgmSetting.Item2);
 
         ManagerSceneScript.GetInstance().SetMainScript(this);
 

@@ -67,7 +67,7 @@ public class ManagerSceneScript : MonoBehaviour
     private string gameSceneName = null;
 
     /// <summary>サウンド管理</summary>
-    public SoundManager SoundManager = null;
+    public SoundManager soundManager = null;
     #endregion
 
     #region 初期化
@@ -77,6 +77,11 @@ public class ManagerSceneScript : MonoBehaviour
     /// <returns></returns>
     IEnumerator Start()
     {
+        Global.GetSaveData().Load();
+        soundManager.UpdateBgmVolume();
+        soundManager.UpdateSeVolume();
+        soundManager.UpdateVoiceVolume();
+
         messageWindow.SetActive(false);
         dialogWindow.gameObject.SetActive(false);
         fader.gameObject.SetActive(true);
@@ -131,9 +136,9 @@ public class ManagerSceneScript : MonoBehaviour
         alpha.MoveTo(1f, FADE_TIME, DeltaFloat.MoveType.LINE);
         while (alpha.IsActive())
         {
+            alpha.Update(Time.deltaTime);
             fader.alpha = alpha.Get();
             yield return null;
-            alpha.Update(Time.deltaTime);
         }
     }
 
@@ -146,11 +151,16 @@ public class ManagerSceneScript : MonoBehaviour
         var alpha = new DeltaFloat();
         alpha.Set(1f);
         alpha.MoveTo(0f, FADE_TIME, DeltaFloat.MoveType.LINE);
+
+        // Startで表示初期化しているが、直後フェードイン始まると一瞬見えるので1フレ待つ
+        fader.alpha = alpha.Get();
+        yield return null;
+
         while (alpha.IsActive())
         {
+            alpha.Update(Time.deltaTime);
             fader.alpha = alpha.Get();
             yield return null;
-            alpha.Update(Time.deltaTime);
         }
         fader.alpha = 0f;
         fader.gameObject.SetActive(false);
@@ -230,7 +240,7 @@ public class ManagerSceneScript : MonoBehaviour
         yield return new WaitWhile(() => gameScript == null);
 
         // ゲーム用BGM再生
-        SoundManager.StartGameBgm(gameScript.bgmClip);
+        soundManager.StartGameBgm(gameScript.bgmClip);
 
         // フェードイン
         yield return FadeIn();
@@ -259,7 +269,7 @@ public class ManagerSceneScript : MonoBehaviour
         yield return FadeOut();
 
         // ゲームのをフェードアウトしてフィールドのBGMを復帰
-        yield return SoundManager.ResumeBgmFromGame();
+        yield return soundManager.ResumeBgmFromGame();
 
         // アンロード
         var unloadSync = SceneManager.UnloadSceneAsync(gameSceneName);

@@ -47,7 +47,7 @@ public class Global
         public OptionData option;
 
         /// <summary>
-        /// 
+        /// オプション
         /// </summary>
         public struct OptionData
         {
@@ -63,9 +63,9 @@ public class Global
         {
             stage0Clear = 0;
 
-            option.bgmVolume = 32;
-            option.seVolume = 32;
-            option.voiceVolume = 32;
+            option.bgmVolume = 3;
+            option.seVolume = 3;
+            option.voiceVolume = 3;
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ public class Global
         {
             stage0Clear = PlayerPrefs.GetInt("stage0Clear", 0);
 
-            option.bgmVolume = PlayerPrefs.GetInt("optionBgmVolume", 32);
-            option.seVolume = PlayerPrefs.GetInt("optionSeVolume", 32);
-            option.voiceVolume = PlayerPrefs.GetInt("optionVoiceVolume", 32);
+            option.bgmVolume = PlayerPrefs.GetInt("optionBgmVolume", 3);
+            option.seVolume = PlayerPrefs.GetInt("optionSeVolume", 3);
+            option.voiceVolume = PlayerPrefs.GetInt("optionVoiceVolume", 3);
         }
     }
 
@@ -100,9 +100,19 @@ public class Global
     /// </summary>
     public class TemporaryData
     {
+        /// <summary>ハンデ用負けた回数</summary>
+        public int loseCount;
 
+        /// <summary>ゲーム戻り時の勝利判定</summary>
+        public bool gameWon;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public TemporaryData()
         {
+            loseCount = 0;
+            gameWon = false;
         }
     }
 }

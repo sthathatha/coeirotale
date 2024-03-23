@@ -57,7 +57,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
     {
         base.Update();
 
-        var sound = ManagerSceneScript.GetInstance().SoundManager;
+        var sound = ManagerSceneScript.GetInstance().soundManager;
         var input = InputManager.GetInstance();
         var rigid = GetComponent<Rigidbody2D>();
 
@@ -145,7 +145,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <param name="ballScript"></param>
     private void CheckBallHit(PierreGameBall ballScript)
     {
-        var sound = ManagerSceneScript.GetInstance().SoundManager;
+        var sound = ManagerSceneScript.GetInstance().soundManager;
         var rigid = GetComponent<Rigidbody2D>();
         var collision = ballScript.gameObject.GetComponent<Collider2D>();
 
