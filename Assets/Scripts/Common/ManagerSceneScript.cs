@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class ManagerSceneScript : MonoBehaviour
 {
+    /// <summary>デバッグ用</summary>
     public static Boolean isDebugLoad = false;
 
     #region 定数
+    /// <summary>フェード時間</summary>
     const float FADE_TIME = 0.5f;
 
     /// <summary>
@@ -26,9 +28,15 @@ public class ManagerSceneScript : MonoBehaviour
     #endregion
 
     #region インスタンス
+    /// <summary>インスタンス</summary>
     private static ManagerSceneScript _instance = null;
+    /// <summary>インスタンス</summary>
+    /// <returns></returns>
     public static ManagerSceneScript GetInstance() { return _instance; }
 
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public ManagerSceneScript()
     {
         _instance = this;
@@ -38,6 +46,9 @@ public class ManagerSceneScript : MonoBehaviour
     #region メンバー
     /// <summary>メッセージウィンドウ</summary>
     public GameObject messageWindow = null;
+
+    /// <summary>ダイアログウィンドウ</summary>
+    public GameObject dialogWindow = null;
 
     /// <summary>ミニゲーム説明ウィンドウ</summary>
     public GameObject minigameTutorialWindow = null;
@@ -54,11 +65,20 @@ public class ManagerSceneScript : MonoBehaviour
     private GameSceneScriptBase gameScript = null;
     /// <summary>ゲームシーン名</summary>
     private string gameSceneName = null;
+
+    /// <summary>サウンド管理</summary>
+    public SoundManager SoundManager = null;
     #endregion
 
     #region 初期化
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Start()
     {
+        messageWindow.SetActive(false);
+        dialogWindow.gameObject.SetActive(false);
         fader.gameObject.SetActive(true);
         fader.alpha = 1f;
 
@@ -75,12 +95,6 @@ public class ManagerSceneScript : MonoBehaviour
     }
     #endregion
 
-    void Update()
-    {
-
-    }
-
-
     #region グローバル要素取得
     /// <summary>メッセージウィンドウ</summary>
     /// <returns></returns>
@@ -95,6 +109,13 @@ public class ManagerSceneScript : MonoBehaviour
     {
         return minigameTutorialWindow.GetComponent<MinigameTutorialWindow>();
     }
+
+    /// <summary>ダイアログウィンドウ</summary>
+    /// <returns></returns>
+    public DialogWindow GetDialogWindow()
+    {
+        return dialogWindow.GetComponent<DialogWindow>();
+    }
     #endregion
 
     #region フェード管理
@@ -102,7 +123,7 @@ public class ManagerSceneScript : MonoBehaviour
     /// フェードアウト
     /// </summary>
     /// <returns></returns>
-    private IEnumerator FadeOut()
+    public IEnumerator FadeOut()
     {
         fader.gameObject.SetActive(true);
         var alpha = new DeltaFloat();
@@ -120,7 +141,7 @@ public class ManagerSceneScript : MonoBehaviour
     /// フェードイン
     /// </summary>
     /// <returns></returns>
-    private IEnumerator FadeIn()
+    public IEnumerator FadeIn()
     {
         var alpha = new DeltaFloat();
         alpha.Set(1f);
@@ -147,20 +168,34 @@ public class ManagerSceneScript : MonoBehaviour
         StartCoroutine(LoadMainSceneCoroutine(sceneName, id));
     }
 
+    /// <summary>
+    /// メインシーン切り替えコルーチン
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     private IEnumerator LoadMainSceneCoroutine(string sceneName, int id)
     {
+        // フェードアウト
         SceneState = State.Loading;
         yield return FadeOut();
 
-        if (!mainScript)
-        {
-            SceneManager.UnloadSceneAsync(mainScript.GetSceneName());
-            mainScript = null;
-        }
+        // 旧シーンを保持してロード
+        var oldScript = mainScript;
+        mainScript = null;
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        yield return new WaitUntil(()=>mainScript != null);
+        yield return new WaitUntil(() => mainScript != null);
 
+        // 旧シーンがある場合閉じる
+        if (!oldScript)
+        {
+            SceneManager.UnloadSceneAsync(oldScript.GetSceneName());
+        }
+
+        // フェードイン
         yield return FadeIn();
+
+        // フェードイン後の処理
         yield return mainScript.AfterFadeIn();
 
         SceneState = State.Main;
@@ -176,19 +211,31 @@ public class ManagerSceneScript : MonoBehaviour
         StartCoroutine(StartGameCoroutine(sceneName));
     }
 
+    /// <summary>
+    /// ゲームシーン呼び出しコルーチン
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <returns></returns>
     private IEnumerator StartGameCoroutine(string sceneName)
     {
+        // フェードアウト
         SceneState = State.Loading;
         yield return FadeOut();
 
-        //メインシーンをスリープ
+        // メインシーンをスリープ
         mainScript.Sleep();
 
+        // ゲームシーンをロード
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
         yield return new WaitWhile(() => gameScript == null);
 
+        // ゲーム用BGM再生
+        SoundManager.StartGameBgm(gameScript.bgmClip);
+
+        // フェードイン
         yield return FadeIn();
+
+        // フェードイン後の処理
         yield return gameScript.AfterFadeIn();
 
         SceneState = State.Game;
@@ -199,15 +246,22 @@ public class ManagerSceneScript : MonoBehaviour
     /// </summary>
     public void ExitGame()
     {
-        StartCoroutine (ExitGameCoroutine());
+        StartCoroutine(ExitGameCoroutine());
     }
 
+    /// <summary>
+    /// ゲーム終了コルーチン
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator ExitGameCoroutine()
     {
         SceneState = State.Loading;
         yield return FadeOut();
 
-        //アンロード
+        // ゲームのをフェードアウトしてフィールドのBGMを復帰
+        yield return SoundManager.ResumeBgmFromGame();
+
+        // アンロード
         var unloadSync = SceneManager.UnloadSceneAsync(gameSceneName);
         yield return unloadSync;
 

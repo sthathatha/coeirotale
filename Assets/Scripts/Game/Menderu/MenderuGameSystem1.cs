@@ -61,6 +61,13 @@ public class MenderuGameSystem1 : GameSceneScriptBase
 
     /// <summary>種オブジェクトの親</summary>
     public GameObject seeds = null;
+
+    /// <summary>カーソル移動SE</summary>
+    public AudioClip se_cursor_move = null;
+    /// <summary>種取得SE</summary>
+    public AudioClip se_get = null;
+    /// <summary>ターンエンドSE</summary>
+    public AudioClip se_end = null;
     #endregion
 
     #region プライベート
@@ -174,6 +181,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             menderuMouth.SetBool("talking", false);
         }
 
+        var sound = ManagerSceneScript.GetInstance().SoundManager;
         var input = InputManager.GetInstance();
 
         if (input.GetKeyPress(InputManager.Keys.Up))
@@ -188,6 +196,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             {
                 --cursorRow;
             }
+            sound.PlaySE(se_cursor_move);
             UpdateCursorLocation();
         }
         else if (input.GetKeyPress(InputManager.Keys.Down))
@@ -202,6 +211,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             {
                 ++cursorRow;
             }
+            sound.PlaySE(se_cursor_move);
             UpdateCursorLocation();
         }
         else if (input.GetKeyPress(InputManager.Keys.Right))
@@ -216,6 +226,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             {
                 ++cursorCol;
             }
+            sound.PlaySE(se_cursor_move);
             UpdateCursorLocation();
         }
         else if (input.GetKeyPress(InputManager.Keys.Left))
@@ -234,6 +245,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             {
                 --cursorCol;
             }
+            sound.PlaySE(se_cursor_move);
             UpdateCursorLocation();
         }
         else if (input.GetKeyPress(InputManager.Keys.East))
@@ -241,6 +253,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             // 終了ボタンに移動
             cursorRow = 2;
             cursorCol = 5;
+            sound.PlaySE(se_cursor_move);
             UpdateCursorLocation();
         }
         else if (input.GetKeyPress(InputManager.Keys.South))
@@ -280,6 +293,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     private IEnumerator SelectCoroutine()
     {
         var manager = ManagerSceneScript.GetInstance();
+        var sound = manager.SoundManager;
 
         if (cursorCol >= 5)
         {
@@ -290,6 +304,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             }
             else
             {
+                sound.PlaySE(se_end);
                 yield return EnemyTurnCoroutine();
                 if (manager.SceneState != ManagerSceneScript.State.Game) yield break;
             }
@@ -300,6 +315,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             var seed = seedScripts[cursorRow][cursorCol];
             if (seed.IsEnable())
             {
+                sound.PlaySE(se_get);
                 pointRNum += seed.GetNum();
                 pointR.SetText(pointRNum.ToString());
                 seed.Pick();
@@ -360,7 +376,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator EnemyTurnCoroutine()
     {
-        var input = InputManager.GetInstance();
+        var sound = ManagerSceneScript.GetInstance().SoundManager;
+
         GrowUp();
         yield return new WaitForSeconds(1f);
 
@@ -390,6 +407,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             pointL.SetText(pointLNum.ToString());
             pickScr.Pick();
 
+            sound.PlaySE(se_get);
             if (pickLoc == enemyPickList.Last())
             {
                 yield return MenderuTalk("これね！", TalkWaitType.Time);

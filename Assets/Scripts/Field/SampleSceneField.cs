@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,16 @@ public class SampleSceneField : MainScriptBase
     override protected IEnumerator Start()
     {
         yield return base.Start();
-
-
     }
 
     // Update is called once per frame
     override protected void Update()
     {
         base.Update();
+    }
+
+    public override Tuple<SoundManager.FieldBgmType, AudioClip> GetBgm()
+    {
+        return new Tuple<SoundManager.FieldBgmType, AudioClip>(SoundManager.FieldBgmType.Common2, null);
     }
 }

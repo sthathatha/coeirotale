@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameSceneScriptBase : MonoBehaviour
 {
+    public AudioClip bgmClip = null;
+
     // Start is called before the first frame update
     virtual public IEnumerator Start()
     {
@@ -25,4 +27,16 @@ public class GameSceneScriptBase : MonoBehaviour
     {
         yield break;
     }
+
+    /// <summary>
+    /// •‰‚¯‚½‰ñ”
+    /// </summary>
+    /// <returns></returns>
+    protected int GetLoseCount()
+    {
+        //todo:
+        return 5;
+    }
+
+    virtual public AudioClip GetBgmClip() { return  bgmClip; }
 }

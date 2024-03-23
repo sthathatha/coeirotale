@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// ミニゲームチュートリアル用ウィンドウ
+/// </summary>
 public class MinigameTutorialWindow : MonoBehaviour
 {
     #region 定数
@@ -18,15 +21,17 @@ public class MinigameTutorialWindow : MonoBehaviour
     #endregion
 
     #region プライベート
+    /// <summary>アルファ</summary>
     private DeltaFloat alpha;
     #endregion
 
-    private void Start()
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    public MinigameTutorialWindow()
     {
         alpha = new DeltaFloat();
         alpha.Set(0);
-        gameObject.GetComponent<CanvasGroup>().alpha = 0;
-        gameObject.SetActive(false);
     }
 
     #region 使用メソッド

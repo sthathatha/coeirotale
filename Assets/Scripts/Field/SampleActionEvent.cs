@@ -7,34 +7,46 @@ public class SampleActionEvent : ActionEventBase
     /// <summary>パラメータ</summary>
     public int param1;
 
+    /// <summary>ボイス</summary>
+    public AudioClip voiceClip;
+
     // テスト
     protected override IEnumerator Exec()
     {
         var manager = ManagerSceneScript.GetInstance();
-        var window = manager.GetMessageWindow();
+        var msg = manager.GetMessageWindow();
+        var dialog = manager.GetDialogWindow();
 
-        //メッセージあ
-        //window.Open();
-        //window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列ああああああ");
-
-        //yield return window.WaitForMessageEnd();
-        //window.Close();
-
-        //ゲームシーン呼び出し
-        var sceneName = param1 switch
+        msg.Open();
+        switch (param1)
         {
-            0 => "GameSceneMenderuA",
-            1 => "GameScenePierreA",
-            _ => "",
-        };
-        manager.StartGame(sceneName);
-        yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
+            case 0:
+                msg.StartMessage(MessageWindow.Face.Menderu0, "私と遊ぶ？", voiceClip);
+                break;
+            case 1:
+                msg.StartMessage(MessageWindow.Face.Pierre0, "僕と遊ぶかい？", voiceClip);
+                break;
+            case 2:
+                msg.StartMessage(MessageWindow.Face.Mati0, "私と遊ぶのか？", voiceClip);
+                break;
+        }
+        yield return msg.WaitForMessageEnd();
+        yield return dialog.OpenDialog();
+        msg.Close();
 
-        //終わったらメッセージい
-        //window.Open();
-        //window.StartMessage(MessageWindow.Face.Menderu0, "テスト文字列いいいいい");
+        if (dialog.GetResult() == DialogWindow.Result.Yes)
+        {
+            //ゲームシーン呼び出し
+            var sceneName = param1 switch
+            {
+                0 => "GameSceneMenderuA",
+                1 => "GameScenePierreA",
+                2 => "GameSceneIkusautaA",
+                _ => "",
+            };
 
-        //yield return window.WaitForMessageEnd();
-        //window.Close();
+            manager.StartGame(sceneName);
+            yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
+        }
     }
 }

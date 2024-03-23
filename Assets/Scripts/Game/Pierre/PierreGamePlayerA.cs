@@ -12,6 +12,15 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <summary>ピエール</summary>
     public PierreGamePierreA pierre = null;
 
+    /// <summary>ジャンプSE</summary>
+    public AudioClip se_jump = null;
+    /// <summary>転ぶSE</summary>
+    public AudioClip se_down = null;
+    /// <summary>ボール踏むSE</summary>
+    public AudioClip se_jump_humi = null;
+    /// <summary>ピエールタッチSE</summary>
+    public AudioClip se_touch = null;
+
     /// <summary>ピエール接触中フラグ</summary>
     private bool pierreHitting = false;
 
@@ -48,6 +57,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
     {
         base.Update();
 
+        var sound = ManagerSceneScript.GetInstance().SoundManager;
         var input = InputManager.GetInstance();
         var rigid = GetComponent<Rigidbody2D>();
 
@@ -72,6 +82,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
             {
                 if (gameObject.transform.localPosition.y <= 1f)
                 {
+                    sound.PlaySE(se_jump);
                     var v = rigid.velocity;
                     v.y = 800f;
                     rigid.velocity = v;
@@ -81,6 +92,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
             // ピエールに触る
             if (pierreHitting && pierre.IsHit(this))
             {
+                sound.PlaySE(se_touch);
                 system.TatchPierre();
             }
 
@@ -133,6 +145,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <param name="ballScript"></param>
     private void CheckBallHit(PierreGameBall ballScript)
     {
+        var sound = ManagerSceneScript.GetInstance().SoundManager;
         var rigid = GetComponent<Rigidbody2D>();
         var collision = ballScript.gameObject.GetComponent<Collider2D>();
 
@@ -140,6 +153,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
         if (closest.y > collision.transform.position.y + collision.offset.y)
         {
             // 踏んだ処理
+            sound.PlaySE(se_jump_humi);
             var v = rigid.velocity;
             v.y = 800f;
             v.x = -300f;
@@ -148,6 +162,7 @@ public class PierreGamePlayerA : PierreGameRoadObject
         else
         {
             // やられる処理
+            sound.PlaySE(se_down);
             action = PlayerAction.Down;
             StartCoroutine(DownAction());
         }

@@ -5906,6 +5906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e511a97be0e2a48bebf75cb6c717ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 01fb7cd6a88018049978f9de495a5944, type: 3}
   battle1Parent: {fileID: 1198503696}
   battle2Parent: {fileID: 66130522}
   talkWindow: {fileID: 1584277454}
@@ -5916,6 +5917,9 @@ MonoBehaviour:
   cursorMain: {fileID: 1437481336}
   cursorEnd: {fileID: 1766889410}
   seeds: {fileID: 313993189}
+  se_cursor_move: {fileID: 8300000, guid: cac955170a963ef41893acfdca160331, type: 3}
+  se_get: {fileID: 8300000, guid: ce2eb97f2125ff84f933134ff2670c24, type: 3}
+  se_end: {fileID: 8300000, guid: 6e5e1504eaa89ce40a96fb701e2087f4, type: 3}
 --- !u!4 &1022198419
 Transform:
   m_ObjectHideFlags: 0
@@ -9331,7 +9335,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
