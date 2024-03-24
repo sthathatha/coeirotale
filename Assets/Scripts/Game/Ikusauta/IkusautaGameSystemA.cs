@@ -197,7 +197,8 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         }
 
         // ！出る
-        PlaySE(se_bikkuri);
+        yield return new WaitUntil(() => se_bikkuri.loadState == AudioDataLoadState.Loaded);
+        PlaySE(se_bikkuri, 0.04f);
         ui_bikkuri.SetActive(true);
         // マチの反応速度
         var matiTime = CalcMatiTime();
@@ -432,10 +433,14 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         ui_huda_winner.SetActive(scene == HudaPattern.TukuyomiWin || scene == HudaPattern.MatiWin);
     }
 
-
-    private void PlaySE(AudioClip se)
+    /// <summary>
+    /// SE再生
+    /// </summary>
+    /// <param name="se"></param>
+    /// <param name="startTime"></param>
+    private void PlaySE(AudioClip se, float startTime = 0f)
     {
-        ManagerSceneScript.GetInstance().soundManager.PlaySE(se);
+        ManagerSceneScript.GetInstance().soundManager.PlaySE(se, startTime);
     }
     #endregion
 }

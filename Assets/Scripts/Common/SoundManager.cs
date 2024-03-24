@@ -74,13 +74,15 @@ public class SoundManager : MonoBehaviour
     /// SEÄ¶
     /// </summary>
     /// <param name="se"></param>
-    public void PlaySE(AudioClip se)
+    /// <param name="startTime">Ä¶ŠJnŠÔ</param>
+    public void PlaySE(AudioClip se, float startTime = 0f)
     {
         var seObj = GameObject.Instantiate(seDummy);
         seObj.transform.SetParent(this.transform);
 
         var seSource = seObj.GetComponent<AudioSource>();
         seSource.clip = se;
+        seSource.time = startTime;
         seSource.Play();
 
         StartCoroutine(DestroyWaitCoroutine(seSource));

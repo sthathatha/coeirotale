@@ -3564,6 +3564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd84b6baccc88045b363d71599f049e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmClip: {fileID: 0}
   waitingCharacter: {fileID: 1924249387}
   tukuyomiWinCharacter: {fileID: 1632558183}
   matiWinCharacter: {fileID: 1310172256}
@@ -3581,7 +3582,7 @@ MonoBehaviour:
   ui_batu_tukuyomi: {fileID: 1621308811}
   ui_batu_tukuyomi_chara: {fileID: 302471427}
   grasses: {fileID: 1521057269}
-  se_bikkuri: {fileID: 8300000, guid: 02cb81e9721185f4ebd8ec5ecfda0287, type: 3}
+  se_bikkuri: {fileID: 8300000, guid: 8172f0be3553b934fbb325526ea7424e, type: 3}
   se_fault: {fileID: 8300000, guid: d1a1ff4d81be9964fb7146faf86cc26d, type: 3}
   se_mati_win: {fileID: 8300000, guid: e02a507c6678e424e8d534879a925032, type: 3}
   se_tukuyomi_win: {fileID: 8300000, guid: a1b9233f6a0403a439e441103a1daf6a, type: 3}
