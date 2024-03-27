@@ -67,7 +67,7 @@ public class ManagerSceneScript : MonoBehaviour
     private string gameSceneName = null;
 
     /// <summary>サウンド管理</summary>
-    public SoundManager soundManager = null;
+    public SoundManager soundMan = null;
     #endregion
 
     #region 初期化
@@ -78,9 +78,9 @@ public class ManagerSceneScript : MonoBehaviour
     IEnumerator Start()
     {
         Global.GetSaveData().Load();
-        soundManager.UpdateBgmVolume();
-        soundManager.UpdateSeVolume();
-        soundManager.UpdateVoiceVolume();
+        soundMan.UpdateBgmVolume();
+        soundMan.UpdateSeVolume();
+        soundMan.UpdateVoiceVolume();
 
         messageWindow.SetActive(false);
         dialogWindow.gameObject.SetActive(false);
@@ -95,6 +95,10 @@ public class ManagerSceneScript : MonoBehaviour
 
         SceneState = State.Loading;
         yield return new WaitWhile(() => mainScript == null);
+
+        // ゲーム起動時最初の処理
+        InitMainScene();
+
         yield return FadeIn();
         SceneState = State.Main;
     }
@@ -190,18 +194,25 @@ public class ManagerSceneScript : MonoBehaviour
         SceneState = State.Loading;
         yield return FadeOut();
 
-        // 旧シーンを保持してロード
+        // 旧シーンを保持してロード開始
         var oldScript = mainScript;
         mainScript = null;
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         yield return new WaitUntil(() => mainScript != null);
 
-        // 旧シーンがある場合閉じる
+        // BGMデータ取得
+        var bgmData = mainScript.GetBgm();
+        // 変更の必要がある場合フェードアウトを待つ
+        yield return soundMan.FadeOutFieldBgm(false);
+
+        // 旧シーンがある場合アンロード
         if (!oldScript)
         {
             SceneManager.UnloadSceneAsync(oldScript.GetSceneName());
         }
 
+        // 初期処理
+        InitMainScene();
         // フェードイン
         yield return FadeIn();
 
@@ -209,6 +220,16 @@ public class ManagerSceneScript : MonoBehaviour
         yield return mainScript.AfterFadeIn();
 
         SceneState = State.Main;
+    }
+
+    /// <summary>
+    /// メインシーン読み込み後、フェードアウト直前にやるべきこと
+    /// </summary>
+    private void InitMainScene()
+    {
+        // BGM開始
+        var bgmData = mainScript.GetBgm();
+        soundMan.PlayFieldBgm(bgmData.Item1, bgmData.Item2);
     }
 
     /// <summary>
@@ -228,8 +249,9 @@ public class ManagerSceneScript : MonoBehaviour
     /// <returns></returns>
     private IEnumerator StartGameCoroutine(string sceneName)
     {
-        // フェードアウト
+        // フェードアウトしながらBGMをポーズ
         SceneState = State.Loading;
+        StartCoroutine(soundMan.FadeOutFieldBgm(true));
         yield return FadeOut();
 
         // メインシーンをスリープ
@@ -239,8 +261,9 @@ public class ManagerSceneScript : MonoBehaviour
         SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         yield return new WaitWhile(() => gameScript == null);
 
-        // ゲーム用BGM再生
-        soundManager.StartGameBgm(gameScript.bgmClip);
+        // フェードアウトを一応確認してゲーム用BGM再生
+        yield return new WaitWhile(() => soundMan.IsFieldBgmPlaying());
+        soundMan.StartGameBgm(gameScript.bgmClip);
 
         // フェードイン
         yield return FadeIn();
@@ -265,17 +288,18 @@ public class ManagerSceneScript : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ExitGameCoroutine()
     {
+        // フェードアウトしながらゲームBGMを停止
         SceneState = State.Loading;
+        StartCoroutine(soundMan.FadeOutGameBgm());
         yield return FadeOut();
 
-        // ゲームのをフェードアウトしてフィールドのBGMを復帰
-        yield return soundManager.ResumeBgmFromGame();
-
-        // アンロード
+        // サウンドのフェードアウトを確認してアンロード
+        yield return new WaitWhile(() => soundMan.IsGameBgmPlaying());
         var unloadSync = SceneManager.UnloadSceneAsync(gameSceneName);
         yield return unloadSync;
 
         //メインシーンを復帰
+        StartCoroutine(soundMan.ResumeFieldBgm());
         mainScript.Awake();
 
         yield return mainScript.BeforeFadeIn();

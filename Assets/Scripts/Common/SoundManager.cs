@@ -111,29 +111,16 @@ public class SoundManager : MonoBehaviour
         gameBgmSource.GetComponent<AudioSource>().volume = vol;
     }
 
+    #region フィールドBGM
     /// <summary>
     /// フィールド読み込み時のBGM再生
     /// </summary>
     /// <param name="fieldBgmType"></param>
     /// <param name="source"></param>
-    public IEnumerator PlayFieldBgm(FieldBgmType fieldBgmType, AudioClip source = null)
+    public void PlayFieldBgm(FieldBgmType fieldBgmType, AudioClip source = null)
     {
-        if (fieldBgmType == FieldBgmType.Clip || fieldBgmType != playingFieldBgm)
+        if (IsNeedChangeFieldBgm(fieldBgmType))
         {
-            if (fieldBgmSource.isPlaying)
-            {
-                var vol = new DeltaFloat();
-                vol.Set(fieldBgmSource.volume);
-                vol.MoveTo(0, BGM_FADE_TIME, DeltaFloat.MoveType.LINE);
-                while (vol.IsActive())
-                {
-                    vol.Update(Time.deltaTime);
-                    fieldBgmSource.volume = vol.Get();
-                    yield return null;
-                }
-                fieldBgmSource.Stop();
-            }
-
             var clip = fieldBgmType switch
             {
                 FieldBgmType.Common1 => commonBgm1,
@@ -153,21 +140,17 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲーム開始時のBGM開始
+    /// フィールドBGMをフェードアウトする
     /// </summary>
-    /// <param name="source"></param>
-    public void StartGameBgm(AudioClip source = null)
-    {
-        StartCoroutine(FadeOutGamePlayCoroutine(source));
-    }
-
-    /// <summary>
-    /// フィールドBGMをフェードアウトしてゲームBGM開始
-    /// </summary>
-    /// <param name="clip"></param>
+    /// <param name="isPause">true:ポーズするのみ　false:Stop</param>
     /// <returns></returns>
-    private IEnumerator FadeOutGamePlayCoroutine(AudioClip clip = null)
+    public IEnumerator FadeOutFieldBgm(bool isPause = false)
     {
+        if (!fieldBgmSource.isPlaying)
+        {
+            yield break;
+        }
+
         var vol = new DeltaFloat();
         vol.Set(fieldBgmSource.volume);
         vol.MoveTo(0, BGM_FADE_TIME, DeltaFloat.MoveType.LINE);
@@ -177,36 +160,33 @@ public class SoundManager : MonoBehaviour
             fieldBgmSource.volume = vol.Get();
             yield return null;
         }
-        fieldBgmSource.Pause();
 
-        if (clip)
+        if (isPause)
         {
-            gameBgmSource.volume = CalcBgmVolume();
-            gameBgmSource.clip = clip;
-            gameBgmSource.Play();
+            fieldBgmSource.Pause();
+        }
+        else
+        {
+            fieldBgmSource.Stop();
+            playingFieldBgm = FieldBgmType.None;
         }
     }
 
     /// <summary>
-    /// ゲーム終了時のフィールドBGM復帰
+    /// フィールドBGMがまだ鳴っている（Pauseの場合でもfalseになる）
     /// </summary>
     /// <returns></returns>
-    public IEnumerator ResumeBgmFromGame()
+    public bool IsFieldBgmPlaying()
     {
-        if (gameBgmSource.isPlaying)
-        {
-            var vol = new DeltaFloat();
-            vol.Set(gameBgmSource.volume);
-            vol.MoveTo(0, BGM_FADE_TIME, DeltaFloat.MoveType.LINE);
-            while (vol.IsActive())
-            {
-                vol.Update(Time.deltaTime);
-                gameBgmSource.volume = vol.Get();
-                yield return null;
-            }
-            gameBgmSource.Stop();
-        }
+        return fieldBgmSource.isPlaying;
+    }
 
+    /// <summary>
+    /// ポーズしたフィールドBGM復帰
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator ResumeFieldBgm()
+    {
         fieldBgmSource.UnPause();
         var newVol = new DeltaFloat();
         newVol.Set(0);
@@ -220,33 +200,66 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲーム切り替え時のBGM変更
+    /// BGM変更の必要があるかチェック
+    /// CommonBGMはマップ切り替えで変わらない場合に判定する
     /// </summary>
-    /// <param name="clip"></param>
-    /// <returns></returns>
-    public IEnumerator ChangeGameBgm(AudioClip clip)
+    /// <param name="fieldBgmType">タイプ</param>
+    /// <returns>true:変更する　false:継続</returns>
+    public bool IsNeedChangeFieldBgm(FieldBgmType fieldBgmType)
     {
-        if (gameBgmSource.isPlaying)
-        {
-            var vol = new DeltaFloat();
-            vol.Set(gameBgmSource.volume);
-            vol.MoveTo(0, BGM_FADE_TIME, DeltaFloat.MoveType.LINE);
-            while (vol.IsActive())
-            {
-                vol.Update(Time.deltaTime);
-                gameBgmSource.volume = vol.Get();
-                yield return null;
-            }
-            gameBgmSource.Stop();
-        }
+        if (fieldBgmType == FieldBgmType.Clip) return true;
+        if (fieldBgmType != playingFieldBgm) return true;
+        if (!fieldBgmSource.isPlaying) return true;
 
-        if (clip)
-        {
-            gameBgmSource.volume = CalcBgmVolume();
-            gameBgmSource.clip = clip;
-            gameBgmSource.Play();
-        }
+        return false;
     }
+    #endregion
+
+    #region ゲームBGM
+    /// <summary>
+    /// ゲーム開始時のBGM開始
+    /// </summary>
+    /// <param name="source"></param>
+    public void StartGameBgm(AudioClip source = null)
+    {
+        if (!source) return;
+
+        gameBgmSource.volume = CalcBgmVolume();
+        gameBgmSource.clip = source;
+        gameBgmSource.Play();
+    }
+
+    /// <summary>
+    /// ゲームBGMを止める
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator FadeOutGameBgm()
+    {
+        if (!gameBgmSource.isPlaying) yield break;
+
+        var vol = new DeltaFloat();
+        vol.Set(gameBgmSource.volume);
+        vol.MoveTo(0, BGM_FADE_TIME, DeltaFloat.MoveType.LINE);
+        while (vol.IsActive())
+        {
+            vol.Update(Time.deltaTime);
+            gameBgmSource.volume = vol.Get();
+            yield return null;
+        }
+        gameBgmSource.Stop();
+    }
+
+    /// <summary>
+    /// ゲームBGMがまだ動いてる
+    /// </summary>
+    /// <returns></returns>
+    public bool IsGameBgmPlaying()
+    {
+        return gameBgmSource.isPlaying;
+    }
+
+    #endregion
+
     #endregion
 
     #region ボイス管理

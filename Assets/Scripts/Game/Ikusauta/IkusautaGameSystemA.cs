@@ -440,7 +440,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
     /// <param name="startTime"></param>
     private void PlaySE(AudioClip se, float startTime = 0f)
     {
-        ManagerSceneScript.GetInstance().soundManager.PlaySE(se, startTime);
+        ManagerSceneScript.GetInstance().soundMan.PlaySE(se, startTime);
     }
     #endregion
 }
