@@ -143,8 +143,8 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         yield return new WaitForSeconds(1f);
 
         // チュートリアル表示
-        tutorial.SetTitle("風凛花斬");
-        tutorial.SetText("「！」マークがあらわれたら、すかさずボタンをおそう！");
+        tutorial.SetTitle(StringMinigameMessage.MatiA_Title);
+        tutorial.SetText(StringMinigameMessage.MatiA_Tutorial);
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();

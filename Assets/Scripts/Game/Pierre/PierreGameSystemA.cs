@@ -29,13 +29,13 @@ public class PierreGameSystemA : GameSceneScriptBase
     /// <summary>ランダム表示メッセージ</summary>
     private string[] randomMessage =
     {
-        "ハーッハッハッハ！",
-        "ィヤッホォォォウ！",
-        "ヘイヘイヘーイ！",
-        "ほらほらどうした！",
-        "まだまだいけるよねえ！",
-        "これならどうかな！",
-        "ここまでおいで！",
+        StringMinigameMessage.PierreA_Random0,
+        StringMinigameMessage.PierreA_Random1,
+        StringMinigameMessage.PierreA_Random2,
+        StringMinigameMessage.PierreA_Random3,
+        StringMinigameMessage.PierreA_Random4,
+        StringMinigameMessage.PierreA_Random5,
+        StringMinigameMessage.PierreA_Random6,
     };
     #endregion
 
@@ -152,13 +152,12 @@ public class PierreGameSystemA : GameSceneScriptBase
         yield return base.AfterFadeIn();
 
         messageUI.Open();
-        messageUI.SetMessage("ヘイヘイヘーイ！！");
+        messageUI.SetMessage(StringMinigameMessage.PierreA_Serif0);
 
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
 
-        tutorial.SetTitle("平地競走");
-        tutorial.SetText($"ボールを踏んで加速して、ピエールを追いかけよう！\n" +
-            $"３回タッチしたら勝ち、３回転んだら負けだぞ！");
+        tutorial.SetTitle(StringMinigameMessage.PierreA_Title);
+        tutorial.SetText(StringMinigameMessage.PierreA_Tutorial);
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
@@ -267,7 +266,7 @@ public class PierreGameSystemA : GameSceneScriptBase
         yield return new WaitForSeconds(1f);
 
         messageUI.Open();
-        messageUI.SetMessage("まいった！君の勝ちだ！");
+        messageUI.SetMessage(StringMinigameMessage.PierreA_Win);
 
         yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
 
@@ -287,7 +286,7 @@ public class PierreGameSystemA : GameSceneScriptBase
         yield return new WaitForSeconds(1f);
 
         messageUI.Open();
-        messageUI.SetMessage("アッハッハ残念！\nまたいつでもおいで！");
+        messageUI.SetMessage(StringMinigameMessage.PierreA_Lose);
 
         yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
 

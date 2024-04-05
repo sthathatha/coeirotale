@@ -148,15 +148,13 @@ public class MenderuGameSystem1 : GameSceneScriptBase
 
         yield return base.AfterFadeIn();
 
-        yield return MenderuTalk("「メンデルの種」で勝負よ！");
+        yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_Start);
         MenderuTalkStop();
         yield return null;
 
         // チュートリアル表示
-        tutorial.SetTitle("メンデルの種");
-        tutorial.SetText($"25個の種を交互に1～{TURN_PICK_LIMIT}個取り合います。\n" +
-            $"種はターンが移る時に上下左右にある空欄の数だけ成長し、{SeedScript.SEED_MAX_NUM}まで成長すると取れなくなります。\n" +
-            $"自分のターンに1個も取れなかった場合、負けとなります。");
+        tutorial.SetTitle(StringMinigameMessage.MenderuA_Title);
+        tutorial.SetText(StringMinigameMessage.MenderuA_Tutorial);
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
@@ -384,14 +382,14 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         cursorMain.GetComponent<SpriteRenderer>().color = COLOR_ENEMY;
         cursorEnd.GetComponent<SpriteRenderer>().color = COLOR_ENEMY;
         CreateEnemyPickList();
-        yield return MenderuTalk("それじゃあ　私は…", TalkWaitType.Time, 2f);
+        yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn0, TalkWaitType.Time, 2f);
 
         if (enemyPickList.Count == 0)
         {
             // 取れないので勝利
-            yield return MenderuTalk("な、なんですって！", TalkWaitType.Time);
-            yield return MenderuTalk("取れる種がひとつも無いじゃない！", TalkWaitType.Time);
-            yield return MenderuTalk("私の負けね…お見事だわ！", TalkWaitType.Time);
+            yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_0, TalkWaitType.Time);
+            yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_1, TalkWaitType.Time);
+            yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_2, TalkWaitType.Time);
             ManagerSceneScript.GetInstance().ExitGame();
             yield break;
         }
@@ -410,11 +408,11 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             sound.PlaySE(se_get);
             if (pickLoc == enemyPickList.Last())
             {
-                yield return MenderuTalk("これね！", TalkWaitType.Time);
+                yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn0_2, TalkWaitType.Time);
             }
             else
             {
-                yield return MenderuTalk("これと…", TalkWaitType.Time);
+                yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn0_1, TalkWaitType.Time);
             }
         }
 
@@ -438,8 +436,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             if (enableList.Count == 0)
             {
                 //取れないので敗北
-                yield return MenderuTalk("あら、もう取れる種が無いわ", TalkWaitType.Time);
-                yield return MenderuTalk("私の勝ちね、また遊びましょう", TalkWaitType.Time);
+                yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_0, TalkWaitType.Time);
+                yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_1, TalkWaitType.Time);
                 ManagerSceneScript.GetInstance().ExitGame();
                 yield break;
             }
@@ -448,7 +446,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         cursorMain.GetComponent<SpriteRenderer>().color = COLOR_PLAYER;
         cursorEnd.GetComponent<SpriteRenderer>().color = COLOR_PLAYER;
         pickCount = 0;
-        yield return MenderuTalk("さあ、あなたの番よ", TalkWaitType.None);
+        yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_PTurn0, TalkWaitType.None);
         mouthTimer.Set(0);
         mouthTimer.MoveTo(1f, 2f, DeltaFloat.MoveType.LINE);
     }

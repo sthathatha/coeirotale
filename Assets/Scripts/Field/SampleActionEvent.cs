@@ -30,13 +30,13 @@ public class SampleActionEvent : ActionEventBase
         switch (param1)
         {
             case 0:
-                msg.StartMessage(MessageWindow.Face.Menderu0, "éÑÇ∆óVÇ‘ÅH", voiceClip);
+                msg.StartMessage(MessageWindow.Face.Menderu0, StringFieldMessage.DebugMap_Menderu, voiceClip);
                 break;
             case 1:
-                msg.StartMessage(MessageWindow.Face.Pierre0, "ñlÇ∆óVÇ‘Ç©Ç¢ÅH", voiceClip);
+                msg.StartMessage(MessageWindow.Face.Pierre0, StringFieldMessage.DebugMap_Pierre, voiceClip);
                 break;
             case 2:
-                msg.StartMessage(MessageWindow.Face.Mati0, "éÑÇ∆óVÇ‘ÇÃÇ©ÅH", voiceClip);
+                msg.StartMessage(MessageWindow.Face.Mati0, StringFieldMessage.DebugMap_Mati, voiceClip);
                 break;
         }
         yield return msg.WaitForMessageEnd();
