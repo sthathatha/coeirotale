@@ -11,6 +11,11 @@ public class GameSceneScriptBase : MonoBehaviour
     {
         SetGameResult(false);
         ManagerSceneScript.GetInstance().SetGameScript(this);
+
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(new Vector2(0, 0));
+        cam.Immediate();
+
         yield break;
     }
 
@@ -38,9 +43,16 @@ public class GameSceneScriptBase : MonoBehaviour
         return Global.GetTemporaryData().loseCount;
     }
 
+    /// <summary>
+    /// BGMClip
+    /// </summary>
+    /// <returns></returns>
     virtual public AudioClip GetBgmClip() { return  bgmClip; }
 
-
+    /// <summary>
+    /// åãâ ê›íË
+    /// </summary>
+    /// <param name="_win"></param>
     protected void SetGameResult(bool _win)
     {
         Global.GetTemporaryData().gameWon = _win;

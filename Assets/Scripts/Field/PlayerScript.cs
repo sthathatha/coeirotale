@@ -26,6 +26,12 @@ public class PlayerScript : CharacterScript
         base.Start();
 
         rigid = GetComponent<Rigidbody2D>();
+
+        if (!ManagerSceneScript.GetInstance()) return;
+
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(gameObject);
+        cam.Immediate();
     }
 
     /// <summary>
@@ -35,8 +41,9 @@ public class PlayerScript : CharacterScript
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
         if (field.FieldState != MainScriptBase.State.Idle) { return; }
+        var input = InputManager.GetInstance();
 
-        if (InputManager.GetInstance().GetKeyPress(InputManager.Keys.South))
+        if (input.GetKeyPress(InputManager.Keys.South))
         {
             var list = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
             foreach (var coll in list)
@@ -56,26 +63,26 @@ public class PlayerScript : CharacterScript
         var v = new Vector3(0, 0, 0);
         var actionV = new Vector3(0, 0, 0);
         var moving = false;
-        if (InputManager.GetInstance().GetKey(InputManager.Keys.Up))
+        if (input.GetKey(InputManager.Keys.Up))
         {
             v.y = WALK_VELOCITY;
             actionV.y = ACTION_DISTANCE;
             moving = true;
         }
-        else if (InputManager.GetInstance().GetKey(InputManager.Keys.Down))
+        else if (input.GetKey(InputManager.Keys.Down))
         {
             v.y = -WALK_VELOCITY;
             actionV.y = -ACTION_DISTANCE;
             moving = true;
         }
 
-        if (InputManager.GetInstance().GetKey(InputManager.Keys.Left))
+        if (input.GetKey(InputManager.Keys.Left))
         {
             v.x = -WALK_VELOCITY;
             actionV.x = -ACTION_DISTANCE;
             moving = true;
         }
-        else if (InputManager.GetInstance().GetKey(InputManager.Keys.Right))
+        else if (input.GetKey(InputManager.Keys.Right))
         {
             v.x = WALK_VELOCITY;
             actionV.x = ACTION_DISTANCE;
@@ -90,6 +97,10 @@ public class PlayerScript : CharacterScript
         {
             actionCollide.transform.position = transform.position + actionV;
         }
+
+        // ÉJÉÅÉâçXêV
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(gameObject);
 
         base.Update();
     }

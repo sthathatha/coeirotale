@@ -20,8 +20,16 @@ public class MessageWindow : MonoBehaviour
         Tukuyomi0,
         /// <summary>メンデル</summary>
         Menderu0,
+        /// <summary>ピエール</summary>
         Pierre0,
+        /// <summary>軍歌マチ</summary>
         Mati0,
+        /// <summary>まつかりすく</summary>
+        Matuka0,
+        /// <summary>MANA</summary>
+        Mana0,
+        /// <summary>小春音アミ</summary>
+        Koharune0,
     }
     #endregion
 
@@ -53,10 +61,16 @@ public class MessageWindow : MonoBehaviour
     public Sprite face_Tukuyomi0;
     /// <summary>メンデル0</summary>
     public Sprite face_Menderu0;
-    /// <summary></summary>
+    /// <summary>ピエール</summary>
     public Sprite face_Pierre0;
-    /// <summary></summary>
+    /// <summary>マチ</summary>
     public Sprite face_Mati0;
+    /// <summary>まつかりすく</summary>
+    public Sprite face_Matuka0;
+    /// <summary>MANA</summary>
+    public Sprite face_Mana0;
+    /// <summary>アミ</summary>
+    public Sprite face_Ami0;
     #endregion
 
     /// <summary>
@@ -148,6 +162,9 @@ public class MessageWindow : MonoBehaviour
             ,face_Menderu0
             ,face_Pierre0
             ,face_Mati0
+            ,face_Matuka0
+            ,face_Mana0
+            ,face_Ami0
 #endregion
         };
 
@@ -168,7 +185,10 @@ public class MessageWindow : MonoBehaviour
             Face.Menderu0 => message_menderu,
             Face.Pierre0 => message_pierre,
             Face.Mati0 => message_mati,
-            _=> message_default,
+            Face.Matuka0 => message_matuka,
+            Face.Mana0 => message_mana,
+            Face.Koharune0 => message_koharune,
+            _ => message_default,
         };
     }
 

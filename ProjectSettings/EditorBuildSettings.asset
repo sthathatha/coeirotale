@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneIkusautaA.unity
     guid: fd64e49a9fb04cb478faca2c7ff23b20
+  - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneMatukaA.unity
+    guid: cb6450d1fa9896c49a6e186915ff6b4c
   m_configObjects: {}

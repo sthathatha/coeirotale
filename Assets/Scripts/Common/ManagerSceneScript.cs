@@ -68,6 +68,10 @@ public class ManagerSceneScript : MonoBehaviour
 
     /// <summary>サウンド管理</summary>
     public SoundManager soundMan = null;
+
+    /// <summary>カメラ</summary>
+    public MainCamera mainCam = null;
+
     #endregion
 
     #region 初期化

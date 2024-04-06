@@ -500,6 +500,9 @@ MonoBehaviour:
   face_Menderu0: {fileID: 21300000, guid: a766fe1aec167af4f87d027c4c743128, type: 3}
   face_Pierre0: {fileID: 21300000, guid: 786e68fe7f0a3274cb032aeba2ffb24d, type: 3}
   face_Mati0: {fileID: 21300000, guid: b4e0d22fc2da4bd4eb3b9f5f76fa8d5f, type: 3}
+  face_Matuka0: {fileID: 21300000, guid: c65b09e3607381b40a903a27cde7e6c8, type: 3}
+  face_Mana0: {fileID: 0}
+  face_Ami0: {fileID: 0}
 --- !u!1 &548137742
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &558669098
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1220,6 +1223,7 @@ MonoBehaviour:
   minigameTutorialWindow: {fileID: 1192616315}
   fader: {fileID: 1992069004}
   soundMan: {fileID: 1537035261}
+  mainCam: {fileID: 1785073661}
 --- !u!4 &808918196
 Transform:
   m_ObjectHideFlags: 0
@@ -2522,7 +2526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1647553511
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2564,8 +2568,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF11\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF12\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF13\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF14\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF15\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF16\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF17\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF18"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
-  m_sharedMaterial: {fileID: -1606455754690337242, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebcaebf384e02394b9a2b4131c930f5d, type: 2}
+  m_sharedMaterial: {fileID: -7183824801313302938, guid: ebcaebf384e02394b9a2b4131c930f5d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3055,8 +3059,9 @@ GameObject:
   - component: {fileID: 1785073660}
   - component: {fileID: 1785073659}
   - component: {fileID: 1785073658}
+  - component: {fileID: 1785073661}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3136,6 +3141,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1785073661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785073657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f6c317674fa2746abe60c7d5365ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830667763
 GameObject:
   m_ObjectHideFlags: 0

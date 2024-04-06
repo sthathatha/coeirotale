@@ -40,4 +40,9 @@ public class StringMinigameMessage
     public const string MatukaA_Tutorial = "とにかく連打しろ！";
     public const string MatukaA_Win = "合格\n祝ってやる";
     public const string MatukaA_Lose = "不合格";
+    public const string MatukaA_Serif1 = "手本を見せよう";
+    public const string MatukaA_Serif2 = "さあ　やってみたまえ";
+    public const string MatukaA_Naration1 = "よーい";
+    public const string MatukaA_Naration2 = "はじめ！";
+    public const string MatukaA_Naration3 = "そこまで！";
 }

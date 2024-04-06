@@ -12,6 +12,8 @@ public class MainScriptBase : MonoBehaviour
 
     /// <summary>BGM</summary>
     public AudioClip bgmClip = null;
+
+    public GameObject playerObj = null;
     #endregion
 
     #region ïœêî
@@ -78,6 +80,15 @@ public class MainScriptBase : MonoBehaviour
     virtual public void Awake()
     {
         objectParent?.SetActive(true);
+
+        if (!ManagerSceneScript.GetInstance()) return;
+
+        if (playerObj != null)
+        {
+            var cam = ManagerSceneScript.GetInstance().mainCam;
+            cam.SetTargetPos(playerObj);
+            cam.Immediate();
+        }
     }
 
     /// <summary>
