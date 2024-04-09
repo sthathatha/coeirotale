@@ -6,26 +6,9 @@ using UnityEngine;
 /// <summary>
 /// サンプル
 /// </summary>
-public class SampleSceneField : MainScriptBase
+public class SampleSceneField2 : MainScriptBase
 {
     #region 基底
-    /// <summary>
-    /// 初期化
-    /// </summary>
-    /// <returns></returns>
-    override protected IEnumerator Start()
-    {
-        yield return base.Start();
-    }
-
-    /// <summary>
-    /// フレーム処理
-    /// </summary>
-    override protected void Update()
-    {
-        base.Update();
-    }
-
     /// <summary>
     /// BGM
     /// </summary>
@@ -35,5 +18,4 @@ public class SampleSceneField : MainScriptBase
         return new Tuple<SoundManager.FieldBgmType, AudioClip>(SoundManager.FieldBgmType.Common2, null);
     }
     #endregion
-
 }

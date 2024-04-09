@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// フィールドキャラクター共通処理
+/// </summary>
 public class CharacterScript : MonoBehaviour
 {
     /// <summary>フィールド</summary>

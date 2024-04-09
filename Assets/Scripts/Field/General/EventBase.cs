@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// アクションイベント用
+/// フィールドイベント基本処理
 /// </summary>
-public abstract class ActionEventBase : MonoBehaviour
+public abstract class EventBase : MonoBehaviour
 {
     /// <summary>フィールド</summary>
     public MainScriptBase field;
@@ -40,5 +40,5 @@ public abstract class ActionEventBase : MonoBehaviour
     /// 実際のイベント処理
     /// </summary>
     /// <returns></returns>
-    abstract protected IEnumerator Exec();
+    protected abstract IEnumerator Exec();
 }

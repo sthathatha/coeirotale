@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ’Ç”öŒ^‚Â‚­‚æ‚İ‚¿‚á‚ñ
+/// </summary>
 public class TukuyomiScript : CharacterScript
 {
     #region ’è”
@@ -16,13 +19,11 @@ public class TukuyomiScript : CharacterScript
     public GameObject playerObject;
 
     /// <summary>
-    /// ‰Šú‰»
+    /// ƒvƒŒƒCƒ„[‚Ì‰¡‚É‰Šú‰»
     /// </summary>
-    override protected void Start()
+    public void InitTrace()
     {
         transform.position = playerObject.transform.position + new Vector3(0, TRACE_DISTANCE, 0);
-
-        base.Start();
     }
 
     /// <summary>

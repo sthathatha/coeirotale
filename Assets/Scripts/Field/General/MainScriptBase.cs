@@ -13,7 +13,11 @@ public class MainScriptBase : MonoBehaviour
     /// <summary>BGM</summary>
     public AudioClip bgmClip = null;
 
+    /// <summary>プレイヤー</summary>
     public GameObject playerObj = null;
+
+    /// <summary>追尾つくよみちゃん</summary>
+    public GameObject tukuyomiObj = null;
     #endregion
 
     #region 変数
@@ -35,7 +39,7 @@ public class MainScriptBase : MonoBehaviour
     }
     #endregion
 
-    #region 既定
+    #region 基底
     /// <summary>
     /// 開始時
     /// </summary>
@@ -59,12 +63,6 @@ public class MainScriptBase : MonoBehaviour
     {
     }
     #endregion
-
-    /// <summary>
-    /// シーン名
-    /// </summary>
-    /// <returns></returns>
-    virtual public string GetSceneName() { return "SampleScene"; }
 
     /// <summary>
     /// ゲーム開始用にスリープ
@@ -97,6 +95,10 @@ public class MainScriptBase : MonoBehaviour
     /// <returns></returns>
     virtual public IEnumerator BeforeFadeIn()
     {
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(playerObj.gameObject);
+        cam.Immediate();
+
         yield break;
     }
 
@@ -116,5 +118,49 @@ public class MainScriptBase : MonoBehaviour
     virtual public Tuple<SoundManager.FieldBgmType, AudioClip> GetBgm()
     {
         return new Tuple<SoundManager.FieldBgmType, AudioClip>(SoundManager.FieldBgmType.Clip, bgmClip);
+    }
+
+    /// <summary>
+    /// プレイヤー位置設定・つくよみちゃんも追従
+    /// </summary>
+    /// <param name="id">GeneralPosition</param>
+    public void InitPlayerPos(int id)
+    {
+        var poses = objectParent.transform.GetComponentsInChildren<GeneralPosition>();
+        if (poses.Length == 0) return;
+
+        if (id < 0)
+        {
+            SetPlayerPos(poses[0]);
+            return;
+        }
+
+        foreach (var po in poses)
+        {
+            if (po.id == id)
+            {
+                SetPlayerPos(po);
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// プレイヤー位置設定・つくよみちゃんも追従
+    /// </summary>
+    /// <param name="gp"></param>
+    protected void SetPlayerPos(GeneralPosition gp)
+    {
+        // プレイヤー
+        if (playerObj != null)
+        {
+            playerObj.transform.position = gp.GetPosition();
+        }
+
+        // つくよみちゃん
+        if (tukuyomiObj != null)
+        {
+            tukuyomiObj.GetComponent<TukuyomiScript>().InitTrace();
+        }
     }
 }

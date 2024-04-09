@@ -26,12 +26,6 @@ public class PlayerScript : CharacterScript
         base.Start();
 
         rigid = GetComponent<Rigidbody2D>();
-
-        if (!ManagerSceneScript.GetInstance()) return;
-
-        var cam = ManagerSceneScript.GetInstance().mainCam;
-        cam.SetTargetPos(gameObject);
-        cam.Immediate();
     }
 
     /// <summary>
@@ -52,7 +46,7 @@ public class PlayerScript : CharacterScript
                 if (!ev) continue;
 
                 // イベント発生
-                rigid.velocity = new Vector3(0, 0, 0);
+                StopAnim();
                 ev.ExecEvent();
                 break;
             }
@@ -103,5 +97,30 @@ public class PlayerScript : CharacterScript
         cam.SetTargetPos(gameObject);
 
         base.Update();
+    }
+
+    /// <summary>
+    /// 立ち止まる
+    /// </summary>
+    private void StopAnim()
+    {
+        rigid.velocity = new Vector3(0, 0, 0);
+        modelAnim.SetFloat("speedX", 0);
+        modelAnim.SetFloat("speedY", 0);
+    }
+
+    /// <summary>
+    /// ボリューム型イベントに入ったら実行
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (field.FieldState != MainScriptBase.State.Idle) return;
+
+        var evt = collision.gameObject.GetComponent<AreaEventBase>();
+        if (evt == null) return;
+
+        StopAnim();
+        evt.ExecEvent();
     }
 }
