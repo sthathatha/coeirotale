@@ -9,8 +9,10 @@ using UnityEngine.InputSystem.Utilities;
 /// </summary>
 public class MainCamera : MonoBehaviour
 {
+    /// <summary>ƒJƒƒ‰ˆÚ“®‘¬“x</summary>
+    private const float CAM_SPEED = 1000f;
     /// <summary>‘¦İ’è‹——£</summary>
-    private const float IMMEDIATE_DISTANCE = 5f;
+    private const float IMMEDIATE_DISTANCE = CAM_SPEED / 60f;
 
     /// <summary>Œ»İˆÊ’u</summary>
     private Vector2 basePos;
@@ -41,10 +43,10 @@ public class MainCamera : MonoBehaviour
         if (length < IMMEDIATE_DISTANCE)
         {
             basePos = targetPos;
-        } else
+        }
+        else
         {
-            var deltaLen = length * Time.deltaTime * 2f;
-            if (deltaLen < IMMEDIATE_DISTANCE) deltaLen = IMMEDIATE_DISTANCE;
+            var deltaLen = CAM_SPEED * Time.deltaTime;
             basePos += distance.normalized * deltaLen;
         }
 
@@ -88,6 +90,13 @@ public class MainCamera : MonoBehaviour
     public void Immediate()
     {
         basePos = targetPos;
+
+        var shakeY = 0f;
+        if (shaker.IsActive())
+        {
+            shakeY = shaker.GetShakeValue();
+        }
+        transform.position = new Vector3(basePos.x, basePos.y + shakeY, -10);
     }
 
     /// <summary>
