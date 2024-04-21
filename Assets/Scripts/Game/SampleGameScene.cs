@@ -22,7 +22,9 @@ public class SampleGameScene : GameSceneScriptBase
 
         if (ManagerSceneScript.GetInstance().SceneState != ManagerSceneScript.State.Game) { return; }
 
-        if (InputManager.GetInstance().GetKeyPress(InputManager.Keys.South))
+        var input = InputManager.GetInstance();
+
+        if (input.GetKeyPress(InputManager.Keys.South))
         {
             // 終了してフィールドに戻る
             SetGameResult(false);

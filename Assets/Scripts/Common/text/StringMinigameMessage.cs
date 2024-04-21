@@ -24,7 +24,7 @@ public class StringMinigameMessage
 
     public const string PierreA_Title = "平地競走";
     public const string PierreA_Tutorial = "ボールを踏んで加速して、ピエールを追いかけよう！\n" +
-            "３回タッチしたら勝ち、３回転んだら負けだぞ！";
+            "３回タッチしたら勝ち、３回ころんだら負けだぞ！";
     public const string PierreA_Serif0 = "ヘイヘイヘーイ！！";
     public const string PierreA_Random0 = "ハーッハッハッハ！";
     public const string PierreA_Random1 = "ィヤッホォォォウ！";
@@ -45,4 +45,12 @@ public class StringMinigameMessage
     public const string MatukaA_Naration1 = "よーい";
     public const string MatukaA_Naration2 = "はじめ！";
     public const string MatukaA_Naration3 = "そこまで！";
+
+    public const string ManaA_Title = "スピード";
+    public const string ManaA_Tutorial = "場にあるカードより１多いか１少ないカードを出してね\n" +
+            "先に全部のカードを出したほうが勝ち！";
+    public const string ManaA_Ready = "よーい";
+    public const string ManaA_Go = "すたーと！";
+    public const string ManaA_Win = "だいしょうり！";
+    public const string ManaA_Lose = "まけ…";
 }

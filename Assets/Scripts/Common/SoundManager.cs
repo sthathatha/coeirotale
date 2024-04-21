@@ -43,6 +43,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip commonSeMove = null;
     /// <summary>汎用ウィンドウ開くSE</summary>
     public AudioClip commonSeWindowOpen = null;
+    /// <summary>汎用エラー音ブブッ</summary>
+    public AudioClip commonSeError = null;
     #endregion
 
     #region プライベート変数

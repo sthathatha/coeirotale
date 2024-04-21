@@ -501,8 +501,8 @@ MonoBehaviour:
   face_Pierre0: {fileID: 21300000, guid: 786e68fe7f0a3274cb032aeba2ffb24d, type: 3}
   face_Mati0: {fileID: 21300000, guid: b4e0d22fc2da4bd4eb3b9f5f76fa8d5f, type: 3}
   face_Matuka0: {fileID: 21300000, guid: c65b09e3607381b40a903a27cde7e6c8, type: 3}
-  face_Mana0: {fileID: 0}
-  face_Ami0: {fileID: 0}
+  face_Mana0: {fileID: 21300000, guid: ce076cc654596ef479486c3fca397e30, type: 3}
+  face_Ami0: {fileID: 21300000, guid: a4f70189ded31cd4686d3b9998a540de, type: 3}
 --- !u!1 &548137742
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &548137743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -560,10 +560,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF11\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF12\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF13\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF14\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF15\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF16\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF17\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF18"
+  m_text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u4E00\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u4E8C\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u4E09\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u56DB\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u4E94\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u516D\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u4E03\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u516B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
-  m_sharedMaterial: {fileID: -1606455754690337242, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 544eb3248776fb84c8de0574c2b47054, type: 2}
+  m_sharedMaterial: {fileID: 1648175968017570283, guid: 544eb3248776fb84c8de0574c2b47054, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -587,8 +587,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -25
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -2166,6 +2166,7 @@ MonoBehaviour:
   commonSeSelect: {fileID: 8300000, guid: 4919563bb9d99924687ae01c12b3902d, type: 3}
   commonSeMove: {fileID: 8300000, guid: d9f311e2026ca8248b54f1e799007d64, type: 3}
   commonSeWindowOpen: {fileID: 8300000, guid: e26434ce518edc343a53dbf90d456e31, type: 3}
+  commonSeError: {fileID: 8300000, guid: b4b7f3c45f8e408439f6579a17084cc9, type: 3}
 --- !u!1 &1555959403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,7 +2527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1647553511
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2720,7 +2721,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 30000

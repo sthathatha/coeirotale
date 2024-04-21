@@ -41,6 +41,9 @@ public class SampleActionEvent : ActionEventBase
             case 3:
                 msg.StartMessage(MessageWindow.Face.Matuka0, StringFieldMessage.DebugMap_Matuka, voiceClip);
                 break;
+            case 4:
+                msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.DebugMap_Mana, voiceClip);
+                break;
         }
         yield return msg.WaitForMessageEnd();
         yield return dialog.OpenDialog();
