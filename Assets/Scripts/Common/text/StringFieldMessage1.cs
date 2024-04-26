@@ -17,7 +17,7 @@ public partial class StringFieldMessage
 
     public const string DebugMap_Menderu = "„‚Æ—V‚ÔH";
     public const string DebugMap_Pierre = "–l‚Æ—V‚Ô‚©‚¢H";
-    public const string DebugMap_Mati = "„‚Ì—V‚Ô‚Ì‚©H";
+    public const string DebugMap_Mati = "„‚Æ—V‚Ô‚Ì‚©H";
     public const string DebugMap_Matuka = "‚ h‚ h‚ h‚ h‚ h‚ h‚ hII";
     public const string DebugMap_Mana = "‚¨[H\nMANA‚³‚ñ‚ÆŸ•‰‚·‚é‚©[H";
     public const string DebugMap_Ami = "‚¢‚ç‚Á‚µ‚á‚¢‚Ü‚¹I—V‚ñ‚Å‚¢‚«‚Ü‚·‚©H";

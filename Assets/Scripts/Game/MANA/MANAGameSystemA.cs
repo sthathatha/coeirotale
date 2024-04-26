@@ -532,19 +532,48 @@ public class MANAGameSystemA : GameSceneScriptBase
 
         // 出す場を選択
         var target = 0;
-        var f1Num = field1CardTmp == null ? field1Card.GetNum() : field1CardTmp.GetNum();
-        var f2Num = field2CardTmp == null ? field2Card.GetNum() : field2CardTmp.GetNum();
-        var diff1 = CalcCardDiff(f1Num, playCard.GetNum());
-        var diff2 = CalcCardDiff(f2Num, playCard.GetNum());
-        if (diff1 == 1)
+        var f1TmpNum = field1CardTmp?.GetNum() ?? 0;
+        var f2TmpNum = field2CardTmp?.GetNum() ?? 0;
+        var f1Num = field1Card.GetNum();
+        var f2Num = field2Card.GetNum();
+        var playNum = playCard.GetNum();
+        if (f1TmpNum == 0 && CalcCardDiff(f1Num, playNum) == 1)
         {
+            // １がフリーで出せる
             target = 1;
         }
-        else if (diff2 == 1)
+        else if (f2TmpNum == 0 && CalcCardDiff(f2Num, playNum) == 1)
         {
+            // ２がフリーで出せる
+            target = 2;
+        }
+        else if (f1TmpNum != 0 && CalcCardDiff(f1TmpNum, playNum) == 1)
+        {
+            // １に出てきてる所に出せる
+            target = 1;
+        }
+        else if (f2TmpNum != 0 && CalcCardDiff(f2TmpNum, playNum) == 1)
+        {
+            // ２に出てきてる所に出せる
             target = 2;
         }
 
+        // 出せない場合
+        if (target == 0)
+        {
+            if (f1TmpNum != 0 && CalcCardDiff(f1Num, playNum) == 1)
+            {
+                // １に先に出されそう（お手つきする）
+                target = 1;
+            }
+            else if (f2TmpNum != 0 && CalcCardDiff(f2Num, playNum) == 1)
+            {
+                // ２に先に出されそう
+                target = 2;
+            }
+        }
+
+        // それ以外は近い場所に
         if (target == 0)
         {
             target = index > 2 ? 2 : 1;
@@ -629,8 +658,10 @@ public class MANAGameSystemA : GameSceneScriptBase
                 (false, 3) => posE3,
                 _ => posE4,
             };
-            playCard.MoveTo(backPos.localPosition, MOVE_TIME_PLAY * 4);
+            playCard.SetPriority(BASE_PRIORITY + 2);
+            playCard.MoveTo(backPos.localPosition, MOVE_TIME_PLAY * 5);
             yield return new WaitWhile(() => playCard.IsMoving());
+            playCard.SetPriority(BASE_PRIORITY);
 
             CheckGame();
         }
@@ -728,7 +759,7 @@ public class MANAGameSystemA : GameSceneScriptBase
             enemyYamaList.RemoveAt(0);
         }
 
-        ret.SetPriority(BASE_PRIORITY + 10);
+        ret.SetPriority(BASE_PRIORITY + 20);
         return ret;
     }
 
@@ -766,6 +797,7 @@ public class MANAGameSystemA : GameSceneScriptBase
 
     /// <summary>
     /// カードを出せるかどうか判定
+    /// 動いてるものは認識しない
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
