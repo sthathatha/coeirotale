@@ -658,7 +658,7 @@ public class MANAGameSystemA : GameSceneScriptBase
                 (false, 3) => posE3,
                 _ => posE4,
             };
-            playCard.SetPriority(BASE_PRIORITY + 2);
+            playCard.SetPriority(BASE_PRIORITY + 2 * index);
             playCard.MoveTo(backPos.localPosition, MOVE_TIME_PLAY * 5);
             yield return new WaitWhile(() => playCard.IsMoving());
             playCard.SetPriority(BASE_PRIORITY);
