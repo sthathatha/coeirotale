@@ -29,7 +29,7 @@ public class MessageWindow : MonoBehaviour
         /// <summary>MANA</summary>
         Mana0,
         /// <summary>è¨ètâπÉAÉ~</summary>
-        Koharune0,
+        Ami0,
     }
     #endregion
 
@@ -187,7 +187,7 @@ public class MessageWindow : MonoBehaviour
             Face.Mati0 => message_mati,
             Face.Matuka0 => message_matuka,
             Face.Mana0 => message_mana,
-            Face.Koharune0 => message_koharune,
+            Face.Ami0 => message_koharune,
             _ => message_default,
         };
     }

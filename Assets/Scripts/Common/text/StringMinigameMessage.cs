@@ -53,4 +53,10 @@ public class StringMinigameMessage
     public const string ManaA_Go = "すたーと！";
     public const string ManaA_Win = "だいしょうり！";
     public const string ManaA_Lose = "まけ…";
+
+    public const string AmiA_Title = "ダンスバトル！";
+    public const string AmiA_Tutorial = "タイミングよく上下左右を押して踊ろう！\n十字ボタン、ABXYボタン、\nキーボード矢印、DFJKキーで可";
+    public const string AmiA_Great = "Great";
+    public const string AmiA_Good = "Good";
+    public const string AmiA_Bad = "Bad";
 }

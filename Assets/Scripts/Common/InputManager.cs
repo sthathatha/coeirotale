@@ -24,6 +24,11 @@ public class InputManager
         West,
         /// <summary>ÇSÉ{É^ÉìÇÃè„</summary>
         North,
+
+        AmiUp,
+        AmiDown,
+        AmiRight,
+        AmiLeft,
     }
     #endregion
 
@@ -125,6 +130,27 @@ public class InputManager
             case Keys.North:
                 return (keyboard?.xKey.wasPressedThisFrame == true ||
                     gamepad?.buttonNorth.wasPressedThisFrame == true);
+
+            case Keys.AmiUp:
+                return (keyboard?.jKey.wasPressedThisFrame == true ||
+                    keyboard?.upArrowKey.wasPressedThisFrame == true ||
+                    gamepad?.buttonNorth.wasPressedThisFrame == true ||
+                    gamepad?.dpad.up.wasPressedThisFrame == true);
+            case Keys.AmiDown:
+                return (keyboard?.fKey.wasPressedThisFrame == true ||
+                    keyboard?.downArrowKey.wasPressedThisFrame == true ||
+                    gamepad?.buttonSouth.wasPressedThisFrame == true ||
+                    gamepad?.dpad.down.wasPressedThisFrame == true);
+            case Keys.AmiRight:
+                return (keyboard?.kKey.wasPressedThisFrame == true ||
+                    keyboard?.rightArrowKey.wasPressedThisFrame == true ||
+                    gamepad?.buttonEast.wasPressedThisFrame == true ||
+                    gamepad?.dpad.right.wasPressedThisFrame == true);
+            case Keys.AmiLeft:
+                return (keyboard?.dKey.wasPressedThisFrame == true ||
+                    keyboard?.leftArrowKey.wasPressedThisFrame == true ||
+                    gamepad?.buttonWest.wasPressedThisFrame == true ||
+                    gamepad?.dpad.left.wasPressedThisFrame == true);
         }
 
         return false;

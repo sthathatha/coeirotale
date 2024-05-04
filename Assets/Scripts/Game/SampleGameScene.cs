@@ -8,15 +8,37 @@ public class SampleGameScene : GameSceneScriptBase
     /// 初期化
     /// </summary>
     /// <returns></returns>
-    override public IEnumerator Start()
+    public override IEnumerator Start()
     {
         yield return base.Start();
     }
 
     /// <summary>
+    /// フェードイン後
+    /// </summary>
+    /// <returns></returns>
+    public override IEnumerator AfterFadeIn()
+    {
+        var tutorial = ManagerSceneScript.GetInstance().GetMinigameTutorialWindow();
+        var input = InputManager.GetInstance();
+
+        yield return base.AfterFadeIn();
+        yield return new WaitForSeconds(1f);
+
+        // チュートリアル表示
+        tutorial.SetTitle(StringMinigameMessage.MatiA_Title);
+        tutorial.SetText(StringMinigameMessage.MatiA_Tutorial);
+        yield return tutorial.Open();
+        yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
+        yield return tutorial.Close();
+
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    /// <summary>
     /// フレーム処理
     /// </summary>
-    override public void Update()
+    public override void Update()
     {
         base.Update();
 

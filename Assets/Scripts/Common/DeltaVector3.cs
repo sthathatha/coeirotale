@@ -59,6 +59,5 @@ public class DeltaVector3
     /// <param name="deltaTime"></param>
     public void Update(float deltaTime)
     {
-        _delta.Update(deltaTime);
     }
 }

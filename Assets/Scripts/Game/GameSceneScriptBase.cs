@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class GameSceneScriptBase : MonoBehaviour
 {
+    /// <summary>鳴らすBGM</summary>
     public AudioClip bgmClip = null;
 
-    // Start is called before the first frame update
+    /// <summary>ゲームモード0：ゲーム中　1：ラスボス前</summary>
+    public int gameMode;
+
+    /// <summary>
+    /// フェードイン直前
+    /// </summary>
+    /// <returns></returns>
     virtual public IEnumerator Start()
     {
         SetGameResult(false);
@@ -19,7 +26,9 @@ public class GameSceneScriptBase : MonoBehaviour
         yield break;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// フレーム処理
+    /// </summary>
     virtual public void Update()
     {
 

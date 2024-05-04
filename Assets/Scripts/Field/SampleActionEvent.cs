@@ -44,6 +44,9 @@ public class SampleActionEvent : ActionEventBase
             case 4:
                 msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.DebugMap_Mana, voiceClip);
                 break;
+            case 5:
+                msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.DebugMap_Ami, voiceClip);
+                break;
         }
         yield return msg.WaitForMessageEnd();
         yield return dialog.OpenDialog();
@@ -59,7 +62,7 @@ public class SampleActionEvent : ActionEventBase
                 2 => "GameSceneIkusautaA",
                 3 => "GameSceneMatukaA",
                 4 => "GameSceneManaA",
-                5 => "GameSceneKoharuneA",
+                5 => "GameSceneAmiA",
                 _ => "",
             };
 

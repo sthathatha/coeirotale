@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -24,17 +21,18 @@ public class DeltaFloat
     }
 
     private MoveType moveType;
+    private float startTime;
     private float endTime;
-    private float nowTime;
+
     private float beforeValue;
-    private float nowValue;
     private float afterValue;
     private bool active;
 
     public DeltaFloat()
     {
-        nowTime = 0;
+        startTime = 0;
         endTime = 0;
+
         active = false;
     }
 
@@ -48,7 +46,37 @@ public class DeltaFloat
     /// åªç›íl
     /// </summary>
     /// <returns></returns>
-    public float Get() { return nowValue; }
+    public float Get()
+    {
+        if (IsActive() == false)
+        {
+            return afterValue;
+        }
+
+        var nowTime = Time.realtimeSinceStartup - startTime;
+        if (nowTime > endTime)
+        {
+            active = false;
+            return afterValue;
+        }
+
+        var timePer = nowTime / endTime;
+        float valPer = timePer;
+        switch (moveType)
+        {
+            case MoveType.ACCEL:
+                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Accel);
+                break;
+            case MoveType.DECEL:
+                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Decel);
+                break;
+            case MoveType.BOTH:
+                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Both);
+                break;
+        }
+
+        return Util.CalcBetweenFloat(valPer, beforeValue, afterValue);
+    }
 
     /// <summary>
     /// ë¶éûïœçX
@@ -58,8 +86,6 @@ public class DeltaFloat
     {
         beforeValue = val;
         afterValue = val;
-        nowValue = val;
-        nowTime = 0;
         endTime = 0;
         active = false;
     }
@@ -72,9 +98,11 @@ public class DeltaFloat
     /// <param name="_moveType"></param>
     public void MoveTo(float _val, float _time, MoveType _moveType)
     {
-        beforeValue = nowValue;
+        beforeValue = Get();
+
+        startTime = Time.realtimeSinceStartup;
+
         afterValue = _val;
-        nowTime = 0;
         endTime = _time;
 
         active = true;
@@ -92,30 +120,11 @@ public class DeltaFloat
             return;
         }
 
-        nowTime += deltaTime;
+        var nowTime = Time.realtimeSinceStartup - startTime;
         if (nowTime > endTime)
         {
-            nowValue = afterValue;
             active = false;
             return;
         }
-
-
-        var timePer = nowTime / endTime;
-        float valPer = timePer;
-        switch (moveType)
-        {
-            case MoveType.ACCEL:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Accel);
-                break;
-            case MoveType.DECEL:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Decel);
-                break;
-            case MoveType.BOTH:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Both);
-                break;
-        }
-
-        nowValue = Util.CalcBetweenFloat(valPer, beforeValue, afterValue);
     }
 }

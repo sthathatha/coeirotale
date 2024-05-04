@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &92840976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -502,7 +502,7 @@ MonoBehaviour:
   face_Mati0: {fileID: 21300000, guid: b4e0d22fc2da4bd4eb3b9f5f76fa8d5f, type: 3}
   face_Matuka0: {fileID: 21300000, guid: c65b09e3607381b40a903a27cde7e6c8, type: 3}
   face_Mana0: {fileID: 21300000, guid: ce076cc654596ef479486c3fca397e30, type: 3}
-  face_Ami0: {fileID: 21300000, guid: a4f70189ded31cd4686d3b9998a540de, type: 3}
+  face_Ami0: {fileID: 21300000, guid: 60a852394246c664b951f11b9390ef6b, type: 3}
 --- !u!1 &548137742
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &548137743
 RectTransform:
   m_ObjectHideFlags: 0
