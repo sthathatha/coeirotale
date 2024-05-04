@@ -53,6 +53,9 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>ダイアログウィンドウ</summary>
     public GameObject dialogWindow = null;
 
+    /// <summary>オプションウィンドウ</summary>
+    public GameObject optionWindow = null;
+
     /// <summary>ミニゲーム説明ウィンドウ</summary>
     public GameObject minigameTutorialWindow = null;
 
@@ -82,20 +85,21 @@ public class ManagerSceneScript : MonoBehaviour
     /// <returns></returns>
     IEnumerator Start()
     {
-        Global.GetSaveData().Load();
+        Global.GetSaveData().LoadSystemData();
         soundMan.UpdateBgmVolume();
         soundMan.UpdateSeVolume();
         soundMan.UpdateVoiceVolume();
 
         messageWindow.SetActive(false);
-        dialogWindow.gameObject.SetActive(false);
+        dialogWindow.SetActive(false);
+        optionWindow.SetActive(false);
         fader.gameObject.SetActive(true);
         fader.alpha = 1f;
 
         if (!isDebugLoad)
         {
-            //todo:初期シーンロード
-            SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Additive);
+            //初期シーンロード
+            SceneManager.LoadSceneAsync("TitleScene", LoadSceneMode.Additive);
         }
 
         SceneState = State.Loading;
@@ -131,6 +135,13 @@ public class ManagerSceneScript : MonoBehaviour
     public DialogWindow GetDialogWindow()
     {
         return dialogWindow.GetComponent<DialogWindow>();
+    }
+
+    /// <summary>オプションウィンドウ</summary>
+    /// <returns></returns>
+    public OptionWindow GetOptionWindow()
+    {
+        return optionWindow.GetComponent<OptionWindow>();
     }
     #endregion
 

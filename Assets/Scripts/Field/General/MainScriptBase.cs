@@ -95,9 +95,12 @@ public class MainScriptBase : MonoBehaviour
     /// <returns></returns>
     virtual public IEnumerator BeforeFadeIn()
     {
-        var cam = ManagerSceneScript.GetInstance().mainCam;
-        cam.SetTargetPos(playerObj.gameObject);
-        cam.Immediate();
+        if (playerObj != null)
+        {
+            var cam = ManagerSceneScript.GetInstance().mainCam;
+            cam.SetTargetPos(playerObj);
+            cam.Immediate();
+        }
 
         yield break;
     }

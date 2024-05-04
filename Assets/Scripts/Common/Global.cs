@@ -44,12 +44,12 @@ public class Global
         public int stage0Clear;
 
         /// <summary>オプション</summary>
-        public OptionData option;
+        public SystemData system;
 
         /// <summary>
         /// オプション
         /// </summary>
-        public struct OptionData
+        public struct SystemData
         {
             /// <summary>BGM</summary>
             public int bgmVolume;
@@ -57,41 +57,72 @@ public class Global
             public int seVolume;
             /// <summary>ボイス</summary>
             public int voiceVolume;
+
+            /// <summary>クリアフラグ</summary>
+            public int clearFlag;
         }
 
         public SaveData()
         {
             stage0Clear = 0;
 
-            option.bgmVolume = 3;
-            option.seVolume = 3;
-            option.voiceVolume = 3;
+            system.bgmVolume = 3;
+            system.seVolume = 3;
+            system.voiceVolume = 3;
+            system.clearFlag = 0;
         }
 
         /// <summary>
-        /// セーブ
+        /// ゲームデータをセーブ
         /// </summary>
-        public void Save()
+        public void SaveGameData()
         {
             PlayerPrefs.SetInt("stage0Clear", stage0Clear);
-
-            PlayerPrefs.SetInt("optionBgmVolume", option.bgmVolume);
-            PlayerPrefs.SetInt("optionSeVolume", option.seVolume);
-            PlayerPrefs.SetInt("optionVoiceVolume", option.voiceVolume);
 
             PlayerPrefs.Save();
         }
 
         /// <summary>
-        /// ロード
+        /// ゲームデータをロード
         /// </summary>
-        public void Load()
+        public void LoadGameData()
         {
             stage0Clear = PlayerPrefs.GetInt("stage0Clear", 0);
+        }
 
-            option.bgmVolume = PlayerPrefs.GetInt("optionBgmVolume", 3);
-            option.seVolume = PlayerPrefs.GetInt("optionSeVolume", 3);
-            option.voiceVolume = PlayerPrefs.GetInt("optionVoiceVolume", 3);
+        /// <summary>
+        /// セーブがあるかどうか
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEnableGameData()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// システムデータをセーブ
+        /// </summary>
+        public void SaveSystemData()
+        {
+            PlayerPrefs.SetInt("optionBgmVolume", system.bgmVolume);
+            PlayerPrefs.SetInt("optionSeVolume", system.seVolume);
+            PlayerPrefs.SetInt("optionVoiceVolume", system.voiceVolume);
+
+            PlayerPrefs.SetInt("optionClearFlag", system.clearFlag);
+
+            PlayerPrefs.Save();
+        }
+
+        /// <summary>
+        /// システムデータをロード
+        /// </summary>
+        public void LoadSystemData()
+        {
+            system.bgmVolume = PlayerPrefs.GetInt("optionBgmVolume", 3);
+            system.seVolume = PlayerPrefs.GetInt("optionSeVolume", 3);
+            system.voiceVolume = PlayerPrefs.GetInt("optionVoiceVolume", 3);
+
+            system.clearFlag = PlayerPrefs.GetInt("optionClearFlag", 0);
         }
     }
 

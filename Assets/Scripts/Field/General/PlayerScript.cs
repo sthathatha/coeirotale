@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤー★
+/// </summary>
 public class PlayerScript : CharacterScript
 {
     #region 定数
+
     /// <summary>移動速度</summary>
     const float WALK_VELOCITY = 200f;
 
     /// <summary>A押した時の判定距離</summary>
     const float ACTION_DISTANCE = 30f;
+
     #endregion
 
     /// <summary>アクション検索用当たり判定</summary>
@@ -35,10 +41,15 @@ public class PlayerScript : CharacterScript
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
         if (field.FieldState != MainScriptBase.State.Idle) { return; }
+
+        var optionWindow = ManagerSceneScript.GetInstance().GetOptionWindow();
+        if (optionWindow.gameObject.activeSelf) { return; }
+
         var input = InputManager.GetInstance();
 
         if (input.GetKeyPress(InputManager.Keys.South))
         {
+            // アクション実行
             var list = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
             foreach (var coll in list)
             {
@@ -51,6 +62,12 @@ public class PlayerScript : CharacterScript
                 break;
             }
 
+            return;
+        }
+        else if (input.GetKeyPress(InputManager.Keys.North))
+        {
+            // オプション開く
+            ManagerSceneScript.GetInstance().StartCoroutine(optionWindow.OpenDialog());
             return;
         }
 

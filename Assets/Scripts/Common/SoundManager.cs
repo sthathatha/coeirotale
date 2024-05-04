@@ -303,7 +303,7 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcBgmVolume()
     {
-        var optionVol = Global.GetSaveData().option.bgmVolume;
+        var optionVol = Global.GetSaveData().system.bgmVolume;
         return 0.2f * optionVol / 10;
     }
     /// <summary>
@@ -312,7 +312,7 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcSeVolume()
     {
-        var optionVol = Global.GetSaveData().option.seVolume;
+        var optionVol = Global.GetSaveData().system.seVolume;
         return 1f * optionVol / 10;
     }
     /// <summary>
@@ -321,7 +321,7 @@ public class SoundManager : MonoBehaviour
     /// <returns></returns>
     private float CalcVoiceVolume()
     {
-        var optionVol = Global.GetSaveData().option.voiceVolume;
+        var optionVol = Global.GetSaveData().system.voiceVolume;
         return 1f * optionVol / 10;
     }
     #endregion
