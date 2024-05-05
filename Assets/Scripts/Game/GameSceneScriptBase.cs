@@ -7,9 +7,6 @@ public class GameSceneScriptBase : MonoBehaviour
     /// <summary>鳴らすBGM</summary>
     public AudioClip bgmClip = null;
 
-    /// <summary>ゲームモード0：ゲーム中　1：ラスボス前</summary>
-    public int gameMode;
-
     /// <summary>
     /// フェードイン直前
     /// </summary>

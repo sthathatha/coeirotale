@@ -137,6 +137,9 @@ public class Global
         /// <summary>ゲーム戻り時の勝利判定</summary>
         public bool gameWon;
 
+        /// <summary>ボスラッシュフラグ</summary>
+        public bool bossRush;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -144,6 +147,7 @@ public class Global
         {
             loseCount = 0;
             gameWon = false;
+            bossRush = false;
         }
     }
 }

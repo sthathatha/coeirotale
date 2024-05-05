@@ -9,13 +9,18 @@ public class SampleActionEvent : ActionEventBase
 
     /// <summary>ボイス</summary>
     public AudioClip voiceClip;
+    /// <summary>ボイス2</summary>
+    public AudioClip voiceClip2;
 
     private int loseCount;
+    private int winCount;
 
     public override void Start()
     {
         base.Start();
         loseCount = 0;
+
+        winCount = 0;
     }
 
     // テスト
@@ -66,13 +71,33 @@ public class SampleActionEvent : ActionEventBase
                 _ => "",
             };
 
+            Global.GetTemporaryData().bossRush = false;
+            if (param1 == 5 && winCount == 1)
+            {
+                msg.Open();
+                msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.DebugMap_Ami2, voiceClip2);
+                yield return msg.WaitForMessageEnd();
+                yield return dialog.OpenDialog();
+                msg.Close();
+
+                if (dialog.GetResult() == DialogWindow.Result.Yes)
+                {
+                    sceneName = "GameSceneAmiB";
+                    Global.GetTemporaryData().bossRush = true;
+                }
+            }
+
             tmpData.loseCount = loseCount;
             manager.StartGame(sceneName);
             yield return new WaitWhile(() => manager.SceneState != ManagerSceneScript.State.Main);
 
-            if (!tmpData.gameWon)
+            if (tmpData.gameWon)
             {
-                if (loseCount < 100) loseCount++;
+                winCount = 1;
+            }
+            else
+            {
+                loseCount = Mathf.Clamp(loseCount + 1, 0, 100);
             }
         }
     }
