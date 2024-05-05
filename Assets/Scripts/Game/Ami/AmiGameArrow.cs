@@ -78,4 +78,13 @@ public class AmiGameArrow : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public float GetWeight() { return _weight; }
+
+    /// <summary>
+    /// Å‰‚©‚ç­‚µi‚ñ‚¾ó‘Ô
+    /// </summary>
+    /// <param name="ofs"></param>
+    public void AddOffset(float ofs)
+    {
+        _y.AddOffset(ofs);
+    }
 }

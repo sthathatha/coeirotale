@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class AmiGameSystemA : GameSceneScriptBase
 {
@@ -344,35 +342,37 @@ public class AmiGameSystemA : GameSceneScriptBase
     /// ñÓàÛçÏê¨
     /// </summary>
     /// <param name="dir"></param>
+    /// <param name="offset"></param>
     /// <param name="weight"></param>
-    private void CreateArrow(ArrowDir dir, float weight = -1f)
+    private void CreateArrow(ArrowDir dir, float offset, float weight = -1f)
     {
-        GameObject ar = null;
+        AmiGameArrow ar = null;
         switch (dir)
         {
             case ArrowDir.Right:
-                ar = GameObject.Instantiate(dummyRight);
-                listRight.Add(ar.GetComponent<AmiGameArrow>());
+                ar = GameObject.Instantiate(dummyRight).GetComponent<AmiGameArrow>();
+                listRight.Add(ar);
                 break;
             case ArrowDir.Up:
-                ar = GameObject.Instantiate(dummyUp);
-                listUp.Add(ar.GetComponent<AmiGameArrow>());
+                ar = GameObject.Instantiate(dummyUp).GetComponent<AmiGameArrow>();
+                listUp.Add(ar);
                 break;
             case ArrowDir.Down:
-                ar = GameObject.Instantiate(dummyDown);
-                listDown.Add(ar.GetComponent<AmiGameArrow>());
+                ar = GameObject.Instantiate(dummyDown).GetComponent<AmiGameArrow>();
+                listDown.Add(ar);
                 break;
             case ArrowDir.Left:
-                ar = GameObject.Instantiate(dummyLeft);
-                listLeft.Add(ar.GetComponent<AmiGameArrow>());
+                ar = GameObject.Instantiate(dummyLeft).GetComponent<AmiGameArrow>();
+                listLeft.Add(ar);
                 break;
         }
 
         if (ar != null)
         {
             ar.transform.SetParent(playArrowParent.transform, true);
-            ar.SetActive(true);
-            ar.GetComponent<AmiGameArrow>().SetWeight(weight);
+            ar.AddOffset(offset);
+            ar.gameObject.SetActive(true);
+            ar.SetWeight(weight);
         }
     }
 
@@ -439,7 +439,7 @@ public class AmiGameSystemA : GameSceneScriptBase
         var swingMod = -1;
 
         // åÎç∑
-        var gosa = 0.3f;
+        var gosa = 0.15f;
 
         while (index < notes.Count ||
             listRight.Count > 0 ||
@@ -471,12 +471,13 @@ public class AmiGameSystemA : GameSceneScriptBase
             var nowNote = nowSeconds * timeRate;
             while (index < notes.Count && notes[index].startBeat <= nowNote + delayNote - gosa)
             {
-                CreateArrow(notes[index].dir, notes[index].weightBeat / (float)timeRate);
+                var offset = (nowNote + delayNote - gosa - notes[index].startBeat) / timeRate;
+                CreateArrow(notes[index].dir, offset, notes[index].weightBeat / (float)timeRate);
                 index++;
             }
 
             // CPU
-            while (cpuIndex < cpuNotes.Count && cpuNotes[cpuIndex].startBeat <= nowNote - gosa)
+            while (cpuIndex < cpuNotes.Count && cpuNotes[cpuIndex].startBeat <= nowNote - gosa / 2f)
             {
                 var animName = GetAnimName(cpuNotes[cpuIndex].dir);
                 var time = cpuNotes[cpuIndex].weightBeat / (float)timeRate;
@@ -1224,21 +1225,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 46.5f, -1f, ArrowDir.Left ),
                 new Note( 46.75f, -1f, ArrowDir.Down ),
 
-                new Note( 48.0f, -1f, ArrowDir.Right ),
+                new Note( 48.0f, 0.5f, ArrowDir.Right ),
                 new Note( 48.75f, -1f, ArrowDir.Right ),
                 new Note( 49.0f, -1f, ArrowDir.Up ),
                 new Note( 49.25f, -1f, ArrowDir.Down ),
-                new Note( 49.5f, -1f, ArrowDir.Left ),
+                new Note( 49.5f, 0.5f, ArrowDir.Left ),
                 new Note( 50.25f, -1f, ArrowDir.Left ),
                 new Note( 50.75f, -1f, ArrowDir.Left ),
                 new Note( 51.0f, -1f, ArrowDir.Down ),
                 new Note( 51.25f, -1f, ArrowDir.Right ),
-                new Note( 51.5f, -1f, ArrowDir.Up ),
-                new Note( 52.0f, -1f, ArrowDir.Down ),
+                new Note( 51.5f, 0.5f, ArrowDir.Up ),
+                new Note( 52.0f, 0.5f, ArrowDir.Down ),
                 new Note( 52.75f, -1f, ArrowDir.Left ),
                 new Note( 53.0f, -1f, ArrowDir.Down ),
                 new Note( 53.25f, -1f, ArrowDir.Up ),
-                new Note( 53.5f, -1f, ArrowDir.Right ),
+                new Note( 53.5f, 0.5f, ArrowDir.Right ),
                 new Note( 54.25f, -1f, ArrowDir.Right ),
                 new Note( 54.75f, -1f, ArrowDir.Right ),
                 new Note( 55.0f, -1f, ArrowDir.Left ),
@@ -1246,22 +1247,22 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 55.5f, -1f, ArrowDir.Up ),
                 new Note( 55.75f, -1f, ArrowDir.Right ),
 
-                new Note( 56.0f, -1f, ArrowDir.Up ),
+                new Note( 56.0f, 0.5f, ArrowDir.Up ),
                 new Note( 56.75f, -1f, ArrowDir.Up ),
                 new Note( 57.0f, -1f, ArrowDir.Right ),
                 new Note( 57.25f, -1f, ArrowDir.Up ),
                 new Note( 57.5f, -1f, ArrowDir.Right ),
-                new Note( 57.75f, -1f, ArrowDir.Down ),
-                new Note( 58.25f, -1f, ArrowDir.Left ),
+                new Note( 57.75f, 0.5f, ArrowDir.Down ),
+                new Note( 58.25f, 0.5f, ArrowDir.Left ),
                 new Note( 58.75f, -1f, ArrowDir.Up ),
                 new Note( 59.0f, -1f, ArrowDir.Down ),
                 new Note( 59.25f, -1f, ArrowDir.Left ),
-                new Note( 59.5f, -1f, ArrowDir.Down ),
-                new Note( 60.0f, -1f, ArrowDir.Up ),
+                new Note( 59.5f, 0.5f, ArrowDir.Down ),
+                new Note( 60.0f, 0.5f, ArrowDir.Up ),
                 new Note( 60.5f, -1f, ArrowDir.Right ),
-                new Note( 60.75f, -1f, ArrowDir.Up ),
+                new Note( 60.75f, 0.5f, ArrowDir.Up ),
                 new Note( 61.25f, -1f, ArrowDir.Left ),
-                new Note( 61.5f, -1f, ArrowDir.Down ),
+                new Note( 61.5f, 0.5f, ArrowDir.Down ),
 
                 new Note( 62.25f, -1f, ArrowDir.Left ),
                 new Note( 62.75f, -1f, ArrowDir.Right ),
@@ -1270,21 +1271,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 63.5f, -1f, ArrowDir.Down ),
                 new Note( 63.75f, -1f, ArrowDir.Right ),
 
-                new Note( 64.0f, -1f, ArrowDir.Right ),
+                new Note( 64.0f, 0.5f, ArrowDir.Right ),
                 new Note( 64.75f, -1f, ArrowDir.Right ),
                 new Note( 65.0f, -1f, ArrowDir.Up ),
                 new Note( 65.25f, -1f, ArrowDir.Down ),
-                new Note( 65.5f, -1f, ArrowDir.Left ),
+                new Note( 65.5f, 0.5f, ArrowDir.Left ),
                 new Note( 66.25f, -1f, ArrowDir.Left ),
                 new Note( 66.75f, -1f, ArrowDir.Left ),
                 new Note( 67.0f, -1f, ArrowDir.Down ),
                 new Note( 67.25f, -1f, ArrowDir.Right ),
-                new Note( 67.5f, -1f, ArrowDir.Up ),
-                new Note( 68.0f, -1f, ArrowDir.Down ),
+                new Note( 67.5f, 0.5f, ArrowDir.Up ),
+                new Note( 68.0f, 0.5f, ArrowDir.Down ),
                 new Note( 68.75f, -1f, ArrowDir.Left ),
                 new Note( 69.0f, -1f, ArrowDir.Down ),
                 new Note( 69.25f, -1f, ArrowDir.Up ),
-                new Note( 69.5f, -1f, ArrowDir.Right ),
+                new Note( 69.5f, 0.5f, ArrowDir.Right ),
                 new Note( 70.25f, -1f, ArrowDir.Right ),
                 new Note( 70.75f, -1f, ArrowDir.Right ),
                 new Note( 71.0f, -1f, ArrowDir.Left ),
@@ -1292,26 +1293,26 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 71.5f, -1f, ArrowDir.Up ),
                 new Note( 71.75f, -1f, ArrowDir.Right ),
 
-                new Note( 72.0f, -1f, ArrowDir.Up ),
+                new Note( 72.0f, 0.5f, ArrowDir.Up ),
                 new Note( 72.75f, -1f, ArrowDir.Up ),
                 new Note( 73.0f, -1f, ArrowDir.Right ),
                 new Note( 73.25f, -1f, ArrowDir.Up ),
                 new Note( 73.5f, -1f, ArrowDir.Right ),
-                new Note( 73.75f, -1f, ArrowDir.Down ),
-                new Note( 74.25f, -1f, ArrowDir.Left ),
+                new Note( 73.75f, 0.5f, ArrowDir.Down ),
+                new Note( 74.25f, 0.5f, ArrowDir.Left ),
                 new Note( 74.75f, -1f, ArrowDir.Up ),
                 new Note( 75.0f, -1f, ArrowDir.Down ),
                 new Note( 75.25f, -1f, ArrowDir.Left ),
-                new Note( 75.5f, -1f, ArrowDir.Down ),
-                new Note( 76.0f, -1f, ArrowDir.Up ),
+                new Note( 75.5f, 0.5f, ArrowDir.Down ),
+                new Note( 76.0f, 0.5f, ArrowDir.Up ),
                 new Note( 76.5f, -1f, ArrowDir.Right ),
-                new Note( 76.75f, -1f, ArrowDir.Up ),
-                new Note( 77.25f, -1f, ArrowDir.Left ),
-                new Note( 77.75f, -1f, ArrowDir.Down ),
-                new Note( 78.25f, -1f, ArrowDir.Up ),
+                new Note( 76.75f, 0.5f, ArrowDir.Up ),
+                new Note( 77.25f, 0.5f, ArrowDir.Left ),
+                new Note( 77.75f, 0.5f, ArrowDir.Down ),
+                new Note( 78.25f, 0.5f, ArrowDir.Up ),
                 new Note( 78.75f, -1f, ArrowDir.Right ),
-                new Note( 79.0f, -1f, ArrowDir.Up ),
-                new Note( 79.5f, -1f, ArrowDir.Down ),
+                new Note( 79.0f, 0.5f, ArrowDir.Up ),
+                new Note( 79.5f, 0.5f, ArrowDir.Down ),
 
                 new Note( 80.0f, -1f, ArrowDir.Left ),
                 new Note( 80.75f, -1f, ArrowDir.Left ),
@@ -1327,21 +1328,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 84.25f, -1f, ArrowDir.Up ),
                 new Note( 84.5f, -1f, ArrowDir.Down ),
                 new Note( 84.75f, -1f, ArrowDir.Left ),
-                new Note( 85.0f, -1f, ArrowDir.Down ),
+                new Note( 85.0f, 0.5f, ArrowDir.Down ),
                 new Note( 85.5f, -1f, ArrowDir.Up ),
-                new Note( 85.75f, -1f, ArrowDir.Right ),
-                new Note( 86.25f, -1f, ArrowDir.Left ),
+                new Note( 85.75f, 0.5f, ArrowDir.Right ),
+                new Note( 86.25f, 0.5f, ArrowDir.Left ),
                 new Note( 86.75f, -1f, ArrowDir.Down ),
                 new Note( 87.0f, -1f, ArrowDir.Left ),
                 new Note( 87.25f, -1f, ArrowDir.Down ),
                 new Note( 87.5f, -1f, ArrowDir.Up ),
                 new Note( 87.75f, -1f, ArrowDir.Right ),
-                new Note( 88.0f, -1f, ArrowDir.Up ),
+                new Note( 88.0f, 0.5f, ArrowDir.Up ),
                 new Note( 88.5f, -1f, ArrowDir.Down ),
-                new Note( 88.75f, -1f, ArrowDir.Up ),
+                new Note( 88.75f, 0.5f, ArrowDir.Up ),
                 new Note( 89.25f, -1f, ArrowDir.Down ),
                 new Note( 89.5f, -1f, ArrowDir.Left ),
-                new Note( 89.75f, -1f, ArrowDir.Up ),
+                new Note( 89.75f, 0.5f, ArrowDir.Up ),
                 new Note( 90.25f, -1f, ArrowDir.Right ),
                 new Note( 90.5f, -1f, ArrowDir.Down ),
                 new Note( 90.75f, -1f, ArrowDir.Left ),
@@ -1376,20 +1377,20 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 100.25f, -1f, ArrowDir.Up ),
                 new Note( 100.5f, -1f, ArrowDir.Down ),
                 new Note( 100.75f, -1f, ArrowDir.Left ),
-                new Note( 101.0f, -1f, ArrowDir.Down ),
+                new Note( 101.0f, 0.5f, ArrowDir.Down ),
                 new Note( 101.5f, -1f, ArrowDir.Up ),
-                new Note( 101.75f, -1f, ArrowDir.Right ),
-                new Note( 102.25f, -1f, ArrowDir.Left ),
+                new Note( 101.75f, 0.5f, ArrowDir.Right ),
+                new Note( 102.25f, 0.5f, ArrowDir.Left ),
                 new Note( 102.75f, -1f, ArrowDir.Down ),
                 new Note( 103.0f, -1f, ArrowDir.Left ),
                 new Note( 103.25f, -1f, ArrowDir.Down ),
                 new Note( 103.5f, -1f, ArrowDir.Up ),
                 new Note( 103.75f, -1f, ArrowDir.Right ),
-                new Note( 104.0f, -1f, ArrowDir.Left ),
-                new Note( 104.75f, -1f, ArrowDir.Down ),
-                new Note( 105.5f, -1f, ArrowDir.Right ),
-                new Note( 106.0f, -1f, ArrowDir.Up ),
-                new Note( 106.75f, -1f, ArrowDir.Down ),
+                new Note( 104.0f, 0.5f, ArrowDir.Left ),
+                new Note( 104.75f, 0.5f, ArrowDir.Down ),
+                new Note( 105.5f, 0.5f, ArrowDir.Right ),
+                new Note( 106.0f, 0.5f, ArrowDir.Up ),
+                new Note( 106.75f, 0.5f, ArrowDir.Down ),
                 new Note( 107.5f, -1f, ArrowDir.Up ),
                 new Note( 107.75f, -1f, ArrowDir.Down ),
 
@@ -1419,28 +1420,28 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 115.5f, -1f, ArrowDir.Right ),
                 new Note( 115.75f, -1f, ArrowDir.Up ),
 
-                new Note( 116.0f, -1f, ArrowDir.Right ),
-                new Note( 116.75f, -1f, ArrowDir.Down ),
-                new Note( 117.5f, -1f, ArrowDir.Up ),
-                new Note( 118.25f, -1f, ArrowDir.Left ),
+                new Note( 116.0f, 0.5f, ArrowDir.Right ),
+                new Note( 116.75f, 0.5f, ArrowDir.Down ),
+                new Note( 117.5f, 0.5f, ArrowDir.Up ),
+                new Note( 118.25f, 0.5f, ArrowDir.Left ),
                 new Note( 119.0f, -1f, ArrowDir.Down ),
                 new Note( 119.5f, -1f, ArrowDir.Right ),
-                new Note( 120.0f, -1f, ArrowDir.Up ),
-                new Note( 120.75f, -1f, ArrowDir.Left ),
-                new Note( 121.5f, -1f, ArrowDir.Up ),
-                new Note( 122.25f, -1f, ArrowDir.Down ),
+                new Note( 120.0f, 0.5f, ArrowDir.Up ),
+                new Note( 120.75f, 0.5f, ArrowDir.Left ),
+                new Note( 121.5f, 0.5f, ArrowDir.Up ),
+                new Note( 122.25f, 0.5f, ArrowDir.Down ),
                 new Note( 123.0f, -1f, ArrowDir.Left ),
                 new Note( 123.5f, -1f, ArrowDir.Down ),
 
-                new Note( 124.0f, -1f, ArrowDir.Left ),
-                new Note( 124.75f, -1f, ArrowDir.Right ),
-                new Note( 125.5f, -1f, ArrowDir.Down ),
-                new Note( 126.25f, -1f, ArrowDir.Up ),
+                new Note( 124.0f, 0.5f, ArrowDir.Left ),
+                new Note( 124.75f, 0.5f, ArrowDir.Right ),
+                new Note( 125.5f, 0.5f, ArrowDir.Down ),
+                new Note( 126.25f, 0.5f, ArrowDir.Up ),
                 new Note( 127.0f, -1f, ArrowDir.Right ),
                 new Note( 127.25f, -1f, ArrowDir.Up ),
                 new Note( 127.5f, -1f, ArrowDir.Left ),
                 new Note( 127.75f, -1f, ArrowDir.Down ),
-                new Note( 128.0f, -1f, ArrowDir.Right ),
+                new Note( 128.0f, 2f, ArrowDir.Right ),
 
                 new Note( 130.0f, -1f, ArrowDir.Up ),
                 new Note( 130.75f, -1f, ArrowDir.Up ),
@@ -1601,21 +1602,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 46.5f, -1f, ArrowDir.Right ),
                 new Note( 46.75f, -1f, ArrowDir.Down ),
 
-                new Note( 48.0f, -1f, ArrowDir.Left ),
+                new Note( 48.0f, 0.5f, ArrowDir.Left ),
                 new Note( 48.75f, -1f, ArrowDir.Left ),
                 new Note( 49.0f, -1f, ArrowDir.Up ),
                 new Note( 49.25f, -1f, ArrowDir.Down ),
-                new Note( 49.5f, -1f, ArrowDir.Right ),
+                new Note( 49.5f, 0.5f, ArrowDir.Right ),
                 new Note( 50.25f, -1f, ArrowDir.Right ),
                 new Note( 50.75f, -1f, ArrowDir.Right ),
                 new Note( 51.0f, -1f, ArrowDir.Down ),
                 new Note( 51.25f, -1f, ArrowDir.Left ),
-                new Note( 51.5f, -1f, ArrowDir.Up ),
-                new Note( 52.0f, -1f, ArrowDir.Down ),
+                new Note( 51.5f, 0.5f, ArrowDir.Up ),
+                new Note( 52.0f, 0.5f, ArrowDir.Down ),
                 new Note( 52.75f, -1f, ArrowDir.Right ),
                 new Note( 53.0f, -1f, ArrowDir.Down ),
                 new Note( 53.25f, -1f, ArrowDir.Up ),
-                new Note( 53.5f, -1f, ArrowDir.Left ),
+                new Note( 53.5f, 0.5f, ArrowDir.Left ),
                 new Note( 54.25f, -1f, ArrowDir.Left ),
                 new Note( 54.75f, -1f, ArrowDir.Left ),
                 new Note( 55.0f, -1f, ArrowDir.Right ),
@@ -1623,22 +1624,22 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 55.5f, -1f, ArrowDir.Up ),
                 new Note( 55.75f, -1f, ArrowDir.Left ),
 
-                new Note( 56.0f, -1f, ArrowDir.Up ),
+                new Note( 56.0f, 0.5f, ArrowDir.Up ),
                 new Note( 56.75f, -1f, ArrowDir.Up ),
                 new Note( 57.0f, -1f, ArrowDir.Left ),
                 new Note( 57.25f, -1f, ArrowDir.Up ),
                 new Note( 57.5f, -1f, ArrowDir.Left ),
-                new Note( 57.75f, -1f, ArrowDir.Down ),
-                new Note( 58.25f, -1f, ArrowDir.Right ),
+                new Note( 57.75f, 0.5f, ArrowDir.Down ),
+                new Note( 58.25f, 0.5f, ArrowDir.Right ),
                 new Note( 58.75f, -1f, ArrowDir.Up ),
                 new Note( 59.0f, -1f, ArrowDir.Down ),
                 new Note( 59.25f, -1f, ArrowDir.Right ),
-                new Note( 59.5f, -1f, ArrowDir.Down ),
-                new Note( 60.0f, -1f, ArrowDir.Up ),
+                new Note( 59.5f, 0.5f, ArrowDir.Down ),
+                new Note( 60.0f, 0.5f, ArrowDir.Up ),
                 new Note( 60.5f, -1f, ArrowDir.Left ),
-                new Note( 60.75f, -1f, ArrowDir.Up ),
+                new Note( 60.75f, 0.5f, ArrowDir.Up ),
                 new Note( 61.25f, -1f, ArrowDir.Right ),
-                new Note( 61.5f, -1f, ArrowDir.Down ),
+                new Note( 61.5f, 0.5f, ArrowDir.Down ),
 
                 new Note( 62.25f, -1f, ArrowDir.Right ),
                 new Note( 62.75f, -1f, ArrowDir.Left ),
@@ -1647,21 +1648,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 63.5f, -1f, ArrowDir.Down ),
                 new Note( 63.75f, -1f, ArrowDir.Left ),
 
-                new Note( 64.0f, -1f, ArrowDir.Left ),
+                new Note( 64.0f, 0.5f, ArrowDir.Left ),
                 new Note( 64.75f, -1f, ArrowDir.Left ),
                 new Note( 65.0f, -1f, ArrowDir.Up ),
                 new Note( 65.25f, -1f, ArrowDir.Down ),
-                new Note( 65.5f, -1f, ArrowDir.Right ),
+                new Note( 65.5f, 0.5f, ArrowDir.Right ),
                 new Note( 66.25f, -1f, ArrowDir.Right ),
                 new Note( 66.75f, -1f, ArrowDir.Right ),
                 new Note( 67.0f, -1f, ArrowDir.Down ),
                 new Note( 67.25f, -1f, ArrowDir.Left ),
-                new Note( 67.5f, -1f, ArrowDir.Up ),
-                new Note( 68.0f, -1f, ArrowDir.Down ),
+                new Note( 67.5f, 0.5f, ArrowDir.Up ),
+                new Note( 68.0f, 0.5f, ArrowDir.Down ),
                 new Note( 68.75f, -1f, ArrowDir.Right ),
                 new Note( 69.0f, -1f, ArrowDir.Down ),
                 new Note( 69.25f, -1f, ArrowDir.Up ),
-                new Note( 69.5f, -1f, ArrowDir.Left ),
+                new Note( 69.5f, 0.5f, ArrowDir.Left ),
                 new Note( 70.25f, -1f, ArrowDir.Left ),
                 new Note( 70.75f, -1f, ArrowDir.Left ),
                 new Note( 71.0f, -1f, ArrowDir.Right ),
@@ -1669,26 +1670,26 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 71.5f, -1f, ArrowDir.Up ),
                 new Note( 71.75f, -1f, ArrowDir.Left ),
 
-                new Note( 72.0f, -1f, ArrowDir.Up ),
+                new Note( 72.0f, 0.5f, ArrowDir.Up ),
                 new Note( 72.75f, -1f, ArrowDir.Up ),
                 new Note( 73.0f, -1f, ArrowDir.Left ),
                 new Note( 73.25f, -1f, ArrowDir.Up ),
                 new Note( 73.5f, -1f, ArrowDir.Left ),
-                new Note( 73.75f, -1f, ArrowDir.Down ),
-                new Note( 74.25f, -1f, ArrowDir.Right ),
+                new Note( 73.75f, 0.5f, ArrowDir.Down ),
+                new Note( 74.25f, 0.5f, ArrowDir.Right ),
                 new Note( 74.75f, -1f, ArrowDir.Up ),
                 new Note( 75.0f, -1f, ArrowDir.Down ),
                 new Note( 75.25f, -1f, ArrowDir.Right ),
-                new Note( 75.5f, -1f, ArrowDir.Down ),
-                new Note( 76.0f, -1f, ArrowDir.Up ),
+                new Note( 75.5f, 0.5f, ArrowDir.Down ),
+                new Note( 76.0f, 0.5f, ArrowDir.Up ),
                 new Note( 76.5f, -1f, ArrowDir.Left ),
-                new Note( 76.75f, -1f, ArrowDir.Up ),
-                new Note( 77.25f, -1f, ArrowDir.Right ),
-                new Note( 77.75f, -1f, ArrowDir.Down ),
-                new Note( 78.25f, -1f, ArrowDir.Up ),
+                new Note( 76.75f, 0.5f, ArrowDir.Up ),
+                new Note( 77.25f, 0.5f, ArrowDir.Right ),
+                new Note( 77.75f, 0.5f, ArrowDir.Down ),
+                new Note( 78.25f, 0.5f, ArrowDir.Up ),
                 new Note( 78.75f, -1f, ArrowDir.Left ),
-                new Note( 79.0f, -1f, ArrowDir.Up ),
-                new Note( 79.5f, -1f, ArrowDir.Down ),
+                new Note( 79.0f, 0.5f, ArrowDir.Up ),
+                new Note( 79.5f, 0.5f, ArrowDir.Down ),
 
                 new Note( 80.0f, -1f, ArrowDir.Right ),
                 new Note( 80.75f, -1f, ArrowDir.Right ),
@@ -1704,21 +1705,21 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 84.25f, -1f, ArrowDir.Up ),
                 new Note( 84.5f, -1f, ArrowDir.Down ),
                 new Note( 84.75f, -1f, ArrowDir.Right ),
-                new Note( 85.0f, -1f, ArrowDir.Down ),
+                new Note( 85.0f, 0.5f, ArrowDir.Down ),
                 new Note( 85.5f, -1f, ArrowDir.Up ),
-                new Note( 85.75f, -1f, ArrowDir.Left ),
-                new Note( 86.25f, -1f, ArrowDir.Right ),
+                new Note( 85.75f, 0.5f, ArrowDir.Left ),
+                new Note( 86.25f, 0.5f, ArrowDir.Right ),
                 new Note( 86.75f, -1f, ArrowDir.Down ),
                 new Note( 87.0f, -1f, ArrowDir.Right ),
                 new Note( 87.25f, -1f, ArrowDir.Down ),
                 new Note( 87.5f, -1f, ArrowDir.Up ),
                 new Note( 87.75f, -1f, ArrowDir.Left ),
-                new Note( 88.0f, -1f, ArrowDir.Up ),
+                new Note( 88.0f, 0.5f, ArrowDir.Up ),
                 new Note( 88.5f, -1f, ArrowDir.Down ),
-                new Note( 88.75f, -1f, ArrowDir.Up ),
+                new Note( 88.75f, 0.5f, ArrowDir.Up ),
                 new Note( 89.25f, -1f, ArrowDir.Down ),
                 new Note( 89.5f, -1f, ArrowDir.Right ),
-                new Note( 89.75f, -1f, ArrowDir.Up ),
+                new Note( 89.75f, 0.5f, ArrowDir.Up ),
                 new Note( 90.25f, -1f, ArrowDir.Left ),
                 new Note( 90.5f, -1f, ArrowDir.Down ),
                 new Note( 90.75f, -1f, ArrowDir.Right ),
@@ -1753,20 +1754,20 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 100.25f, -1f, ArrowDir.Up ),
                 new Note( 100.5f, -1f, ArrowDir.Down ),
                 new Note( 100.75f, -1f, ArrowDir.Right ),
-                new Note( 101.0f, -1f, ArrowDir.Down ),
+                new Note( 101.0f, 0.5f, ArrowDir.Down ),
                 new Note( 101.5f, -1f, ArrowDir.Up ),
-                new Note( 101.75f, -1f, ArrowDir.Left ),
-                new Note( 102.25f, -1f, ArrowDir.Right ),
+                new Note( 101.75f, 0.5f, ArrowDir.Left ),
+                new Note( 102.25f, 0.5f, ArrowDir.Right ),
                 new Note( 102.75f, -1f, ArrowDir.Down ),
                 new Note( 103.0f, -1f, ArrowDir.Right ),
                 new Note( 103.25f, -1f, ArrowDir.Down ),
                 new Note( 103.5f, -1f, ArrowDir.Up ),
                 new Note( 103.75f, -1f, ArrowDir.Left ),
-                new Note( 104.0f, -1f, ArrowDir.Right ),
-                new Note( 104.75f, -1f, ArrowDir.Down ),
-                new Note( 105.5f, -1f, ArrowDir.Left ),
-                new Note( 106.0f, -1f, ArrowDir.Up ),
-                new Note( 106.75f, -1f, ArrowDir.Down ),
+                new Note( 104.0f, 0.5f, ArrowDir.Right ),
+                new Note( 104.75f, 0.5f, ArrowDir.Down ),
+                new Note( 105.5f, 0.5f, ArrowDir.Left ),
+                new Note( 106.0f, 0.5f, ArrowDir.Up ),
+                new Note( 106.75f, 0.5f, ArrowDir.Down ),
                 new Note( 107.5f, -1f, ArrowDir.Up ),
                 new Note( 107.75f, -1f, ArrowDir.Down ),
 
@@ -1796,28 +1797,28 @@ public class AmiGameSystemA : GameSceneScriptBase
                 new Note( 115.5f, -1f, ArrowDir.Left ),
                 new Note( 115.75f, -1f, ArrowDir.Up ),
 
-                new Note( 116.0f, -1f, ArrowDir.Left ),
-                new Note( 116.75f, -1f, ArrowDir.Down ),
-                new Note( 117.5f, -1f, ArrowDir.Up ),
-                new Note( 118.25f, -1f, ArrowDir.Right ),
+                new Note( 116.0f, 0.5f, ArrowDir.Left ),
+                new Note( 116.75f, 0.5f, ArrowDir.Down ),
+                new Note( 117.5f, 0.5f, ArrowDir.Up ),
+                new Note( 118.25f, 0.5f, ArrowDir.Right ),
                 new Note( 119.0f, -1f, ArrowDir.Down ),
                 new Note( 119.5f, -1f, ArrowDir.Left ),
-                new Note( 120.0f, -1f, ArrowDir.Up ),
-                new Note( 120.75f, -1f, ArrowDir.Right ),
-                new Note( 121.5f, -1f, ArrowDir.Up ),
-                new Note( 122.25f, -1f, ArrowDir.Down ),
+                new Note( 120.0f, 0.5f, ArrowDir.Up ),
+                new Note( 120.75f, 0.5f, ArrowDir.Right ),
+                new Note( 121.5f, 0.5f, ArrowDir.Up ),
+                new Note( 122.25f, 0.5f, ArrowDir.Down ),
                 new Note( 123.0f, -1f, ArrowDir.Right ),
                 new Note( 123.5f, -1f, ArrowDir.Down ),
 
-                new Note( 124.0f, -1f, ArrowDir.Right ),
-                new Note( 124.75f, -1f, ArrowDir.Left ),
-                new Note( 125.5f, -1f, ArrowDir.Down ),
-                new Note( 126.25f, -1f, ArrowDir.Up ),
+                new Note( 124.0f, 0.5f, ArrowDir.Right ),
+                new Note( 124.75f, 0.5f, ArrowDir.Left ),
+                new Note( 125.5f, 0.5f, ArrowDir.Down ),
+                new Note( 126.25f, 0.5f, ArrowDir.Up ),
                 new Note( 127.0f, -1f, ArrowDir.Left ),
                 new Note( 127.25f, -1f, ArrowDir.Up ),
                 new Note( 127.5f, -1f, ArrowDir.Right ),
                 new Note( 127.75f, -1f, ArrowDir.Down ),
-                new Note( 128.0f, -1f, ArrowDir.Left ),
+                new Note( 128.0f, 2f, ArrowDir.Left ),
 
                 new Note( 130.0f, -1f, ArrowDir.Up ),
                 new Note( 130.75f, -1f, ArrowDir.Up ),

@@ -39,6 +39,12 @@ public class DeltaVector3
     }
 
     /// <summary>
+    /// オフセット追加
+    /// </summary>
+    /// <param name="ofs"></param>
+    public void AddOffset(float ofs) { _delta.AddOffset(ofs); }
+
+    /// <summary>
     /// 指定時間で値を変える
     /// </summary>
     /// <param name="_val"></param>

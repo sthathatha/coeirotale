@@ -28,13 +28,25 @@ public class DeltaFloat
     private float afterValue;
     private bool active;
 
+    private float offset;
+
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
     public DeltaFloat()
     {
         startTime = 0;
         endTime = 0;
+        offset = 0;
 
         active = false;
     }
+
+    /// <summary>
+    /// オフセット追加
+    /// </summary>
+    /// <param name="ofs"></param>
+    public void AddOffset(float ofs) { offset += ofs; }
 
     /// <summary>
     /// 移動中
@@ -53,7 +65,7 @@ public class DeltaFloat
             return afterValue;
         }
 
-        var nowTime = Time.realtimeSinceStartup - startTime;
+        var nowTime = Time.realtimeSinceStartup - startTime + offset;
         if (nowTime > endTime)
         {
             active = false;
@@ -61,19 +73,14 @@ public class DeltaFloat
         }
 
         var timePer = nowTime / endTime;
-        float valPer = timePer;
-        switch (moveType)
+        if (timePer < 0f) { timePer = 0f; }
+        float valPer = moveType switch
         {
-            case MoveType.ACCEL:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Accel);
-                break;
-            case MoveType.DECEL:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Decel);
-                break;
-            case MoveType.BOTH:
-                valPer = Util.SinCurve(timePer, Constant.SinCurveType.Both);
-                break;
-        }
+            MoveType.ACCEL => Util.SinCurve(timePer, Constant.SinCurveType.Accel),
+            MoveType.DECEL => Util.SinCurve(timePer, Constant.SinCurveType.Decel),
+            MoveType.BOTH => Util.SinCurve(timePer, Constant.SinCurveType.Both),
+            _ => timePer
+        };
 
         return Util.CalcBetweenFloat(valPer, beforeValue, afterValue);
     }
@@ -120,7 +127,7 @@ public class DeltaFloat
             return;
         }
 
-        var nowTime = Time.realtimeSinceStartup - startTime;
+        var nowTime = Time.realtimeSinceStartup - startTime + offset;
         if (nowTime > endTime)
         {
             active = false;
