@@ -370,6 +370,7 @@ public class AmiGameSystemA : GameSceneScriptBase
         if (ar != null)
         {
             ar.transform.SetParent(playArrowParent.transform, true);
+            ar.ForceStart();
             ar.AddOffset(offset);
             ar.gameObject.SetActive(true);
             ar.SetWeight(weight);
@@ -439,7 +440,7 @@ public class AmiGameSystemA : GameSceneScriptBase
         var swingMod = -1;
 
         // åÎç∑
-        var gosa = 0.15f;
+        var gosa = 0.25f;
 
         while (index < notes.Count ||
             listRight.Count > 0 ||
@@ -468,19 +469,19 @@ public class AmiGameSystemA : GameSceneScriptBase
             }
 
             // ñÓàÛçÏê¨îªíË
-            var nowNote = nowSeconds * timeRate;
-            while (index < notes.Count && notes[index].startBeat <= nowNote + delayNote - gosa)
+            var nowNote = nowSeconds * timeRate - gosa;
+            while (index < notes.Count && notes[index].startBeat <= nowNote + delayNote)
             {
-                var offset = (nowNote + delayNote - gosa - notes[index].startBeat) / timeRate;
-                CreateArrow(notes[index].dir, offset, notes[index].weightBeat / (float)timeRate);
+                var offset = (nowNote + delayNote - notes[index].startBeat) / timeRate;
+                CreateArrow(notes[index].dir, offset, notes[index].weightBeat / timeRate);
                 index++;
             }
 
             // CPU
-            while (cpuIndex < cpuNotes.Count && cpuNotes[cpuIndex].startBeat <= nowNote - gosa / 2f)
+            while (cpuIndex < cpuNotes.Count && cpuNotes[cpuIndex].startBeat <= nowNote + gosa / 2f)
             {
                 var animName = GetAnimName(cpuNotes[cpuIndex].dir);
-                var time = cpuNotes[cpuIndex].weightBeat / (float)timeRate;
+                var time = cpuNotes[cpuIndex].weightBeat / timeRate;
                 StartCoroutine(PlayAnim(enemy, animName, animName, time));
                 cpuIndex++;
             }

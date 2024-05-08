@@ -7,8 +7,14 @@ using UnityEngine;
 /// </summary>
 public class AmiGameArrow : MonoBehaviour
 {
+    /// <summary>開始位置Y</summary>
+    public const float START_Y = 720f;
+    /// <summary>終了位置Y</summary>
+    public const float END_Y = -180f;
     /// <summary>生成から押すタイミングまでの時間</summary>
     public const float DELAY_TIME = 1f;
+    /// <summary>終了Yまで動く時間</summary>
+    private const float MOVE_TIME = DELAY_TIME * (START_Y - END_Y) / START_Y;
 
     /// <summary>X位置</summary>
     private float _x;
@@ -24,7 +30,6 @@ public class AmiGameArrow : MonoBehaviour
     public AmiGameArrow()
     {
         _y = new DeltaFloat();
-        _y.Set(1f);
     }
 
     /// <summary>
@@ -33,12 +38,15 @@ public class AmiGameArrow : MonoBehaviour
     void Start()
     {
         _x = transform.localPosition.x;
-        _y.Set(transform.localPosition.y);
+    }
 
-        //
-        var endY = -180f;
-        var time = DELAY_TIME * (transform.localPosition.y - endY) / transform.localPosition.y;
-        _y.MoveTo(endY, time, DeltaFloat.MoveType.LINE);
+    /// <summary>
+    /// Time.realTimeSinceStartupがコンストラクタで使えないらしいので外から呼ぶ
+    /// </summary>
+    public void ForceStart()
+    {
+        _y.Set(START_Y);
+        _y.MoveTo(END_Y, MOVE_TIME, DeltaFloat.MoveType.LINE);
     }
 
     /// <summary>
