@@ -1275,6 +1275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1829919246}
   - component: {fileID: 1829919247}
+  - component: {fileID: 1829919248}
   m_Layer: 0
   m_Name: TukuyomiObject
   m_TagString: Untagged
@@ -1314,6 +1315,41 @@ MonoBehaviour:
   fieldScript: {fileID: 0}
   model: {fileID: 738354313}
   playerObject: {fileID: 978293813}
+--- !u!58 &1829919248
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829919245}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 18.216217
 --- !u!1 &1963466747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,6 +1412,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldScript: {fileID: 1963466749}
+  tukuyomiObj: {fileID: 1829919247}
+  serif0: {fileID: 8300000, guid: a015e9ec5bebeda4d9d6432f23164656, type: 3}
+  serif1: {fileID: 8300000, guid: e90bbfd0a7465a04ab95328fb19324be, type: 3}
+  serif2: {fileID: 8300000, guid: d056e649efdb0144d8e9909722660c9f, type: 3}
+  serif3: {fileID: 8300000, guid: 784681b296117664a902cf1f568e08e0, type: 3}
+  serif4: {fileID: 8300000, guid: 7aa1f6a1deb3be04093144f0ba70091e, type: 3}
+  serif5: {fileID: 8300000, guid: d41bb799d1395c5488e419ca36bac8a5, type: 3}
+  serif6: {fileID: 8300000, guid: 3bd8698d85dd1b7489987ea993051867, type: 3}
+  serif7: {fileID: 8300000, guid: 6c8804e7be706e545956f0c3154d13dc, type: 3}
+  serif8: {fileID: 8300000, guid: 64b37e2f8f71d3f479c3d9123635a18d, type: 3}
+  serif9: {fileID: 8300000, guid: e5461fc8e07c63444aa67efd2f70bfd9, type: 3}
+  serif10: {fileID: 8300000, guid: 404cb915e7efa894ead68264a21c4153, type: 3}
+  serif11: {fileID: 8300000, guid: c3800ec3cb92d4a46be1428a8ffb1fc3, type: 3}
 --- !u!1 &1971601859
 GameObject:
   m_ObjectHideFlags: 0

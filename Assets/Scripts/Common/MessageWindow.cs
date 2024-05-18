@@ -127,13 +127,13 @@ public class MessageWindow : MonoBehaviour
     {
         while (true)
         {
+            yield return null;
+
             // ƒ{ƒ^ƒ“‚Å‘—‚é
             if (InputManager.GetInstance().GetKeyPress(InputManager.Keys.South))
             {
                 break;
             }
-
-            yield return null;
         }
     }
     #endregion

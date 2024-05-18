@@ -10,9 +10,6 @@ public class PlayerScript : CharacterScript
 {
     #region ’è”
 
-    /// <summary>ˆÚ“®‘¬“x</summary>
-    const float WALK_VELOCITY = 200f;
-
     /// <summary>A‰Ÿ‚µ‚½‚Ì”»’è‹——£</summary>
     const float ACTION_DISTANCE = 30f;
 

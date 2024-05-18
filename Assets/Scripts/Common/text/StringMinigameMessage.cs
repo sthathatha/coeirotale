@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ミニゲームで使用するメッセージ
+/// </summary>
 public class StringMinigameMessage
 {
+    #region マチ
+
     public const string MatiA_Title = "風凛花斬";
     public const string MatiA_Tutorial = "「！」マークがあらわれたら、すかさずボタンをおそう！";
+
+    #endregion
+
+    #region メンデル
 
     public const string MenderuA_Title = "メンデルの種";
     public const string MenderuA_Tutorial = "25個の種を交互に1～3個取り合います。\n" +
@@ -22,6 +31,10 @@ public class StringMinigameMessage
     public const string MenderuA_Serif_ETurn2_0 = "あら、もう取れる種が無いわ";
     public const string MenderuA_Serif_ETurn2_1 = "私の勝ちね、また遊びましょう";
 
+    #endregion
+
+    #region ピエール
+
     public const string PierreA_Title = "平地競走";
     public const string PierreA_Tutorial = "ボールを踏んで加速して、ピエールを追いかけよう！\n" +
             "３回タッチしたら勝ち、３回ころんだら負けだぞ！";
@@ -36,6 +49,10 @@ public class StringMinigameMessage
     public const string PierreA_Win = "まいった！君の勝ちだ！";
     public const string PierreA_Lose = "アッハッハ残念！\nまたいつでもおいで！";
 
+    #endregion
+
+    #region まつかりすく
+
     public const string MatukaA_Title = "説明";
     public const string MatukaA_Tutorial = "とにかく連打しろ！";
     public const string MatukaA_Win = "合格\n祝ってやる";
@@ -46,6 +63,10 @@ public class StringMinigameMessage
     public const string MatukaA_Naration2 = "はじめ！";
     public const string MatukaA_Naration3 = "そこまで！";
 
+    #endregion
+
+    #region MANA
+
     public const string ManaA_Title = "スピード";
     public const string ManaA_Tutorial = "場にあるカードより１多いか１少ないカードを出してね\n" +
             "先に全部のカードを出したほうが勝ち！";
@@ -54,9 +75,18 @@ public class StringMinigameMessage
     public const string ManaA_Win = "だいしょうり！";
     public const string ManaA_Lose = "まけ…";
 
+    #endregion
+
+    #region アミ
+
     public const string AmiA_Title = "ダンスバトル！";
     public const string AmiA_Tutorial = "タイミングよく上下左右を押して踊ろう！\n十字ボタン、ABXYボタン、\nキーボード矢印、DFJKキーで可";
     public const string AmiA_Great = "Great";
     public const string AmiA_Good = "Good";
     public const string AmiA_Bad = "Bad";
+
+    #endregion
+
+    #region 
+    #endregion
 }

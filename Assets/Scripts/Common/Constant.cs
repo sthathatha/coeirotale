@@ -20,7 +20,19 @@ public class Constant
         Both,
     }
 
+    /// <summary>
+    /// ‰æ–Ê•
+    /// </summary>
     public const float SCREEN_WIDTH = 1280f;
 
-
+    /// <summary>
+    /// Œü‚«
+    /// </summary>
+    public enum Direction : int
+    {
+        Up = 0,
+        Down,
+        Left,
+        Right,
+    }
 }
