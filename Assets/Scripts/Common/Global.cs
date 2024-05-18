@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Global
 {
@@ -40,14 +43,13 @@ public class Global
     /// </summary>
     public class SaveData
     {
-        /// <summary>プロローグ見たフラグ</summary>
-        public int stage0Clear;
+        public Dictionary<string, string> gameData;
 
-        /// <summary>オプション</summary>
+        /// <summary>システムデータ</summary>
         public SystemData system;
 
         /// <summary>
-        /// オプション
+        /// システムデータ
         /// </summary>
         public struct SystemData
         {
@@ -62,9 +64,12 @@ public class Global
             public int clearFlag;
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public SaveData()
         {
-            stage0Clear = 0;
+            gameData = new Dictionary<string, string>();
 
             system.bgmVolume = 3;
             system.seVolume = 3;
@@ -77,7 +82,8 @@ public class Global
         /// </summary>
         public void SaveGameData()
         {
-            PlayerPrefs.SetInt("stage0Clear", stage0Clear);
+            var serial = ToSaveString(gameData);
+            PlayerPrefs.SetString("gameData", serial);
 
             PlayerPrefs.Save();
         }
@@ -87,7 +93,7 @@ public class Global
         /// </summary>
         public void LoadGameData()
         {
-            stage0Clear = PlayerPrefs.GetInt("stage0Clear", 0);
+            ReadSaveString(PlayerPrefs.GetString("gameData"));
         }
 
         /// <summary>
@@ -96,7 +102,56 @@ public class Global
         /// <returns></returns>
         public bool IsEnableGameData()
         {
-            return false;
+            return PlayerPrefs.HasKey("gameData");
+        }
+
+        /// <summary>
+        /// ゲームデータセット
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void SetGameData(string key, string value)
+        {
+            gameData[key] = value;
+        }
+
+        /// <summary>
+        /// ゲームデータセット整数版
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void SetGameData(string key, int value)
+        {
+            SetGameData(key, value.ToString());
+        }
+
+        /// <summary>
+        /// ゲームデータ文字列取得
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetGameDataString(string key)
+        {
+            return gameData.ContainsKey(key) ? gameData[key] : "";
+        }
+
+        /// <summary>
+        /// ゲームデータを整数で取得
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        public int GetGameDataInt(string key, int def = 0)
+        {
+            int ret;
+            if (int.TryParse(GetGameDataString(key), out ret))
+            {
+                return ret;
+            }
+            else
+            {
+                return def;
+            }
         }
 
         /// <summary>
@@ -123,6 +178,23 @@ public class Global
             system.voiceVolume = PlayerPrefs.GetInt("optionVoiceVolume", 3);
 
             system.clearFlag = PlayerPrefs.GetInt("optionClearFlag", 0);
+        }
+
+        private string ToSaveString(Dictionary<string, string> data)
+        {
+            var strList = data.Select((pair, idx) => pair.Key + ":" + pair.Value);
+
+            return string.Join(',', strList);
+        }
+
+        private void ReadSaveString(string data)
+        {
+            gameData.Clear();
+            foreach (var str in data.Split(','))
+            {
+                var pair = str.Split(':');
+                gameData[pair[0]] = pair[1];
+            }
         }
     }
 

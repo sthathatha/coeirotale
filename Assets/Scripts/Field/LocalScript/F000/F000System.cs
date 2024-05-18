@@ -27,7 +27,7 @@ public class F000System : MainScriptBase
     {
         yield return base.BeforeFadeIn();
 
-        if (true)
+        if (Global.GetSaveData().GetGameDataInt("Tutorial") <= 0)
         {
             var tukuyomi = tukuyomiObj.GetComponent<TukuyomiScript>();
             tukuyomi.SetMode(TukuyomiScript.TukuyomiMode.NPC);
@@ -44,7 +44,7 @@ public class F000System : MainScriptBase
     {
         yield return base.AfterFadeIn();
 
-        //if (true)
+        if (Global.GetSaveData().GetGameDataInt("Tutorial") <= 0)
         {
             var ev = GetComponent<F000StartEvent>();
             ev.ExecEvent();
