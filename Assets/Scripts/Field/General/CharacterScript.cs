@@ -6,36 +6,26 @@ using UnityEngine.UIElements;
 /// <summary>
 /// フィールドキャラクター共通処理
 /// </summary>
-public class CharacterScript : MonoBehaviour
+public class CharacterScript : ObjectBase
 {
-    /// <summary>フィールド</summary>
-    public MainScriptBase field;
-    /// <summary>モデル</summary>
-    public GameObject model;
-
     /// <summary>モデルアニメーション</summary>
     protected Animator modelAnim;
-    /// <summary>モデルSpriteRenderer</summary>
-    protected SpriteRenderer spriteRenderer;
 
     /// <summary>
     /// 初期化
     /// </summary>
-    virtual protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         modelAnim = model.GetComponent<Animator>();
-        spriteRenderer = model.GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
     /// フレーム処理
     /// </summary>
-    virtual protected void Update()
+    protected override void Update()
     {
-        var sortingOrder = Mathf.CeilToInt(-transform.position.y);
-        if (spriteRenderer.sortingOrder != sortingOrder)
-        {
-            spriteRenderer.sortingOrder = sortingOrder;
-        }
+        base.Update();
     }
 }

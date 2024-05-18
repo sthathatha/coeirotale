@@ -29,7 +29,7 @@ public class TukuyomiScript : CharacterScript
     /// <summary>
     /// ƒtƒŒ[ƒ€ˆ—
     /// </summary>
-    override protected void Update()
+    protected override void Update()
     {
         // ’Ç”ö‘ÎÛ‚Æ©•ª‚Ì‹——£Vector
         var distance = playerObject.transform.position - transform.position;

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class MainScriptBase : MonoBehaviour
 {
     #region メンバー
+
     /// <summary>スリープ時にActive=falseする親オブジェクト</summary>
     public GameObject objectParent = null;
 
@@ -18,6 +19,7 @@ public class MainScriptBase : MonoBehaviour
 
     /// <summary>追尾つくよみちゃん</summary>
     public GameObject tukuyomiObj = null;
+
     #endregion
 
     #region 変数

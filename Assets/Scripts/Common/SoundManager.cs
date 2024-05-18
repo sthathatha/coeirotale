@@ -91,6 +91,26 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
+    /// SEループ再生
+    /// </summary>
+    /// <param name="se"></param>
+    /// <param name="startTime">再生開始時間</param>
+    /// <returns>呼び出し側で制御する用オブジェクト</returns>
+    public AudioSource PlaySELoop(AudioClip se, float startTime = 0f)
+    {
+        var seObj = GameObject.Instantiate(seDummy);
+        seObj.transform.SetParent(this.transform);
+
+        var seSource = seObj.GetComponent<AudioSource>();
+        seSource.clip = se;
+        seSource.time = startTime;
+        seSource.loop = true;
+        seSource.Play();
+
+        return seSource;
+    }
+
+    /// <summary>
     /// SE再生終了を待って削除
     /// </summary>
     /// <param name="se"></param>
@@ -100,6 +120,45 @@ public class SoundManager : MonoBehaviour
         yield return new WaitWhile(() => se.isPlaying);
         Destroy(se.gameObject);
     }
+
+    /// <summary>
+    /// ループSEを止める
+    /// </summary>
+    /// <param name="se"></param>
+    /// <param name="time">フェード時間</param>
+    public void StopLoopSE(AudioSource se, float time = -1f)
+    {
+        if (time <= 0f)
+        {
+            se.Stop();
+            Destroy(se.gameObject);
+            return;
+        }
+
+        StartCoroutine(StopLoopSECoroutine(se, time));
+    }
+
+    /// <summary>
+    /// ループSEフェードアウトコルーチン
+    /// </summary>
+    /// <param name="se"></param>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    private IEnumerator StopLoopSECoroutine(AudioSource se, float time)
+    {
+        var vol = new DeltaFloat();
+        vol.Set(se.volume);
+        vol.MoveTo(0f, time, DeltaFloat.MoveType.LINE);
+        while (vol.IsActive())
+        {
+            yield return null;
+            se.volume = vol.Get();
+        }
+
+        se.Stop();
+        Destroy(se);
+    }
+
     #endregion
 
     #region BGM管理

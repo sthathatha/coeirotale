@@ -8,9 +8,25 @@ using UnityEngine;
 public abstract class EventBase : MonoBehaviour
 {
     /// <summary>フィールド</summary>
-    public MainScriptBase field;
+    public MainScriptBase fieldScript;
 
-    public virtual void Start() { }
+    public virtual void Start()
+    {
+        if (fieldScript == null)
+        {
+            // 設定が面倒なので基本的な構造なら取得
+            var objects = gameObject.scene.GetRootGameObjects();
+            foreach (var obj in objects)
+            {
+                var sys = obj.GetComponent<MainScriptBase>();
+                if (sys != null)
+                {
+                    fieldScript = sys;
+                    break;
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// イベント実行
@@ -18,8 +34,8 @@ public abstract class EventBase : MonoBehaviour
     /// <returns></returns>
     public void ExecEvent()
     {
-        field.FieldState = MainScriptBase.State.Event;
-        field.StartCoroutine(ExecEventCoroutine());
+        fieldScript.FieldState = MainScriptBase.State.Event;
+        fieldScript.StartCoroutine(ExecEventCoroutine());
     }
 
     /// <summary>
@@ -33,7 +49,7 @@ public abstract class EventBase : MonoBehaviour
         yield return Exec();
 
         yield return null;
-        field.FieldState = MainScriptBase.State.Idle;
+        fieldScript.FieldState = MainScriptBase.State.Idle;
     }
 
     /// <summary>

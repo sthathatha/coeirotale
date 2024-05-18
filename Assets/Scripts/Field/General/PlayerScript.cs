@@ -40,7 +40,7 @@ public class PlayerScript : CharacterScript
     override protected void Update()
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
-        if (field.FieldState != MainScriptBase.State.Idle) { return; }
+        if (fieldScript.FieldState != MainScriptBase.State.Idle) { return; }
 
         var optionWindow = ManagerSceneScript.GetInstance().GetOptionWindow();
         if (optionWindow.gameObject.activeSelf) { return; }
@@ -53,8 +53,14 @@ public class PlayerScript : CharacterScript
             var list = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
             foreach (var coll in list)
             {
-                var ev = coll.gameObject.GetComponent<ActionEventBase>();
-                if (!ev) continue;
+                var ev = coll.GetComponent<ActionEventBase>();
+                // parent
+                if (ev == null)
+                {
+                    ev = coll.GetComponentInParent<ActionEventBase>();
+                }
+
+                if (ev == null) continue;
 
                 // ÉCÉxÉìÉgî≠ê∂
                 StopAnim();
@@ -132,9 +138,9 @@ public class PlayerScript : CharacterScript
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (field.FieldState != MainScriptBase.State.Idle) return;
+        if (fieldScript?.FieldState != MainScriptBase.State.Idle) return;
 
-        var evt = collision.gameObject.GetComponent<AreaEventBase>();
+        var evt = collision.GetComponent<AreaEventBase>();
         if (evt == null) return;
 
         StopAnim();

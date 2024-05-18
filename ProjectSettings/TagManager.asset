@@ -41,6 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: FieldCharacter
+  - name: FieldObject
     uniqueID: 3228276083
     locked: 0

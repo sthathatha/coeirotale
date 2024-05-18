@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScenes/TitleScene.unity
     guid: 414a69302e1dda34f990e56ef0ce4e38
   - enabled: 1
+    path: Assets/Scenes/MainScenes/OpeningScene.unity
+    guid: 64f33b616fbd9254eb8fe3826934667f
+  - enabled: 1
     path: Assets/Scenes/BetaScene.unity
     guid: cf13a6a67d335144c90770bef878d8e8
   - enabled: 1
@@ -41,4 +44,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneAmiB.unity
     guid: 8386bc50c0926944ea59022d99cc8423
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field000.unity
+    guid: 9cab465aed76b534c9987f6ed9cc416a
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field001.unity
+    guid: 9121f98232226d7489b7a80d34d73e4e
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field002.unity
+    guid: 42b54068ec1d57745988dd96a5b38e74
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field003.unity
+    guid: 64991b0f2a1c3f84484fb8f778f351e6
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field004.unity
+    guid: 43858c17c91324f479375b79f30e1101
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field005.unity
+    guid: ec3918d348a644e499174667884df2bb
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field006.unity
+    guid: 09aad124d7081ce4ca9f591b65a5e233
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field007.unity
+    guid: 54fe0a77c53ffc943af66c8af4e8158c
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field008.unity
+    guid: c5ab3497b648efb408e731b97ec28bdb
   m_configObjects: {}

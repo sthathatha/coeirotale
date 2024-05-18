@@ -95,7 +95,7 @@ public class TitleSceneSystem : MainScriptBase
                     // ゲーム開始
                     sound.PlaySE(sound.commonSeSelect);
                     //todo:セーブ初期化
-                    ManagerSceneScript.GetInstance().LoadMainScene("BetaScene", 0);
+                    ManagerSceneScript.GetInstance().LoadMainScene("OpeningScene", 0);
                     break;
                 case TitleSelect.Continue:
                     if (saveData.IsEnableGameData())
