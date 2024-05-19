@@ -73,9 +73,34 @@ public partial class StringFieldMessage
     public const string Tutorial003_08Reko = "もちろん！";
     public const string Tutorial003_09Tukuyomi = "かしこまりました\nどうぞこちらへ";
 
+    public const string Tutorial004_01Tukuyomi = "この上と下で、みなさん思い思いにすごされています";
+    public const string Tutorial004_02Tukuyomi = "まっすぐ下に行くとカフェがあるので、基本的にはそちらが生活のベースになりますね";
+    public const string Tutorial004_03Reko = "この光は？";
+    public const string Tutorial004_04Tukuyomi = "それを触るとセーブできますが、今は使えません";
+    public const string Tutorial004_05Tukuyomi = "チュートリアルの途中でセーブされるといろいろ面倒ですから";
+    public const string Tutorial004_06Reko = "よくわからない";
+    public const string Tutorial004_07Tukuyomi = "例の場所は右の奥です";
+
+    public const string Tutorial005_01Tukuyomi = "この上は海になっていて、危険なので進めません";
+    public const string Tutorial005_02Tukuyomi = "今は入れないように柵を作ってますから、そこまでなら行ってもかまいませんけどね";
+    public const string Tutorial005_03Reko = "電子の海の渚…\nうっ　頭が";
+
+    public const string Tutorial008_01Tukuyomi = "ごらんの通り、不思議な力で通れずこれ以上奥に入れないのです";
+    public const string Tutorial008_02Reko = "あれは？";
+    public const string Tutorial008_03Tukuyomi = "あの方はここに来てからずっと無理矢理通ろうと頑張っているんですが、だめみたいですね";
+    public const string Tutorial008_04Reko = "そ、そうですか";
+    public const string Tutorial008_05Tukuyomi = "噂では、７つの声を持つ者だけがこの先に進めるらしいんです";
+    public const string Tutorial008_06Reko = "どうしてそんな噂が？";
+    public const string Tutorial008_07Tukuyomi = "そこの立て札に書いてあります";
+    public const string Tutorial008_08Reko = "ああ、そう…";
+    public const string Tutorial008_09Reko = "７つの声…６人は声が残ってるって言ってましたよね？あと１人居ればもしかしたら…";
+    public const string Tutorial008_10Tukuyomi = "会いに行きますか？みなさん個性的な方ですぐには手を貸してくれないかもしれませんが、協力しますよ！";
+    public const string Tutorial008_11Reko = "そうしましょう、よろしくお願いします";
+    public const string Tutorial008_12Tukuyomi = "必要とあれば私の体をお使いください！";
+
     #endregion
 
-    #region フィールド000～0
+    #region フィールド000～008
 
     public const string F003_GetKey = "小さな鍵を手に入れた！";
 

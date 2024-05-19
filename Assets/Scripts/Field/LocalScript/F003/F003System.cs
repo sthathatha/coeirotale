@@ -27,9 +27,8 @@ public class F003System : MainScriptBase
     {
         yield return base.BeforeFadeIn();
 
-        if (Global.GetSaveData().GetGameDataInt("Tutorial") <= 1)
+        if (Global.GetSaveData().GetGameDataInt("Tutorial") < 2)
         {
-            var player = playerObj.GetComponent<PlayerScript>();
             var tukuyomi = tukuyomiObj.GetComponent<TukuyomiScript>();
             tukuyomi.SetMode(TukuyomiScript.TukuyomiMode.NPC);
 
@@ -46,7 +45,7 @@ public class F003System : MainScriptBase
     {
         yield return base.AfterFadeIn();
 
-        if (Global.GetSaveData().GetGameDataInt("Tutorial") <= 1)
+        if (Global.GetSaveData().GetGameDataInt("Tutorial") < 2)
         {
             Global.GetSaveData().SetGameData("Tutorial", 2);
 

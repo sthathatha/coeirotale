@@ -184,6 +184,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6208899ff844da243a16d1565ca942b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fieldScript: {fileID: 0}
+  tukuyomi: {fileID: 424438379}
+  player: {fileID: 1655134220}
+  serif0: {fileID: 8300000, guid: 918c1e578723e324284ebf2e0af95edc, type: 3}
+  serif1: {fileID: 8300000, guid: f7d447fe6b76d064ab0fdf683b0072d5, type: 3}
+  serif2: {fileID: 8300000, guid: b85bf2a1e23cb8f4d9fe0c68c3d1b0a8, type: 3}
+  serif3: {fileID: 8300000, guid: 9960a548fdce8c74badd368c5328f16f, type: 3}
+  serif4: {fileID: 8300000, guid: 49897a55279ede44d9762158988eb7ae, type: 3}
 --- !u!1 &212037377
 GameObject:
   m_ObjectHideFlags: 0
