@@ -14,8 +14,10 @@ public class MessageWindow : MonoBehaviour
     {
         /// <summary>なし</summary>
         None = -1,
+        /// <summary>なしナレーション</summary>
+        None2 = 0,
         /// <summary>レコ</summary>
-        Reko = 0,
+        Reko,
         /// <summary>つくよみちゃん</summary>
         Tukuyomi0,
         /// <summary>メンデル</summary>
@@ -30,6 +32,19 @@ public class MessageWindow : MonoBehaviour
         Mana0,
         /// <summary>小春音アミ</summary>
         Ami0,
+
+        /// <summary>ドロシー</summary>
+        Drows0,
+        /// <summary>エラ</summary>
+        Eraps0,
+        /// <summary>エグザ</summary>
+        Exa0,
+        /// <summary>ウーラ</summary>
+        Worra0,
+        /// <summary>クー</summary>
+        Koob0,
+        /// <summary>悠</summary>
+        You0,
     }
     #endregion
 
@@ -71,6 +86,22 @@ public class MessageWindow : MonoBehaviour
     public Sprite face_Mana0;
     /// <summary>アミ</summary>
     public Sprite face_Ami0;
+
+    /// <summary>ナレーションなど</summary>
+    public Sprite face_None;
+
+    /// <summary>ドロシー</summary>
+    public Sprite face_Drows0;
+    /// <summary>エラ</summary>
+    public Sprite face_Eraps0;
+    /// <summary>エグザ</summary>
+    public Sprite face_Exa0;
+    /// <summary>ウーラ</summary>
+    public Sprite face_Worra0;
+    /// <summary>クー</summary>
+    public Sprite face_Koob0;
+    /// <summary>悠</summary>
+    public Sprite face_You0;
     #endregion
 
     /// <summary>
@@ -157,7 +188,8 @@ public class MessageWindow : MonoBehaviour
         var ary = new List<Sprite>
         {
 #region アイコンリスト化
-            face_Reko
+            face_None
+            ,face_Reko
             ,face_Tukuyomi0
             ,face_Menderu0
             ,face_Pierre0
@@ -165,6 +197,12 @@ public class MessageWindow : MonoBehaviour
             ,face_Matuka0
             ,face_Mana0
             ,face_Ami0
+            ,face_Drows0
+            ,face_Eraps0
+            ,face_Exa0
+            ,face_Worra0
+            ,face_Koob0
+            ,face_You0
 #endregion
         };
 

@@ -10,6 +10,12 @@ public abstract class EventBase : MonoBehaviour
     /// <summary>フィールド</summary>
     public MainScriptBase fieldScript;
 
+    /// <summary>イベント見たフラグの保存 "Event"で終わるもののみ</summary>
+    private string saveName = string.Empty;
+
+    /// <summary>
+    /// 開始時
+    /// </summary>
     public virtual void Start()
     {
         if (fieldScript == null)
@@ -25,6 +31,13 @@ public abstract class EventBase : MonoBehaviour
                     break;
                 }
             }
+        }
+
+        // クラス名を見たフラグ保存用にする
+        var name = GetType().Name;
+        if (name.EndsWith("Event"))
+        {
+            saveName = name.Replace("Event", "");
         }
     }
 
@@ -49,7 +62,25 @@ public abstract class EventBase : MonoBehaviour
         yield return Exec();
 
         yield return null;
+
+        if (string.IsNullOrEmpty(saveName) == false)
+        {
+            // イベントフラグを保存
+            Global.GetSaveData().SetGameData(saveName, 1);
+        }
+
         fieldScript.FieldState = MainScriptBase.State.Idle;
+    }
+
+    /// <summary>
+    /// 見たことあるか
+    /// </summary>
+    /// <returns></returns>
+    public bool IsShowed()
+    {
+        if (string.IsNullOrEmpty(saveName)) return false;
+
+        return Global.GetSaveData().GetGameDataString(saveName) == "1";
     }
 
     /// <summary>

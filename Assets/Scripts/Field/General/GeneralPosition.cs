@@ -17,4 +17,17 @@ public class GeneralPosition : MonoBehaviour
     {
         return gameObject.transform.position;
     }
+
+    /// <summary>
+    /// 開始時
+    /// </summary>
+    private void Start()
+    {
+        // エディタ用のSpriteは消す
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null)
+        {
+            sprite.enabled = false;
+        }
+    }
 }

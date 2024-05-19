@@ -51,5 +51,33 @@ public partial class StringFieldMessage
     public const string Tutorial000_17Tukuyomi = "困ったことがあったらなんでも言ってくださいね";
     public const string Tutorial000_18Reko = "フリーソザイキャラクターってなんだ…？";
 
+    public const string Tutorial001_01Tukuyomi = "これは壁です";
+    public const string Tutorial001_02Reko = "見ればわかります";
+    public const string Tutorial001_03Tukuyomi = "壁は通れません";
+    public const string Tutorial001_04Reko = "だから…";
+    public const string Tutorial001_05Tukuyomi = "操作はキーボードかゲームパッドですか？\nどれかのボタンを押せば怪しい場所を調べることができますよ";
+    public const string Tutorial001_06Reko = "それは教えてくれないんだ";
+
+    public const string Tutorial002_01Tukuyomi = "こちらはを押すたびに切り替えられるタイプですね\nただしひとつのスイッチでいくつかの壁が動きます";
+    public const string Tutorial002_02Reko = "なんでそんな面倒なもの作ったんですか";
+    public const string Tutorial002_03Tukuyomi = "ほら、階段の明かりって上下どちらでもオンオフできるじゃないですか";
+    public const string Tutorial002_04Reko = "絶対関係無いと思う";
+
+    public const string Tutorial003_01Tukuyomi = "おめでとうございます！\nあなたはもうこの世界の歩き方を充分理解できました！";
+    public const string Tutorial003_02Reko = "壁動かしただけですけど";
+    public const string Tutorial003_03Tukuyomi = "やっぱりだめでしょうか";
+    public const string Tutorial003_04Reko = "行かなければいけない場所があった気がするんです\nどうすればいいんですか？";
+    public const string Tutorial003_05Tukuyomi = "それが…わからないんです\nここはとても小さい世界ですが、出口はどこにもありません";
+    public const string Tutorial003_06Reko = "そんな！出られないんですか？";
+    public const string Tutorial003_07Tukuyomi = "１箇所だけ探していない場所…というか入れない場所があります\n一応見に行ってみますか？";
+    public const string Tutorial003_08Reko = "もちろん！";
+    public const string Tutorial003_09Tukuyomi = "かしこまりました\nどうぞこちらへ";
+
+    #endregion
+
+    #region フィールド000～0
+
+    public const string F003_GetKey = "小さな鍵を手に入れた！";
+
     #endregion
 }

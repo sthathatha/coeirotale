@@ -94,14 +94,17 @@ public class TitleSceneSystem : MainScriptBase
                 case TitleSelect.GameStart:
                     // ゲーム開始
                     sound.PlaySE(sound.commonSeSelect);
-                    //todo:セーブ初期化
+                    Global.GetSaveData().InitGameData();
                     ManagerSceneScript.GetInstance().LoadMainScene("OpeningScene", 0);
                     break;
                 case TitleSelect.Continue:
                     if (saveData.IsEnableGameData())
                     {
                         sound.PlaySE(sound.commonSeSelect);
-                        //todo:ロード
+                        // ロード
+                        var save = Global.GetSaveData();
+                        save.LoadGameData();
+                        ManagerSceneScript.GetInstance().LoadMainScene(save.GetGameDataString("SaveFieldScene"), save.GetGameDataInt("SaveFieldPos"));
                     }
                     else
                     {

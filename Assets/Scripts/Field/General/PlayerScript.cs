@@ -37,7 +37,11 @@ public class PlayerScript : CharacterScript
     override protected void Update()
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
-        if (fieldScript.FieldState != MainScriptBase.State.Idle) { return; }
+        if (fieldScript.FieldState != MainScriptBase.State.Idle)
+        {
+            UpdateCamera();
+            return;
+        }
 
         var optionWindow = ManagerSceneScript.GetInstance().GetOptionWindow();
         if (optionWindow.gameObject.activeSelf) { return; }
@@ -112,11 +116,18 @@ public class PlayerScript : CharacterScript
             actionCollide.transform.position = transform.position + actionV;
         }
 
-        // カメラ更新
-        var cam = ManagerSceneScript.GetInstance().mainCam;
-        cam.SetTargetPos(gameObject);
+        UpdateCamera();
 
         base.Update();
+    }
+
+    /// <summary>
+    /// カメラ更新
+    /// </summary>
+    private void UpdateCamera()
+    {
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(gameObject);
     }
 
     /// <summary>

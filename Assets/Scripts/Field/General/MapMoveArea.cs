@@ -22,4 +22,16 @@ public class MapMoveArea : AreaEventBase
         ManagerSceneScript.GetInstance().LoadMainScene(targetMap, targetPos);
         yield break;
     }
+
+    public override void Start()
+    {
+        base.Start();
+
+        // エディタ用のSpriteは消す
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null)
+        {
+            sprite.enabled = false;
+        }
+    }
 }

@@ -45,6 +45,17 @@ public class TukuyomiScript : CharacterScript
     #region 基底
 
     /// <summary>
+    /// 開始時
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+
+        // 基本は追尾モード
+        SetMode(TukuyomiMode.Trace);
+    }
+
+    /// <summary>
     /// フレーム処理
     /// </summary>
     protected override void Update()

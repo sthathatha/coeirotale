@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -126,28 +127,33 @@ public class MainScriptBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 汎用座標を取得
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public GeneralPosition SearchGeneralPosition(int id)
+    {
+        var poses = objectParent.transform.GetComponentsInChildren<GeneralPosition>();
+        if (poses.Length == 0) return null;
+
+        if (id < 0)
+        {
+            return poses[0];
+        }
+
+        return poses.FirstOrDefault(p => p.id == id);
+    }
+
+    /// <summary>
     /// プレイヤー位置設定・つくよみちゃんも追従
     /// </summary>
     /// <param name="id">GeneralPosition</param>
     public void InitPlayerPos(int id)
     {
-        var poses = objectParent.transform.GetComponentsInChildren<GeneralPosition>();
-        if (poses.Length == 0) return;
+        var pos = SearchGeneralPosition(id);
+        if (pos == null) return;
 
-        if (id < 0)
-        {
-            SetPlayerPos(poses[0]);
-            return;
-        }
-
-        foreach (var po in poses)
-        {
-            if (po.id == id)
-            {
-                SetPlayerPos(po);
-                break;
-            }
-        }
+        SetPlayerPos(pos);
     }
 
     /// <summary>

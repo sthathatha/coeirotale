@@ -43,6 +43,7 @@ public class Global
     /// </summary>
     public class SaveData
     {
+        /// <summary>ゲーム内のデータ</summary>
         public Dictionary<string, string> gameData;
 
         /// <summary>システムデータ</summary>
@@ -94,6 +95,14 @@ public class Global
         public void LoadGameData()
         {
             ReadSaveString(PlayerPrefs.GetString("gameData"));
+        }
+
+        /// <summary>
+        /// ゲームデータ初期化
+        /// </summary>
+        public void InitGameData()
+        {
+            gameData.Clear();
         }
 
         /// <summary>
@@ -180,6 +189,11 @@ public class Global
             system.clearFlag = PlayerPrefs.GetInt("optionClearFlag", 0);
         }
 
+        /// <summary>
+        /// セーブ用文字列に変換
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         private string ToSaveString(Dictionary<string, string> data)
         {
             var strList = data.Select((pair, idx) => pair.Key + ":" + pair.Value);
@@ -187,6 +201,10 @@ public class Global
             return string.Join(',', strList);
         }
 
+        /// <summary>
+        /// セーブ用文字列を読み込み
+        /// </summary>
+        /// <param name="data"></param>
         private void ReadSaveString(string data)
         {
             gameData.Clear();

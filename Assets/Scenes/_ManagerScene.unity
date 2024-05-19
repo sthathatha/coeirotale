@@ -991,6 +991,13 @@ MonoBehaviour:
   face_Matuka0: {fileID: 21300000, guid: c65b09e3607381b40a903a27cde7e6c8, type: 3}
   face_Mana0: {fileID: 21300000, guid: ce076cc654596ef479486c3fca397e30, type: 3}
   face_Ami0: {fileID: 21300000, guid: 60a852394246c664b951f11b9390ef6b, type: 3}
+  face_None: {fileID: 21300000, guid: 79f631ef94b6bc24ab37d84cd7f1e456, type: 3}
+  face_Drows0: {fileID: 21300000, guid: a96a862f5b1a8c54aaf39eee948cda5b, type: 3}
+  face_Eraps0: {fileID: 21300000, guid: 640ebbab068634c41b0a0f6597d34089, type: 3}
+  face_Exa0: {fileID: 0}
+  face_Worra0: {fileID: 0}
+  face_Koob0: {fileID: 0}
+  face_You0: {fileID: 0}
 --- !u!1 &548137742
 GameObject:
   m_ObjectHideFlags: 0
