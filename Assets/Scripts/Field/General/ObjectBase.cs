@@ -7,10 +7,11 @@ using UnityEngine;
 /// </summary>
 public class ObjectBase : MonoBehaviour
 {
-    /// <summary>フィールド</summary>
-    public MainScriptBase fieldScript;
     /// <summary>モデル</summary>
     public GameObject model;
+
+    /// <summary>フィールド</summary>
+    protected MainScriptBase fieldScript;
 
     /// <summary>モデルSpriteRenderer</summary>
     protected SpriteRenderer spriteRenderer;
@@ -27,18 +28,15 @@ public class ObjectBase : MonoBehaviour
             spriteRenderer.sortingLayerName = "FieldObject";
         }
 
-        if (fieldScript == null)
+        // フィールドスクリプト　設定が面倒なので基本的な構造なら取得
+        var objects = gameObject.scene.GetRootGameObjects();
+        foreach (var obj in objects)
         {
-            // 設定が面倒なので基本的な構造なら取得
-            var objects = gameObject.scene.GetRootGameObjects();
-            foreach (var obj in objects)
+            var sys = obj.GetComponent<MainScriptBase>();
+            if (sys != null)
             {
-                var sys = obj.GetComponent<MainScriptBase>();
-                if (sys != null)
-                {
-                    fieldScript = sys;
-                    break;
-                }
+                fieldScript = sys;
+                break;
             }
         }
     }

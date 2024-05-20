@@ -58,8 +58,6 @@ public class MainScriptBase : MonoBehaviour
         }
 
         ManagerSceneScript.GetInstance().SetMainScript(this);
-
-        FieldState = State.Idle;
     }
 
     virtual protected void Update()
@@ -114,6 +112,7 @@ public class MainScriptBase : MonoBehaviour
     /// <returns></returns>
     virtual public IEnumerator AfterFadeIn()
     {
+        FieldState = State.Idle;
         yield break;
     }
 

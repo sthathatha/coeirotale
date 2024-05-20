@@ -103,6 +103,7 @@ public partial class StringFieldMessage
     #region フィールド000～008
 
     public const string F003_GetKey = "小さな鍵を手に入れた！";
+    public const string F008_Board = "七つの声を持つ者に\n　道は開かれる";
 
     #endregion
 }

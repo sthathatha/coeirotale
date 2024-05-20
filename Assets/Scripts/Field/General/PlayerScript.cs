@@ -146,6 +146,7 @@ public class PlayerScript : CharacterScript
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) return;
         if (fieldScript?.FieldState != MainScriptBase.State.Idle) return;
 
         var evt = collision.GetComponent<AreaEventBase>();

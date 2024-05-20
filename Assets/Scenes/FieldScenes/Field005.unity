@@ -1463,6 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1842195426}
   - component: {fileID: 1842195427}
+  - component: {fileID: 1842195428}
   m_Layer: 0
   m_Name: system
   m_TagString: Untagged
@@ -1501,6 +1502,23 @@ MonoBehaviour:
   bgmClip: {fileID: 0}
   playerObj: {fileID: 34157621}
   tukuyomiObj: {fileID: 1804830399}
+--- !u!114 &1842195428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842195425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c873e308e707f140be31f335287d2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldScript: {fileID: 0}
+  tukuyomi: {fileID: 1804830401}
+  player: {fileID: 34157622}
+  serif0: {fileID: 8300000, guid: 3459d8d4ba7cbd3499cdfe1eaaebbd06, type: 3}
+  serif1: {fileID: 8300000, guid: bea4cda5a6f3edd4fa91cbe6756572ba, type: 3}
 --- !u!1 &1878688160
 GameObject:
   m_ObjectHideFlags: 0

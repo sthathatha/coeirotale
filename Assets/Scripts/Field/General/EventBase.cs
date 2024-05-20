@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class EventBase : MonoBehaviour
 {
     /// <summary>フィールド</summary>
-    public MainScriptBase fieldScript;
+    protected MainScriptBase fieldScript;
 
     /// <summary>イベント見たフラグの保存 "Event"で終わるもののみ</summary>
     private string saveName = string.Empty;
@@ -18,18 +18,15 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     public virtual void Start()
     {
-        if (fieldScript == null)
+        // フィールドスクリプト　設定が面倒なのでprotectedにして基本的な構造なら取得
+        var objects = gameObject.scene.GetRootGameObjects();
+        foreach (var obj in objects)
         {
-            // 設定が面倒なので基本的な構造なら取得
-            var objects = gameObject.scene.GetRootGameObjects();
-            foreach (var obj in objects)
+            var sys = obj.GetComponent<MainScriptBase>();
+            if (sys != null)
             {
-                var sys = obj.GetComponent<MainScriptBase>();
-                if (sys != null)
-                {
-                    fieldScript = sys;
-                    break;
-                }
+                fieldScript = sys;
+                break;
             }
         }
 
@@ -69,7 +66,10 @@ public abstract class EventBase : MonoBehaviour
             Global.GetSaveData().SetGameData(saveName, 1);
         }
 
-        fieldScript.FieldState = MainScriptBase.State.Idle;
+        if (ManagerSceneScript.GetInstance().SceneState != ManagerSceneScript.State.Loading)
+        {
+            fieldScript.FieldState = MainScriptBase.State.Idle;
+        }
     }
 
     /// <summary>
