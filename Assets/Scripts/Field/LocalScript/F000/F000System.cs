@@ -46,7 +46,7 @@ public class F000System : MainScriptBase
 
         if (Global.GetSaveData().GetGameDataInt("Tutorial") <= 0)
         {
-            var ev = GetComponent<F000StartEvent>();
+            var ev = GetComponent<F000Tutorial>();
             ev.ExecEvent();
         }
     }

@@ -28,7 +28,7 @@ public class F007Tutorial : EventBase
         player.WalkTo(posCenter.GetPosition());
         yield return new WaitWhile(() => tukuyomi.IsWalking());
         tukuyomi.WalkTo(posUp);
-        yield return player.IsWalking();
+        yield return new WaitWhile(() => player.IsWalking());
         player.WalkTo(posUp);
         yield return new WaitForSeconds(1f);
 

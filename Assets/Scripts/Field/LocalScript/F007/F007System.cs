@@ -49,7 +49,7 @@ public class F007System : MainScriptBase
         {
             Global.GetSaveData().SetGameData("Tutorial", 5);
 
-            var ev = GetComponent<F005Tutorial>();
+            var ev = GetComponent<F007Tutorial>();
             ev.ExecEvent();
         }
     }
