@@ -100,10 +100,16 @@ public partial class StringFieldMessage
 
     #endregion
 
-    #region フィールド000～008
+    #region フィールド000～010
 
     public const string F003_GetKey = "小さな鍵を手に入れた！";
     public const string F008_Board = "七つの声を持つ者に\n　道は開かれる";
+    public const string F009_Board1 = "\n←大騒ぎは住民に配慮して離れ小島へ";
+    public const string F009_Board2 = "\n↑草原\n　静かな場所で精神統一";
+    public const string F009_Board3 = "\n→クラウンサーカス";
+    public const string F010_Board1 = "\n←MANAさんのおうち！";
+    public const string F010_Board2 = "\n↓カフェ 小春日和";
+    public const string F010_Board3 = "\n→十字花教会　COEIRO支部";
 
     #endregion
 }

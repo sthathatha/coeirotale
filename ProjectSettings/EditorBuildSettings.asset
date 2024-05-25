@@ -71,4 +71,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FieldScenes/Field008.unity
     guid: c5ab3497b648efb408e731b97ec28bdb
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field009.unity
+    guid: 9195dbd55ddd56846afd101f50df2ca4
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field010.unity
+    guid: 208b3e378a70b464898c7f8834be839a
   m_configObjects: {}

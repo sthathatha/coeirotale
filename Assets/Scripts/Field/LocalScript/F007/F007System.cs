@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// F007
+/// F007 ‰E‚Ì‹È‚ª‚è“¹
 /// </summary>
 public class F007System : MainScriptBase
 {

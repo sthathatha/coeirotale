@@ -7,11 +7,17 @@ using UnityEngine;
 /// </summary>
 public abstract class EventBase : MonoBehaviour
 {
+    /// <summary>見た回数カウントをセーブする</summary>
+    public bool SaveViewFlag = false;
+
+    /// <summary>見た回数保存名</summary>
+    public string saveName = string.Empty;
+
     /// <summary>フィールド</summary>
     protected MainScriptBase fieldScript;
 
-    /// <summary>イベント見たフラグの保存 "Event"で終わるもののみ</summary>
-    private string saveName = string.Empty;
+    /// <summary>見た回数</summary>
+    protected int viewCount = 0;
 
     /// <summary>
     /// 開始時
@@ -30,11 +36,9 @@ public abstract class EventBase : MonoBehaviour
             }
         }
 
-        // クラス名を見たフラグ保存用にする
-        var name = GetType().Name;
-        if (name.EndsWith("Event"))
+        if (SaveViewFlag)
         {
-            saveName = name.Replace("Event", "");
+            viewCount = Global.GetSaveData().GetGameDataInt(saveName);
         }
     }
 
@@ -60,27 +64,21 @@ public abstract class EventBase : MonoBehaviour
 
         yield return null;
 
-        if (string.IsNullOrEmpty(saveName) == false)
+        if (SaveViewFlag)
         {
-            // イベントフラグを保存
-            Global.GetSaveData().SetGameData(saveName, 1);
+            // イベント見た回数を保存
+            if (viewCount < int.MaxValue)
+            {
+                viewCount++;
+            }
+
+            Global.GetSaveData().SetGameData(saveName, viewCount);
         }
 
         if (ManagerSceneScript.GetInstance().SceneState != ManagerSceneScript.State.Loading)
         {
             fieldScript.FieldState = MainScriptBase.State.Idle;
         }
-    }
-
-    /// <summary>
-    /// 見たことあるか
-    /// </summary>
-    /// <returns></returns>
-    public bool IsShowed()
-    {
-        if (string.IsNullOrEmpty(saveName)) return false;
-
-        return Global.GetSaveData().GetGameDataString(saveName) == "1";
     }
 
     /// <summary>

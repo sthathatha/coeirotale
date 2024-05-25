@@ -101,6 +101,11 @@ public class ManagerSceneScript : MonoBehaviour
             //初期シーンロード
             SceneManager.LoadSceneAsync("TitleScene", LoadSceneMode.Additive);
         }
+        else
+        {
+            //デバッグ時はセーブデータをロード
+            Global.GetSaveData().LoadGameData();
+        }
 
         SceneState = State.Loading;
         yield return new WaitWhile(() => mainScript == null);
