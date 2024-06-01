@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// サーカス入口の鍵を拾うオブジェクト
 /// </summary>
-public class F003GetKey : ActionEventBase
+public class F003GetKey : AreaActionEventBase
 {
     /// <summary>
     /// 開始時
@@ -15,7 +15,7 @@ public class F003GetKey : ActionEventBase
         base.Start();
 
         // 入手済みなら自分で消す
-        if (Global.GetSaveData().GetGameDataInt("PierreKey") ==1)
+        if (Global.GetSaveData().GetGameDataInt(F121KeyBlock.KEY_FLG) >= 1)
         {
             gameObject.SetActive(false);
         }
@@ -29,7 +29,7 @@ public class F003GetKey : ActionEventBase
     protected override IEnumerator Exec()
     {
         // 鍵を入手
-        Global.GetSaveData().SetGameData("PierreKey", 1);
+        Global.GetSaveData().SetGameData(F121KeyBlock.KEY_FLG, 1);
         var msg = ManagerSceneScript.GetInstance().GetMessageWindow();
 
         msg.Open();

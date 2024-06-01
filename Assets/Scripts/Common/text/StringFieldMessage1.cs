@@ -103,13 +103,103 @@ public partial class StringFieldMessage
     #region フィールド000～010
 
     public const string F003_GetKey = "小さな鍵を手に入れた！";
+
+    public const string F006_1_ErapsNew = "こんにちは、新しい方ですね";
+    public const string F006_2_Eraps = "この先はヌシが棲むといわれている海で、立入禁止になっています";
+    public const string F006_3_Eraps = "巨大な純白の、ワニのような魚のような姿をしているんだとか";
+    public const string F006_4_Reko = "ワニと魚じゃ全然違うよ";
+    public const string F006_5_Tukuyomi = "伝説とはそういうものなのです";
+    public const string F006_6_Reko = "どういうものだろう";
+
     public const string F008_Board = "七つの声を持つ者に\n　道は開かれる";
     public const string F009_Board1 = "\n←大騒ぎは住民に配慮して離れ小島へ";
     public const string F009_Board2 = "\n↑草原\n　静かな場所で精神統一";
-    public const string F009_Board3 = "\n→クラウンサーカス";
+    public const string F009_Board3 = "\nクラウンサーカス→";
     public const string F010_Board1 = "\n←MANAさんのおうち！";
     public const string F010_Board2 = "\n↓カフェ 小春日和";
-    public const string F010_Board3 = "\n→十字花教会　COEIRO支部";
+    public const string F010_Board3 = "\n十字花教会\nCOEIRO支部→";
 
+    #endregion
+
+    #region フィールドXX1～　道中ギミック系
+
+    public const string F111_New1_Exa = "よお、新入りか";
+    public const string F111_New2_Tukuyomi = "先ほど迷い込んできた方です\nあちらに渡りたいのですが";
+    public const string F111_New3_Exa = "悪いな、まだ修理が終わってないんだわ";
+    public const string F111_New4_Exa = "お前ら飛んでんだから勝手に行けばいいじゃねえか";
+    public const string F111_New5_Tukuyomi = "そういうわけにはまいりませんって";
+    public const string F111_New6_Exa = "ああ…";
+    public const string F111_New7_Exa = "そしたら悪いがどっかでロープ持ってきてくれよ\nちょっと足りなくなっちまってさ";
+    public const string F111_New8_Exa = "どうせやらないと進めないし選択肢とか出さなくていいよな\n頼んだぜ！";
+    public const string F111_New9_Reko = "はっ！いつの間にか引き受けたことになってる";
+    public const string F111_New10_Tukuyomi = "仕方ありません、ロープ探してきましょう";
+    public const string F111_1_Exa = "ロープはあったか？";
+    public const string F111_2_Tukuyomi = "お持ちしました！";
+    public const string F111_3_Exa = "よし待ってな、すぐ直してやる";
+    public const string F111_4_Exa = "さあ終わったぜ\nしっかりやんな";
+    public const string F111_5_Exa = "どうした、行くところがあるんだろ？";
+
+    public const string F121_1_Tukuyomi = "鍵がかかっていますね";
+    public const string F121_2_Reko = "誰も居ないのでは？";
+    public const string F121_3_Tukuyomi = "鍵探して入っちゃいましょう！";
+    public const string F121_4_Reko = "ええー";
+    public const string F121_Board1 = "クラウンサーカス芸人募集中！\n誰でも気軽にどうぞ！";
+    public const string F121_Board2 = "我こそはという方はいつでも直接支配人まで！";
+    public const string F121_Board3 = "入口の鍵は文字が一番少ない立て札から下に４歩、左に４歩くらいのところに隠してあるぞ！";
+    public const string F121_Board4 = "１歩のサイズはなんとなく察してくれよな！";
+
+    public const string F141_Board1 = "仲間はずれの扉をみつけよう";
+    public const string F141_Board2 = "閉じている時は同じ見た目だけど、開くとひとつだけ違うよ！";
+    public const string F141_Board3 = "どれかの扉に触れたら、それと他のランダムなひとつを残してすべての扉が開くよ";
+    public const string F141_Board4 = "その後であらためて好きな扉を進んでね";
+    public const string F141_1_Koob = "苦戦してるみたいだね、ヒントが必要かな？";
+    public const string F141_2_Koob = "２回目の選択は、開いている扉を選んでもいいよ";
+    public const string F141_3_Koob = "開くとひとつだけ違うけど、開ききった後はやっぱり同じ見た目になっちゃうよ";
+    public const string F141_4_Koob = "開く瞬間をよく見ると仲間はずれは見つかるかもね";
+
+    public const string F151_1_Reko = "この板を渡せば面倒な回り道しなくていいな";
+    public const string F151_2_Tukuyomi = "ロープも何かに使えるかもしれないので持っていきましょう";
+
+
+
+    #endregion
+
+    #region フィールド143　メンデル
+
+    public const string F143_Fast1_Koob = "わ、早いな\nもう来たのか";
+    public const string F143_Fast2_Koob = "頑張ってね、何か困ったことがあったら私は小春日和にいるから";
+
+    public const string F143_New1_Menderu = "ようこそいらっしゃいました、迷える子羊よ";
+    public const string F143_New2_Menderu = "…なんだ、つくよみちゃんか";
+    public const string F143_New3_Tukuyomi = "なんだとはなんだ";
+    public const string F143_New4_Menderu = "そっちの人は？";
+    public const string F143_New5_Reko = "あの、この世界に迷い込んでしまったらしくて";
+    public const string F143_New6_Menderu = "そう、大変だったわね";
+    public const string F143_New7_Menderu = "私は遠藤愛、みんなメンデルって呼んでるわ";
+    public const string F143_New8_Tukuyomi = "出口を探したいということで、メンデルさんのお力を借りにきました！";
+    public const string F143_New9_Menderu = "東のあれね、あれを越えられるなんて本気で思ってるの？";
+    public const string F143_New10_Menderu = "余計なことしないでここの暮らしに順応したほうが…楽でいいわよ";
+    public const string F143_New11_Tukuyomi = "だけどメンデルさんも元の世界に心残りはあるんでしょう？その研究だって…";
+    public const string F143_New12_Menderu = "無駄よ…研究なんか何の役にもたたなかった。私が居なくたって世界は何も変わらない";
+    public const string F143_New13_Reko = "そんなことはありませんよ、今だってあなたが居ないとだめなんです";
+    public const string F143_New14_Reko = "あなたの世界にだって、あなたこそを必要としている人がいるはずでしょう！";
+    public const string F143_New15_Menderu = "理想や気持ちだけでは何も変えられないよ。私を納得させられるだけの力を示すことができる？";
+    public const string F143_New16_Tukuyomi = "望むところです！受けて立ちますよ";
+    public const string F143_New17_Reko = "あっ、勝手に";
+
+    public const string F143_Lose1_Menderu = "だめね、そんなんじゃああの壁は越えられないわ";
+    public const string F143_Lose2_Reko = "（これ関係無いですよね…？）";
+    public const string F143_Lose3_Tukuyomi = "（ね、個性的でしょう）";
+
+    public const string F143_Retry_Menderu = "さて、成長したかしら？";
+
+    public const string F143_Win1_Menderu = "ふう、わかったわ、協力しましょう";
+    public const string F143_Win2_Tukuyomi = "やりましたね！一歩前進です！";
+    public const string F143_Win3_Menderu = "でもあの壁の先の事は何もわかってないんだから、過度な期待はしないでおくことね";
+    public const string F143_Win4_Reko = "その時はその時ですよ";
+
+    #endregion
+
+    #region フィールド200～　ラストダンジョン系
     #endregion
 }

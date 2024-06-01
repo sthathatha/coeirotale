@@ -966,7 +966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4619c4b84cf0b874699af511645e62a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 507025700}
   actionCollide: {fileID: 97950169}
 --- !u!50 &978293815
@@ -1040,7 +1039,7 @@ Transform:
   m_GameObject: {fileID: 978293813}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1192,7 +1191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975dff6863111d2428187cc4c1a49fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 1963466749}
   model: {fileID: 1971601859}
 --- !u!1 &1245172751
 GameObject:
@@ -1337,7 +1335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field001
   targetPos: 0
 --- !u!1 &1636133596
@@ -1410,8 +1409,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1451,7 +1450,7 @@ Transform:
   m_GameObject: {fileID: 1829919245}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1471,7 +1470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc9ec6d9c5cfc3448e7459ef47f44ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 738354313}
   playerObject: {fileID: 978293813}
 --- !u!58 &1829919248
@@ -1570,7 +1568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7271ccc1ac49214c8eff992775a0834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 1963466749}
+  SaveViewFlag: 0
+  saveName: 
   tukuyomiObj: {fileID: 1829919247}
   serif0: {fileID: 8300000, guid: a015e9ec5bebeda4d9d6432f23164656, type: 3}
   serif1: {fileID: 8300000, guid: e90bbfd0a7465a04ab95328fb19324be, type: 3}
@@ -1738,8 +1737,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

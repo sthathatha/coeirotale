@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,7 @@ public class MessageWindow : MonoBehaviour
     {
         /// <summary>なし</summary>
         None = -1,
-        /// <summary>なしナレーション</summary>
+        /// <summary>アスタリスク</summary>
         None2 = 0,
         /// <summary>レコ</summary>
         Reko,

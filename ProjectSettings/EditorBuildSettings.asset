@@ -77,4 +77,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FieldScenes/Field010.unity
     guid: 208b3e378a70b464898c7f8834be839a
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field111.unity
+    guid: 558c6bf4135213e4c93725057527f800
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field121.unity
+    guid: 17e8c8e654a9d2b43b16f1d90d5dc4af
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field141.unity
+    guid: 464df02661ebd7e4d8a4545c27a19ffc
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field142.unity
+    guid: 9387730d35e494b46ad49101ae62e5ec
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field143.unity
+    guid: b447b0e38b8be174f99175dad9b62642
+  - enabled: 1
+    path: Assets/Scenes/FieldScenes/Field151.unity
+    guid: c84bc33c795c0294997cc1b25c7f2733
   m_configObjects: {}

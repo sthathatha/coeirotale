@@ -38,6 +38,11 @@ public abstract class EventBase : MonoBehaviour
 
         if (SaveViewFlag)
         {
+            if (string.IsNullOrEmpty(saveName))
+            {
+                saveName = this.GetType().Name;
+            }
+
             viewCount = Global.GetSaveData().GetGameDataInt(saveName);
         }
     }
@@ -48,7 +53,7 @@ public abstract class EventBase : MonoBehaviour
     /// <returns></returns>
     public void ExecEvent()
     {
-        fieldScript.FieldState = MainScriptBase.State.Event;
+        fieldScript.ActivateEvent(this);
         fieldScript.StartCoroutine(ExecEventCoroutine());
     }
 
@@ -75,10 +80,7 @@ public abstract class EventBase : MonoBehaviour
             Global.GetSaveData().SetGameData(saveName, viewCount);
         }
 
-        if (ManagerSceneScript.GetInstance().SceneState != ManagerSceneScript.State.Loading)
-        {
-            fieldScript.FieldState = MainScriptBase.State.Idle;
-        }
+        fieldScript.EndEvent(this);
     }
 
     /// <summary>

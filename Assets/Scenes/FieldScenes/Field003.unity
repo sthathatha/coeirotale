@@ -444,7 +444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b1488d9943ea94c9cd1b02855d7e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   tukuyomi: {fileID: 1413768655}
   player: {fileID: 1517005470}
   serif0: {fileID: 8300000, guid: bab7b8e256040aa449758465d62ae406, type: 3}
@@ -497,7 +498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351f806e330f5c746989192aa89c4d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 1192560851}
 --- !u!1 &549734465
 GameObject:
@@ -569,8 +569,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -593,7 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 703680840}
   - component: {fileID: 703680842}
-  - component: {fileID: 703680841}
+  - component: {fileID: 703680843}
   m_Layer: 0
   m_Name: model
   m_TagString: Untagged
@@ -611,46 +611,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 64, y: 64, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003836428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &703680841
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703680839}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.013040107, y: -0.17392153}
-  m_Size: {x: 1.9739822, y: 0.36519235}
-  m_Direction: 1
 --- !u!212 &703680842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -703,6 +668,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &703680843
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703680839}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1003836427
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +739,7 @@ Transform:
   m_GameObject: {fileID: 1003836427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -250, z: 0}
+  m_LocalPosition: {x: 18.2, y: -221.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -748,7 +758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc213d48488a396478cb269c8cdbe2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
 --- !u!1 &1176099115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1015,7 @@ Transform:
   m_GameObject: {fileID: 1413768653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1024,7 +1035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc9ec6d9c5cfc3448e7459ef47f44ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 1556095276}
   playerObject: {fileID: 1517005469}
 --- !u!58 &1413768656
@@ -1093,7 +1103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4619c4b84cf0b874699af511645e62a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 92008259}
   actionCollide: {fileID: 134166973}
 --- !u!50 &1517005471
@@ -1167,7 +1176,7 @@ Transform:
   m_GameObject: {fileID: 1517005469}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1523,7 +1532,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field002
   targetPos: 1
 --- !u!1 &1716763853
@@ -1669,7 +1679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field004
   targetPos: 0
 --- !u!1 &1919326252
@@ -1742,8 +1753,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

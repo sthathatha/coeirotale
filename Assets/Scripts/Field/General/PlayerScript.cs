@@ -21,6 +21,8 @@ public class PlayerScript : CharacterScript
     /// <summary>物理</summary>
     private Rigidbody2D rigid;
 
+    private List<AreaActionEventBase> areaActionList = new List<AreaActionEventBase>();
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -37,7 +39,8 @@ public class PlayerScript : CharacterScript
     override protected void Update()
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) { return; }
-        if (fieldScript.FieldState != MainScriptBase.State.Idle)
+        if (fieldScript.FieldState != MainScriptBase.State.Idle ||
+            fieldScript.IsEventPlaying())
         {
             UpdateCamera();
             return;
@@ -51,22 +54,26 @@ public class PlayerScript : CharacterScript
         if (input.GetKeyPress(InputManager.Keys.South))
         {
             // アクション実行
+            var eventPlayed = false;
             var list = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
             foreach (var coll in list)
             {
-                var ev = coll.GetComponent<ActionEventBase>();
-                // parent
-                if (ev == null)
-                {
-                    ev = coll.GetComponentInParent<ActionEventBase>();
-                }
-
+                var ev = coll.GetComponent<ActionEventBase>() ??
+                    coll.GetComponentInParent<ActionEventBase>();
                 if (ev == null) continue;
 
                 // イベント発生
                 StopAnim();
                 ev.ExecEvent();
+                eventPlayed = true;
                 break;
+            }
+
+            if (eventPlayed == false && areaActionList.Count > 0)
+            {
+                StopAnim();
+                areaActionList[0].ExecEvent();
+                eventPlayed = true;
             }
 
             return;
@@ -147,12 +154,41 @@ public class PlayerScript : CharacterScript
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main) return;
+        if (fieldScript?.IsEventPlaying() == true) return;
         if (fieldScript?.FieldState != MainScriptBase.State.Idle) return;
 
+        // 
+        var aa = collision.GetComponent<AreaActionEventBase>();
+        if (aa == null) aa = collision.GetComponentInParent<AreaActionEventBase>();
+        if (aa != null)
+        {
+            areaActionList.Add(aa);
+        }
+
+        //
         var evt = collision.GetComponent<AreaEventBase>();
-        if (evt == null) return;
+        if (evt == null)
+        {
+            evt = collision.GetComponentInParent<AreaEventBase>();
+            if (evt == null) return;
+        }
 
         StopAnim();
         evt.ExecEvent();
+    }
+
+    /// <summary>
+    /// ボリュームから出た
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var aa = collision.GetComponent<AreaActionEventBase>();
+        if (aa == null) aa = collision.GetComponentInParent<AreaActionEventBase>();
+
+        if (aa != null)
+        {
+            areaActionList.Remove(aa);
+        }
     }
 }

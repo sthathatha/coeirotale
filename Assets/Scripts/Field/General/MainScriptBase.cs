@@ -40,9 +40,23 @@ public class MainScriptBase : MonoBehaviour
     {
         get; set;
     }
+
+    /// <summary>
+    /// 実行中イベント
+    /// </summary>
+    protected List<EventBase> activeEvent;
     #endregion
 
     #region 基底
+
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    public MainScriptBase()
+    {
+        activeEvent = new List<EventBase>();
+    }
+
     /// <summary>
     /// 開始時
     /// </summary>
@@ -63,7 +77,10 @@ public class MainScriptBase : MonoBehaviour
     virtual protected void Update()
     {
     }
+
     #endregion
+
+    #region パブリックメソッド
 
     /// <summary>
     /// ゲーム開始用にスリープ
@@ -156,6 +173,37 @@ public class MainScriptBase : MonoBehaviour
     }
 
     /// <summary>
+    /// イベント開始
+    /// </summary>
+    /// <param name="ev"></param>
+    public void ActivateEvent(EventBase ev)
+    {
+        activeEvent.Add(ev);
+    }
+
+    /// <summary>
+    /// イベント終了
+    /// </summary>
+    /// <param name="ev"></param>
+    public void EndEvent(EventBase ev)
+    {
+        activeEvent.Remove(ev);
+    }
+
+    /// <summary>
+    /// イベント実行中か否か
+    /// </summary>
+    /// <returns></returns>
+    public bool IsEventPlaying()
+    {
+        return activeEvent.Count > 0;
+    }
+
+    #endregion
+
+    #region プロテクトメソッド
+
+    /// <summary>
     /// プレイヤー位置設定・つくよみちゃんも追従
     /// </summary>
     /// <param name="gp"></param>
@@ -173,4 +221,6 @@ public class MainScriptBase : MonoBehaviour
             tukuyomiObj.GetComponent<TukuyomiScript>().InitTrace();
         }
     }
+
+    #endregion
 }

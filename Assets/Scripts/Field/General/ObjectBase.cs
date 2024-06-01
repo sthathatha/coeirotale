@@ -13,19 +13,21 @@ public class ObjectBase : MonoBehaviour
     /// <summary>フィールド</summary>
     protected MainScriptBase fieldScript;
 
-    /// <summary>モデルSpriteRenderer</summary>
-    protected SpriteRenderer spriteRenderer;
+    /// <summary>描画順を設定するリスト</summary>
+    protected List<SpriteRenderer> priorityTargetList;
 
     /// <summary>
     /// 開始時
     /// </summary>
     virtual protected void Start()
     {
+        priorityTargetList = new List<SpriteRenderer>();
+
         //スプライト取得
-        spriteRenderer = model?.GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
+        var sprite = model?.GetComponent<SpriteRenderer>();
+        if (sprite != null)
         {
-            spriteRenderer.sortingLayerName = "FieldObject";
+            AddPriorityList(sprite);
         }
 
         // フィールドスクリプト　設定が面倒なので基本的な構造なら取得
@@ -47,13 +49,26 @@ public class ObjectBase : MonoBehaviour
     virtual protected void Update()
     {
         //スプライトの表示オーダーを位置にあわせて更新
-        if (spriteRenderer != null)
+        if (priorityTargetList.Count > 0)
         {
             var sortingOrder = Mathf.CeilToInt(-transform.position.y);
-            if (spriteRenderer.sortingOrder != sortingOrder)
+            foreach (var s in priorityTargetList)
             {
-                spriteRenderer.sortingOrder = sortingOrder;
+                if (s.sortingOrder != sortingOrder)
+                {
+                    s.sortingOrder = sortingOrder;
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// 描画順設定Spriteの追加
+    /// </summary>
+    /// <param name="sprite"></param>
+    protected void AddPriorityList(SpriteRenderer sprite)
+    {
+        sprite.sortingLayerName = "FieldObject";
+        priorityTargetList.Add(sprite);
     }
 }

@@ -303,7 +303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351f806e330f5c746989192aa89c4d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 1067762480}
 --- !u!114 &211385904
 MonoBehaviour:
@@ -317,7 +316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd067f8c3d3af3b4887f906d792e750b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   wall: {fileID: 227433003}
   pressSE: {fileID: 8300000, guid: 5c3f4c10d38acc24dbc6a77d57b2ea56, type: 3}
 --- !u!1 &221114633
@@ -413,7 +413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5614c1efdb8a0f4c8e86eacb1a41f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 958574228}
   moveSE: {fileID: 8300000, guid: fe6598f5d4b458047bc542da2bc9afb1, type: 3}
 --- !u!1 &322255724
@@ -486,8 +485,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -865,7 +864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field000
   targetPos: 1
 --- !u!1 &572042082
@@ -1011,7 +1011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field002
   targetPos: 0
 --- !u!1 &648346433
@@ -1332,8 +1333,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1629,7 +1630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 351f806e330f5c746989192aa89c4d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 648346433}
 --- !u!114 &1097845761
 MonoBehaviour:
@@ -1643,7 +1643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd067f8c3d3af3b4887f906d792e750b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   wall: {fileID: 227433003}
   pressSE: {fileID: 8300000, guid: 5c3f4c10d38acc24dbc6a77d57b2ea56, type: 3}
 --- !u!61 &1097845762
@@ -1923,7 +1924,7 @@ Transform:
   m_GameObject: {fileID: 1449442816}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1943,7 +1944,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc9ec6d9c5cfc3448e7459ef47f44ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 1030905821}
   playerObject: {fileID: 1563308307}
 --- !u!58 &1449442819
@@ -1993,7 +1993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb82b3f3842f0a41ac3aa9a4a16a204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
+  SaveViewFlag: 0
+  saveName: 
   serif0: {fileID: 8300000, guid: ca58d4075948cbd429b54bde75f91043, type: 3}
   serif1: {fileID: 8300000, guid: 5ad753ed128fd0c47b6ff229894ef209, type: 3}
   serif2: {fileID: 8300000, guid: a273642d3d7e7064eb630ddcd2a60b5e, type: 3}
@@ -2064,7 +2065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4619c4b84cf0b874699af511645e62a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldScript: {fileID: 0}
   model: {fileID: 1213835946}
   actionCollide: {fileID: 1913459164}
 --- !u!50 &1563308309
@@ -2138,7 +2138,7 @@ Transform:
   m_GameObject: {fileID: 1563308307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

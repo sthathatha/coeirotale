@@ -169,6 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field007
   targetPos: 1
 --- !u!61 &132466195
@@ -314,6 +316,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95595bbb923bdef488e43c8e4bb7a03e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SaveViewFlag: 0
+  saveName: 
   targetMap: Field201
   targetPos: 0
 --- !u!61 &315876206
@@ -537,7 +541,7 @@ Transform:
   m_GameObject: {fileID: 661989250}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -271.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1027,8 +1031,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1479,8 +1483,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1066691213
+  m_SortingLayer: 1
   m_SortingOrder: -19000
   m_Sprite: {fileID: 21300000, guid: 9c435e79075cafe40977c91c6cb885d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1931,7 +1935,7 @@ Transform:
   m_GameObject: {fileID: 1684219124}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 2.2713175}
+  m_LocalPosition: {x: -71.91882, y: -5.8702946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2035,6 +2039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 766a61b845c0ff448bf2d543cc0223d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SaveViewFlag: 0
+  saveName: 
 --- !u!1 &1995726375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,6 +2292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a331e7077650cc249b372cb8eb18a21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SaveViewFlag: 0
+  saveName: 
   tukuyomi: {fileID: 661989252}
   player: {fileID: 1684219125}
   serif0: {fileID: 8300000, guid: c25acbfc4c2302d479bf2c4b44af6942, type: 3}
