@@ -23,9 +23,9 @@ public class F008System : MainScriptBase
     /// フェードイン直前処理
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator BeforeFadeIn()
+    public override IEnumerator BeforeInitFadeIn()
     {
-        yield return base.BeforeFadeIn();
+        yield return base.BeforeInitFadeIn();
 
         if (Global.GetSaveData().GetGameDataInt("Tutorial") < 6)
         {

@@ -188,7 +188,17 @@ public class PlayerScript : CharacterScript
 
         if (aa != null)
         {
-            areaActionList.Remove(aa);
+            RemoveAreaActionList(aa);
         }
+    }
+
+    /// <summary>
+    /// エリアアクションリストから削除
+    /// 　接触中にSetActiveで消えるとOnTriggerExitが呼ばれないため
+    /// </summary>
+    /// <param name="aa"></param>
+    public void RemoveAreaActionList(AreaActionEventBase aa)
+    {
+        areaActionList.Remove(aa);
     }
 }

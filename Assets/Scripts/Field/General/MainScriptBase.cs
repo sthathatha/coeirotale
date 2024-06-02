@@ -108,6 +108,15 @@ public class MainScriptBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    virtual public IEnumerator BeforeInitFadeIn()
+    {
+        yield break;
+    }
+
+    /// <summary>
     /// フェードイン直前にやること
     /// </summary>
     /// <returns></returns>
@@ -213,12 +222,24 @@ public class MainScriptBase : MonoBehaviour
         if (playerObj != null)
         {
             playerObj.transform.position = gp.GetPosition();
+
+            var cam = ManagerSceneScript.GetInstance().mainCam;
+            cam.SetTargetPos(playerObj);
+            cam.Immediate();
         }
 
         // つくよみちゃん
         if (tukuyomiObj != null)
         {
-            tukuyomiObj.GetComponent<TukuyomiScript>().InitTrace();
+            var dir = gp.direction switch
+            {
+                "up" => Constant.Direction.Up,
+                "right" => Constant.Direction.Right,
+                "left" => Constant.Direction.Left,
+                _ => Constant.Direction.Down
+            };
+
+            tukuyomiObj.GetComponent<TukuyomiScript>().InitTrace(dir);
         }
     }
 

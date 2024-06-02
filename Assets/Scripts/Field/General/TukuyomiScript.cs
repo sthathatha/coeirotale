@@ -137,27 +137,23 @@ public class TukuyomiScript : CharacterScript
     /// <summary>
     /// プレイヤーの横に初期化
     /// </summary>
-    public void InitTrace()
+    public void InitTrace(Constant.Direction dir = Constant.Direction.Down)
     {
         if (mode == TukuyomiMode.Trace)
         {
-            transform.position = playerObject.transform.position + new Vector3(0, TRACE_DISTANCE, 0);
-        }
-    }
+            var distVal = TRACE_DISTANCE - 2f;
+            var dist = dir switch
+            {
+                Constant.Direction.Up => new Vector3(0, -distVal, 0),
+                Constant.Direction.Down => new Vector3(0, distVal, 0),
+                Constant.Direction.Right => new Vector3(-distVal, 0, 0),
+                _ => new Vector3(distVal, 0, 0),
+            };
 
-    /// <summary>
-    /// 強制的に向き変更
-    /// </summary>
-    /// <param name="dir"></param>
-    public void SetDirection(Constant.Direction dir)
-    {
-        PlayVectorAnim(dir switch
-        {
-            Constant.Direction.Up => new Vector3(0, 1, 0),
-            Constant.Direction.Down => new Vector3(0, -1, 0),
-            Constant.Direction.Left => new Vector3(-1, 0, 0),
-            _ => new Vector3(1, 0, 0),
-        });
+            transform.position = playerObject.transform.position + dist;
+
+            SetDirection(dir);
+        }
     }
 
     #endregion
@@ -177,22 +173,22 @@ public class TukuyomiScript : CharacterScript
         {
             if (distance.x > 0)
             {
-                modelAnim.Play("right");
+                SetDirection(Constant.Direction.Right);
             }
             else
             {
-                modelAnim.Play("left");
+                SetDirection(Constant.Direction.Left);
             }
         }
         else
         {
             if (distance.y > 0)
             {
-                modelAnim.Play("up");
+                SetDirection(Constant.Direction.Up);
             }
             else
             {
-                modelAnim.Play("down");
+                SetDirection(Constant.Direction.Down);
             }
         }
     }

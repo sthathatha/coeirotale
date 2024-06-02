@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class F003GetKey : AreaActionEventBase
 {
+    /// <summary>プレイヤー</summary>
+    public PlayerScript player;
+
     /// <summary>
     /// 開始時
     /// </summary>
@@ -38,6 +41,7 @@ public class F003GetKey : AreaActionEventBase
 
         msg.Close();
 
+        player.RemoveAreaActionList(this);
         gameObject.SetActive(false);
     }
 }

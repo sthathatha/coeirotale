@@ -7,7 +7,11 @@ using UnityEngine;
 /// </summary>
 public class GeneralPosition : MonoBehaviour
 {
+    /// <summary>ID</summary>
     public int id = 0;
+
+    /// <summary>Œü‚«</summary>
+    public string direction = "down";
 
     /// <summary>
     /// À•Wæ“¾

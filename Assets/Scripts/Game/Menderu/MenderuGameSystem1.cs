@@ -390,6 +390,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_0, TalkWaitType.Time);
             yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_1, TalkWaitType.Time);
             yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_2, TalkWaitType.Time);
+
+            SetGameResult(true);
             ManagerSceneScript.GetInstance().ExitGame();
             yield break;
         }
@@ -438,6 +440,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
                 //Žæ‚ê‚È‚¢‚Ì‚Å”s–k
                 yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_0, TalkWaitType.Time);
                 yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_1, TalkWaitType.Time);
+
+                SetGameResult(false);
                 ManagerSceneScript.GetInstance().ExitGame();
                 yield break;
             }

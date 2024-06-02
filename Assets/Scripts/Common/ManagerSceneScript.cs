@@ -246,6 +246,7 @@ public class ManagerSceneScript : MonoBehaviour
         // 初期処理
         InitMainScene(id);
         // フェードイン前の処理
+        yield return mainScript.BeforeInitFadeIn();
         yield return mainScript.BeforeFadeIn();
         // フェードイン
         yield return FadeIn();

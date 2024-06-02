@@ -69,6 +69,21 @@ public class CharacterScript : ObjectBase
         return walkPosition.IsActive();
     }
 
+    /// <summary>
+    /// 向き変更
+    /// </summary>
+    /// <param name="dir">向き</param>
+    public void SetDirection(Constant.Direction dir)
+    {
+        modelAnim?.Play(dir switch
+        {
+            Constant.Direction.Up => "up",
+            Constant.Direction.Down => "down",
+            Constant.Direction.Right => "right",
+            _ => "left"
+        });
+    }
+
     #endregion
 
     #region 内部メソッド
