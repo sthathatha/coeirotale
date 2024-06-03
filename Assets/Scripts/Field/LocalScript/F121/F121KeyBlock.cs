@@ -10,6 +10,9 @@ public class F121KeyBlock : ActionEventBase
     /// <summary>鍵フラグのセーブデータ</summary>
     public const string KEY_FLG = "PierreKeyPhase";
 
+    /// <summary>プレイヤー</summary>
+    public PlayerScript player;
+
     public AudioClip voice1;
     public AudioClip voice2;
 
@@ -56,6 +59,8 @@ public class F121KeyBlock : ActionEventBase
 
         // 持っていたら開ける
         Global.GetSaveData().SetGameData(KEY_FLG, 2);
+        ManagerSceneScript.GetInstance().soundMan.PlaySE(openSe);
+        player.RemoveActionEvent(this);
         gameObject.SetActive(false);
     }
 }

@@ -1068,6 +1068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
+  player: {fileID: 202765794}
   voice1: {fileID: 8300000, guid: fda7cdc17f09a0841bb236ef91a7df65, type: 3}
   voice2: {fileID: 8300000, guid: 965fd9d24af02dd4bb9f26cbd0309f27, type: 3}
   openSe: {fileID: 8300000, guid: 0e74bd43cc5f6cb4d9387b7e82a7f4a7, type: 3}

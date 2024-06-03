@@ -67,6 +67,7 @@ public class MainScriptBase : MonoBehaviour
         if (!ManagerSceneScript.GetInstance())
         {
             ManagerSceneScript.isDebugLoad = true;
+            Global.GetSaveData().LoadGameData();
             SceneManager.LoadScene("_ManagerScene", LoadSceneMode.Additive);
             yield return null;
         }

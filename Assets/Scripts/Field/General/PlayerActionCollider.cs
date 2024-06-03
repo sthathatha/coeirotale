@@ -4,28 +4,50 @@ using UnityEngine;
 
 public class PlayerActionCollider : MonoBehaviour
 {
-    private List<Collider2D> hitColliders;
+    private List<ActionEventBase> hitColliders;
 
     void Start()
     {
-        hitColliders = new List<Collider2D> ();
+        hitColliders = new List<ActionEventBase>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        hitColliders.Add (collision);
+        var ae = collision.GetComponent<ActionEventBase>();
+        if (ae == null) ae = collision.GetComponentInParent<ActionEventBase>();
+
+        if (ae != null)
+        {
+            hitColliders.Add(ae);
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        hitColliders.Remove (collision);
+        var ae = collision.GetComponent<ActionEventBase>();
+        if (ae == null) ae = collision.GetComponentInParent<ActionEventBase>();
+
+        if (ae != null)
+        {
+            RemoveActionEventList(ae);
+        }
+    }
+
+    /// <summary>
+    /// 自分で消えるときはExitが呼ばれないので手動で削除呼ぶ
+    /// </summary>
+    /// <param name="collision"></param>
+    public void RemoveActionEventList(ActionEventBase ae)
+    {
+        hitColliders.Remove(ae);
     }
 
     /// <summary>
     /// 当たっているコリジョンのリスト
     /// </summary>
     /// <returns></returns>
-    public List<Collider2D> GetHitList()
+    public List<ActionEventBase> GetHitList()
     {
         return hitColliders;
     }

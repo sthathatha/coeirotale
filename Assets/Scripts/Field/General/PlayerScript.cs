@@ -201,4 +201,14 @@ public class PlayerScript : CharacterScript
     {
         areaActionList.Remove(aa);
     }
+
+    /// <summary>
+    /// アクションリストから削除
+    /// 　接触中にSetActiveで消えるとき用
+    /// </summary>
+    /// <param name="ae"></param>
+    public void RemoveActionEvent(ActionEventBase ae)
+    {
+        actionCollide.GetComponent<PlayerActionCollider>().RemoveActionEventList(ae);
+    }
 }
