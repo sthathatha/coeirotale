@@ -55,9 +55,24 @@ public class CharacterScript : ObjectBase
     /// </summary>
     /// <param name="position"></param>
     /// <param name="speed"></param>
-    public void WalkTo(Vector3 position, float speed = 1f)
+    /// <param name="afterDir"></param>
+    public void WalkTo(Vector3 position, float speed = 1f, string afterDir = "")
     {
-        StartCoroutine(WalkToCoroutine(position, speed));
+        StartCoroutine(WalkToCoroutine(position, true, speed, afterDir));
+    }
+
+    /// <summary>
+    /// そのまま動く
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="speed"></param>
+    /// <param name="afterDir"></param>
+    public void SlideTo(Vector3 position,
+        float speed = 8f,
+        string afterDir = "",
+        DeltaFloat.MoveType moveType = DeltaFloat.MoveType.LINE)
+    {
+        StartCoroutine(WalkToCoroutine(position, false, speed, afterDir, moveType));
     }
 
     /// <summary>
@@ -84,6 +99,15 @@ public class CharacterScript : ObjectBase
         });
     }
 
+    /// <summary>
+    /// アニメーション指定
+    /// </summary>
+    /// <param name="anim"></param>
+    public void PlayAnim(string anim)
+    {
+        modelAnim?.Play(anim);
+    }
+
     #endregion
 
     #region 内部メソッド
@@ -92,18 +116,28 @@ public class CharacterScript : ObjectBase
     /// 歩くコルーチン
     /// </summary>
     /// <param name="target"></param>
+    /// <param name="playAnim">歩くアニメーション</param>
     /// <param name="speed"></param>
+    /// <param name="afterDir"></param>
     /// <returns></returns>
-    private IEnumerator WalkToCoroutine(Vector3 target, float speed = 1f)
+    private IEnumerator WalkToCoroutine(Vector3 target,
+        bool playAnim = true,
+        float speed = 1f,
+        string afterDir = "",
+        DeltaFloat.MoveType moveType = DeltaFloat.MoveType.LINE
+        )
     {
         var vec = target - transform.position;
         var time = vec.magnitude / (WALK_VELOCITY * speed);
 
         walkPosition.Set(transform.position);
-        walkPosition.MoveTo(target, time, DeltaFloat.MoveType.LINE);
+        walkPosition.MoveTo(target, time, moveType);
 
         var walkSpeed = vec / time;
-        WalkStartAnim(walkSpeed);
+        if (playAnim)
+        {
+            WalkStartAnim(walkSpeed);
+        }
         while (walkPosition.IsActive())
         {
             yield return null;
@@ -111,7 +145,15 @@ public class CharacterScript : ObjectBase
             walkPosition.Update(Time.deltaTime);
             transform.position = walkPosition.Get();
         }
-        WalkStopAnim();
+        if (playAnim)
+        {
+            WalkStopAnim();
+        }
+
+        if (string.IsNullOrEmpty(afterDir) == false)
+        {
+            modelAnim?.Play(afterDir);
+        }
     }
 
     /// <summary>

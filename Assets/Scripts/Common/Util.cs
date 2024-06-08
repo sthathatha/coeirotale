@@ -91,4 +91,27 @@ public class Util
 
         return ret;
     }
+
+    /// <summary>
+    /// ƒxƒNƒgƒ‹‚ðDirection‚É•ÏŠ·
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public static Constant.Direction GetDirectionFromVec(Vector3 pos)
+    {
+        if (Mathf.Abs(pos.x) > Mathf.Abs(pos.y))
+        {
+            if (pos.x < 0)
+                return Constant.Direction.Left;
+            else
+                return Constant.Direction.Right;
+        }
+        else
+        {
+            if (pos.y < 0)
+                return Constant.Direction.Down;
+            else
+                return Constant.Direction.Up;
+        }
+    }
 }

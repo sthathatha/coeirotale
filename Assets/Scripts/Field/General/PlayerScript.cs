@@ -15,14 +15,27 @@ public class PlayerScript : CharacterScript
 
     #endregion
 
+    #region メンバー
+
     /// <summary>アクション検索用当たり判定</summary>
     public GameObject actionCollide = null;
+
+    #endregion
+
+    #region 変数
 
     /// <summary>物理</summary>
     private Rigidbody2D rigid;
 
+    /// <summary>エリアアクション保持</summary>
     private List<AreaActionEventBase> areaActionList = new List<AreaActionEventBase>();
 
+    /// <summary>カメラ処理有効</summary>
+    private bool enableCamera = true;
+
+    #endregion
+
+    #region 基底
     /// <summary>
     /// 初期化
     /// </summary>
@@ -55,18 +68,28 @@ public class PlayerScript : CharacterScript
         {
             // アクション実行
             var eventPlayed = false;
-            var list = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
-            foreach (var coll in list)
+            var hitList = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
+            ActionEventBase closestEv = null;
+            var closestDist = 0f;
+            foreach (var coll in hitList)
             {
                 var ev = coll.GetComponent<ActionEventBase>() ??
                     coll.GetComponentInParent<ActionEventBase>();
                 if (ev == null) continue;
 
+                var dist = ev.GetPlayerDistance();
+                if (closestEv == null || dist.sqrMagnitude < closestDist)
+                {
+                    closestEv = ev;
+                    closestDist = dist.sqrMagnitude;
+                }
+            }
+            if (closestEv != null)
+            {
                 // イベント発生
                 StopAnim();
-                ev.ExecEvent();
+                closestEv.ExecEvent();
                 eventPlayed = true;
-                break;
             }
 
             if (eventPlayed == false && areaActionList.Count > 0)
@@ -128,11 +151,48 @@ public class PlayerScript : CharacterScript
         base.Update();
     }
 
+    #endregion
+
+    #region パブリック
+
+    /// <summary>
+    /// エリアアクションリストから削除
+    /// 　接触中にSetActiveで消えるとOnTriggerExitが呼ばれないため
+    /// </summary>
+    /// <param name="aa"></param>
+    public void RemoveAreaActionList(AreaActionEventBase aa)
+    {
+        areaActionList.Remove(aa);
+    }
+
+    /// <summary>
+    /// アクションリストから削除
+    /// 　接触中にSetActiveで消えるとき用
+    /// </summary>
+    /// <param name="ae"></param>
+    public void RemoveActionEvent(ActionEventBase ae)
+    {
+        actionCollide.GetComponent<PlayerActionCollider>().RemoveActionEventList(ae);
+    }
+
+    /// <summary>
+    /// カメラ有効設定
+    /// </summary>
+    /// <param name="enable"></param>
+    public void SetCameraEnable(bool enable)
+    {
+        enableCamera = enable;
+    }
+    #endregion
+
+    #region プライベート
     /// <summary>
     /// カメラ更新
     /// </summary>
     private void UpdateCamera()
     {
+        if (enableCamera == false) return;
+
         var cam = ManagerSceneScript.GetInstance().mainCam;
         cam.SetTargetPos(gameObject);
     }
@@ -192,23 +252,6 @@ public class PlayerScript : CharacterScript
         }
     }
 
-    /// <summary>
-    /// エリアアクションリストから削除
-    /// 　接触中にSetActiveで消えるとOnTriggerExitが呼ばれないため
-    /// </summary>
-    /// <param name="aa"></param>
-    public void RemoveAreaActionList(AreaActionEventBase aa)
-    {
-        areaActionList.Remove(aa);
-    }
+    #endregion
 
-    /// <summary>
-    /// アクションリストから削除
-    /// 　接触中にSetActiveで消えるとき用
-    /// </summary>
-    /// <param name="ae"></param>
-    public void RemoveActionEvent(ActionEventBase ae)
-    {
-        actionCollide.GetComponent<PlayerActionCollider>().RemoveActionEventList(ae);
-    }
 }

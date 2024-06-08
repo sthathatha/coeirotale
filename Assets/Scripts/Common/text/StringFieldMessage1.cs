@@ -123,6 +123,15 @@ public partial class StringFieldMessage
 
     #region フィールドXX1～　道中ギミック系
 
+    public const string F101_New1_Reko = "通れません";
+    public const string F101_New2_Tukuyomi = "うーん、誰かに頼んで伐ってもらわないとダメですね";
+    public const string F101_Check1_Reko = "相当鋭い刃物じゃないと伐れそうにない…";
+    public const string F101_Slash1_Reko = "お願いします";
+    public const string F101_Slash2_You = "ん";
+    public const string F101_Slash3_Reko = "ひえーすごい";
+    public const string F101_Slash4_You = "それじゃ";
+    public const string F101_Slash5_Reko = "ありがとうございました！";
+
     public const string F111_New1_Exa = "よお、新入りか";
     public const string F111_New2_Tukuyomi = "先ほど迷い込んできた方です\nあちらに渡りたいのですが";
     public const string F111_New3_Exa = "悪いな、まだ修理が終わってないんだわ";
@@ -148,6 +157,19 @@ public partial class StringFieldMessage
     public const string F121_Board3 = "入口の鍵は文字が一番少ない立て札から下に４歩、左に４歩くらいのところに隠してあるぞ！";
     public const string F121_Board4 = "１歩のサイズはなんとなく察してくれよな！";
 
+    public const string F131_BackNew1_Reko = "あれ、もとに戻ってる…";
+    public const string F131_BackNew2_Tukuyomi = "フラグ管理のミスでしょうか？";
+    public const string F131_BackNew3_Reko = "じゃあこんなセリフ出ないでしょ";
+    public const string F131_BackNew4_Tukuyomi = "とにかく進むならもう一度解くしかありませんね";
+    public const string F131_BackNew5_Reko = "面倒だなあ";
+    public const string F131_Back1_Reko = "どうしてこっちから来ると毎回もとに戻るんだろう…";
+    public const string F131_Catch1_Reko = "ここなんですが";
+    public const string F131_Catch2_Worra = "それじゃあいつものように一度解いてから、戻ってみてくれるかしら？";
+    public const string F131_Catch3_Worra = "やっぱり！またこんないたずらして";
+    public const string F131_Catch4_You = "なんか…昔のゲームっぽいかなって";
+    public const string F131_Catch5_Worra = "いらんことしなくていいから、小春日和に帰るわよ";
+    public const string F131_Catch6_You = "はーい";
+
     public const string F141_Board1 = "仲間はずれの扉をみつけよう";
     public const string F141_Board2 = "閉じている時は同じ見た目だけど、開くとひとつだけ違うよ！";
     public const string F141_Board3 = "どれかの扉に触れたら、それと他のランダムなひとつを残してすべての扉が開くよ";
@@ -160,8 +182,43 @@ public partial class StringFieldMessage
     public const string F151_1_Reko = "この板を渡せば面倒な回り道しなくていいな";
     public const string F151_2_Tukuyomi = "ロープも何かに使えるかもしれないので持っていきましょう";
 
+    #endregion
 
+    #region フィールド102　マチ
+    #endregion
 
+    #region フィールド112　まつかりすく
+    #endregion
+
+    #region フィールド122　ピエール
+
+    public const string F122_New1_Pierre = "ハッピー・エーーール！";
+    public const string F122_New2_Pierre = "クラウンサーカスへようこそ！\n歓迎するよ僕はピエール・クラウン！";
+    public const string F122_New3_Reko = "またずいぶんやかましい人が出てきたな";
+    public const string F122_New4_Pierre = "君は入団希望者だね？\n早速入団テストを始めよう！";
+    public const string F122_New5_Reko = "いや私は";
+    public const string F122_New6_Pierre = "なあにテストは簡単だ！\nかけっこで僕に追いつくだけ！";
+    public const string F122_New7_Reko = "だめだ全然話聞いてませんよ";
+    public const string F122_New8_Tukuyomi = "頑張りましょうね！";
+    public const string F122_New9_Reko = "あっ こっちも";
+
+    public const string F122_Lose1_Pierre = "サーカス団員に必要なのは１にも２にも体力！\nまた挑戦してくれたまえ！";
+    public const string F122_Lose2_Reko = "なんか納得いかない…";
+
+    public const string F122_Retry1_Pierre = "OK！再テストだ！";
+
+    public const string F122_Win1_Pierre = "素晴らしい逸材だ！\n君ならすぐにスターになれるぞ！";
+    public const string F122_Win2_Reko = "いや私は";
+    public const string F122_Win3_Pierre = "さあ善は急げ特訓を始めよう！\nところでライオンは好きかい？";
+    public const string F122_Win4_Reko = "ライオンのほうがまだ話が通じそうだ";
+    public const string F122_Win5_Tukuyomi = "まずお客さんを開拓するために\nあのバリアを壊しにいきませんか？";
+    public const string F122_Win6_Pierre = "ナイスアイデア！\nそうと決まればさあ行こうすぐ行こう！";
+    public const string F122_Win7_Reko = "なんですかあの人";
+    public const string F122_Win8_Tukuyomi = "あれで案外話せばわかる方ですよ";
+
+    #endregion
+
+    #region フィールド132　MANA
     #endregion
 
     #region フィールド143　メンデル
@@ -197,6 +254,32 @@ public partial class StringFieldMessage
     public const string F143_Win2_Tukuyomi = "やりましたね！一歩前進です！";
     public const string F143_Win3_Menderu = "でもあの壁の先の事は何もわかってないんだから、過度な期待はしないでおくことね";
     public const string F143_Win4_Reko = "その時はその時ですよ";
+
+    #endregion
+
+    #region フィールド153　小春音アミ
+
+    public const string F153_Exa_Def1_Exa = "よお、どうだい調子は";
+    public const string F153_Exa_Plant1_Exa = "草原の入口の植物？";
+    public const string F153_Exa_Plant2_Exa = "すまんがあたしの斧じゃあれは無理だな\nひでんマシンでいあいぎり覚えられる奴でも探すといいぜ";
+
+    public const string F153_Worra_Def1_Worra = "あら、こんにちは\nがんばってるわね";
+    public const string F153_Worra_Ice1_Tukuyomi = "すみません、かくかくしかじかで";
+    public const string F153_Worra_Ice2_Worra = "えっ？";
+    public const string F153_Worra_Ice3_Reko = "わかりませんよそれじゃあ";
+    public const string F153_Worra_Ice4_Reko = "氷のブロックの所でなにか\nおかしなことが起きてまして…";
+    public const string F153_Worra_Ice5_Worra = "なるほど、あれね";
+    public const string F153_Worra_Ice6_Worra = "わかったわ\n調べに行きましょう";
+
+    public const string F153_You_Def1_You = "……";
+    public const string F153_You_Plant1_You = "どうしたの？";
+    public const string F153_You_Plant2_Reko = "草原に行く道の植物を伐採できる人を探してるんですが";
+    public const string F153_You_Plant3_You = "大変だね";
+    public const string F153_You_Plant4_Worra = "その子できるわよ、連れていくといいわ";
+    public const string F153_You_Plant5_Reko = "本当ですか！お願いします";
+    public const string F153_You_Plant6_You = "え～";
+    public const string F153_You_Plant7_Worra = "いってあげなさいな";
+    public const string F153_You_Plant8_You = "は～い";
 
     #endregion
 

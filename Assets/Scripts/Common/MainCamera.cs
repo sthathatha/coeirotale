@@ -47,7 +47,10 @@ public class MainCamera : MonoBehaviour
         else
         {
             var deltaLen = CAM_SPEED * Time.deltaTime;
-            basePos += distance.normalized * deltaLen;
+            if (deltaLen >= length)
+                basePos = targetPos;
+            else
+                basePos += distance.normalized * deltaLen;
         }
 
         // シェイク制御

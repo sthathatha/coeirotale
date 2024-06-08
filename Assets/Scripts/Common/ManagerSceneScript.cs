@@ -78,6 +78,13 @@ public class ManagerSceneScript : MonoBehaviour
 
     #endregion
 
+    #region 変数
+
+    /// <summary>プレイヤー初期化位置</summary>
+    protected int initId = 0;
+
+    #endregion
+
     #region 初期化
     /// <summary>
     /// 初期化
@@ -154,13 +161,15 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>
     /// フェードアウト
     /// </summary>
+    /// <param name="time">フェード時間　未指定でデフォルト</param>
     /// <returns></returns>
-    public IEnumerator FadeOut()
+    public IEnumerator FadeOut(float time = -1f)
     {
+        var fadeTime = time > 0f ? time : FADE_TIME;
         fader.gameObject.SetActive(true);
         var alpha = new DeltaFloat();
         alpha.Set(0);
-        alpha.MoveTo(1f, FADE_TIME, DeltaFloat.MoveType.LINE);
+        alpha.MoveTo(1f, fadeTime, DeltaFloat.MoveType.LINE);
         while (alpha.IsActive())
         {
             alpha.Update(Time.deltaTime);
@@ -172,12 +181,14 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>
     /// フェードイン
     /// </summary>
+    /// <param name="time">フェード時間　未指定でデフォルト</param>
     /// <returns></returns>
-    public IEnumerator FadeIn()
+    public IEnumerator FadeIn(float time = -1f)
     {
+        var fadeTime = time > 0f ? time : FADE_TIME;
         var alpha = new DeltaFloat();
         alpha.Set(1f);
-        alpha.MoveTo(0f, FADE_TIME, DeltaFloat.MoveType.LINE);
+        alpha.MoveTo(0f, fadeTime, DeltaFloat.MoveType.LINE);
 
         // Startで表示初期化しているが、直後フェードイン始まると一瞬見えるので1フレ待つ
         fader.alpha = alpha.Get();
@@ -189,6 +200,24 @@ public class ManagerSceneScript : MonoBehaviour
             fader.alpha = alpha.Get();
             yield return null;
         }
+        fader.alpha = 0f;
+        fader.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 瞬時に暗くする
+    /// </summary>
+    public void FadeOutNoWait()
+    {
+        fader.alpha = 1f;
+        fader.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 瞬時に明るくする
+    /// </summary>
+    public void FadeInNoWait()
+    {
         fader.alpha = 0f;
         fader.gameObject.SetActive(false);
     }
@@ -206,6 +235,12 @@ public class ManagerSceneScript : MonoBehaviour
     }
 
     /// <summary>
+    /// 初期化位置取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetInitId() { return initId; }
+
+    /// <summary>
     /// メインシーン切り替えコルーチン
     /// </summary>
     /// <param name="sceneName"></param>
@@ -216,6 +251,7 @@ public class ManagerSceneScript : MonoBehaviour
         // フェードアウト
         SceneState = State.Loading;
         yield return FadeOut();
+        initId = id;
 
         // 旧シーンを保持してロード開始
         var oldScript = mainScript;

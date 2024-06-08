@@ -995,9 +995,9 @@ MonoBehaviour:
   face_Drows0: {fileID: 21300000, guid: a96a862f5b1a8c54aaf39eee948cda5b, type: 3}
   face_Eraps0: {fileID: 21300000, guid: 640ebbab068634c41b0a0f6597d34089, type: 3}
   face_Exa0: {fileID: 21300000, guid: 6182a9e8fc54171468d3e6b623b2e5f3, type: 3}
-  face_Worra0: {fileID: 0}
+  face_Worra0: {fileID: 21300000, guid: eddd80c2ecd64a844a44aae04ce5eacf, type: 3}
   face_Koob0: {fileID: 21300000, guid: f33abf817e89aa3449dfd40f4ca753d4, type: 3}
-  face_You0: {fileID: 0}
+  face_You0: {fileID: 21300000, guid: 9f414f503e2123c41b83edec0af1869a, type: 3}
 --- !u!1 &548137742
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,7 +4318,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 30000

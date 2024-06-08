@@ -271,6 +271,7 @@ public class PierreGameSystemA : GameSceneScriptBase
         yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
 
         messageUI.Close();
+        SetGameResult(true);
         ManagerSceneScript.GetInstance().ExitGame();
     }
 
@@ -291,6 +292,7 @@ public class PierreGameSystemA : GameSceneScriptBase
         yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
 
         messageUI.Close();
+        SetGameResult(false);
         ManagerSceneScript.GetInstance().ExitGame();
     }
 
