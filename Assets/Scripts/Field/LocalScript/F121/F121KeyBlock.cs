@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class F121KeyBlock : ActionEventBase
 {
-    /// <summary>鍵フラグのセーブデータ</summary>
-    public const string KEY_FLG = "PierreKeyPhase";
-
     /// <summary>プレイヤー</summary>
     public PlayerScript player;
 
@@ -26,7 +23,7 @@ public class F121KeyBlock : ActionEventBase
         base.Start();
 
         // 解錠済みは開始時に消す
-        if (Global.GetSaveData().GetGameDataInt(KEY_FLG) >= 2)
+        if (Global.GetSaveData().GetGameDataInt(F121System.KEY_FLG) >= 2)
         {
             gameObject.SetActive(false);
         }
@@ -39,7 +36,7 @@ public class F121KeyBlock : ActionEventBase
     protected override IEnumerator Exec()
     {
         // 鍵を持っていない場合メッセージ
-        if (Global.GetSaveData().GetGameDataInt(KEY_FLG) == 0)
+        if (Global.GetSaveData().GetGameDataInt(F121System.KEY_FLG) < 2)
         {
             var msg = ManagerSceneScript.GetInstance().GetMessageWindow();
             msg.Open();
@@ -54,11 +51,12 @@ public class F121KeyBlock : ActionEventBase
             yield return msg.WaitForMessageEnd();
             msg.Close();
 
+            Global.GetSaveData().SetGameData(F121System.KEY_FLG, 1);
             yield break;
         }
 
         // 持っていたら開ける
-        Global.GetSaveData().SetGameData(KEY_FLG, 2);
+        Global.GetSaveData().SetGameData(F121System.KEY_FLG, 3);
         ManagerSceneScript.GetInstance().soundMan.PlaySE(openSe);
         player.RemoveActionEvent(this);
         gameObject.SetActive(false);

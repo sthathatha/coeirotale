@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class F121System : MainScriptBase
 {
+    /// <summary>鍵のフラグ　0:未発見　1:扉調べる　2:鍵発見　3:解錠済み</summary>
+    public const string KEY_FLG = "F121KeyFlg";
+
     #region 基底
 
     /// <summary>

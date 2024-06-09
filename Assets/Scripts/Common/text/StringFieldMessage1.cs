@@ -271,6 +271,16 @@ public partial class StringFieldMessage
     public const string F153_Worra_Ice5_Worra = "なるほど、あれね";
     public const string F153_Worra_Ice6_Worra = "わかったわ\n調べに行きましょう";
 
+    public const string F153_Koob_Def1_Koob = "頭を使うと甘いものが欲しくなるってホントなのかな";
+    public const string F153_Koob_HelpQ_Koob = "何か困ってる様子かな？";
+    public const string F153_Koob_Key1_Koob = "サーカスの鍵が見つからないのか\nそれは…";
+    public const string F153_Koob_Key2_Koob = "文字が１番少ない立て札がどれかってことだね\n既に見たことあるはずだよ";
+    public const string F153_Koob_You1_Koob = "氷のブロックが勝手に戻る？\nそれは…";
+    public const string F153_Koob_You2_Koob = "まあ…大人の人を連れていって\n見てもらうといいんじゃないかな";
+    public const string F153_Koob_Plant1_Koob = "植物が邪魔で草原に行けない？\nそれは…";
+    public const string F153_Koob_Plant2_Koob = "特別な刃物と技術が必要だから、できる人を探さないとね";
+    public const string F153_Koob_PlantEx3_Koob = "どこかに隠れてるかも、変なことがおこる場所があったら怪しいね";
+
     public const string F153_You_Def1_You = "……";
     public const string F153_You_Plant1_You = "どうしたの？";
     public const string F153_You_Plant2_Reko = "草原に行く道の植物を伐採できる人を探してるんですが";

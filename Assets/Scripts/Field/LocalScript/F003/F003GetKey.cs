@@ -18,7 +18,7 @@ public class F003GetKey : AreaActionEventBase
         base.Start();
 
         // “üŽèÏ‚Ý‚È‚çŽ©•ª‚ÅÁ‚·
-        if (Global.GetSaveData().GetGameDataInt(F121KeyBlock.KEY_FLG) >= 1)
+        if (Global.GetSaveData().GetGameDataInt(F121System.KEY_FLG) >= 2)
         {
             gameObject.SetActive(false);
         }
@@ -32,7 +32,7 @@ public class F003GetKey : AreaActionEventBase
     protected override IEnumerator Exec()
     {
         // Œ®‚ð“üŽè
-        Global.GetSaveData().SetGameData(F121KeyBlock.KEY_FLG, 1);
+        Global.GetSaveData().SetGameData(F121System.KEY_FLG, 2);
         var msg = ManagerSceneScript.GetInstance().GetMessageWindow();
 
         msg.Open();
