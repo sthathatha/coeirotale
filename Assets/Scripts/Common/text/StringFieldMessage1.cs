@@ -96,7 +96,7 @@ public partial class StringFieldMessage
     public const string Tutorial008_09Reko = "７つの声…６人は声が残ってるって言ってましたよね？あと１人居ればもしかしたら…";
     public const string Tutorial008_10Tukuyomi = "会いに行きますか？みなさん個性的な方ですぐには手を貸してくれないかもしれませんが、協力しますよ！";
     public const string Tutorial008_11Reko = "そうしましょう、よろしくお願いします";
-    public const string Tutorial008_12Tukuyomi = "必要とあれば私の体をお使いください！";
+    public const string Tutorial008_12Tukuyomi = "その姿では不便なことがあるでしょうから\n必要な時は私の体をお貸ししますね";
 
     #endregion
 
@@ -274,7 +274,7 @@ public partial class StringFieldMessage
     public const string F153_Koob_Def1_Koob = "頭を使うと甘いものが欲しくなるってホントなのかな";
     public const string F153_Koob_HelpQ_Koob = "何か困ってる様子かな？";
     public const string F153_Koob_Key1_Koob = "サーカスの鍵が見つからないのか\nそれは…";
-    public const string F153_Koob_Key2_Koob = "文字が１番少ない立て札がどれかってことだね\n既に見たことあるはずだよ";
+    public const string F153_Koob_Key2_Koob = "文字が１番少ない立て札がどれかって事だね\n既に見たことあるはずだよ";
     public const string F153_Koob_You1_Koob = "氷のブロックが勝手に戻る？\nそれは…";
     public const string F153_Koob_You2_Koob = "まあ…大人の人を連れていって\n見てもらうといいんじゃないかな";
     public const string F153_Koob_Plant1_Koob = "植物が邪魔で草原に行けない？\nそれは…";

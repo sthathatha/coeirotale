@@ -2304,7 +2304,7 @@ MonoBehaviour:
   serif2: {fileID: 8300000, guid: eb373fb1d794f624fa706826dc754cdb, type: 3}
   serif3: {fileID: 8300000, guid: b05df1d29dad4274292dedd9bc6c31cf, type: 3}
   serif4: {fileID: 8300000, guid: 6fce44ba8eeb99648bbb8ac9a36af764, type: 3}
-  serif5: {fileID: 8300000, guid: 433a73e9b0883a145a78a715a80ca4d0, type: 3}
+  serif5: {fileID: 8300000, guid: b9d30be3913678e47a7189037ac0df50, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
