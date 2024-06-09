@@ -120,6 +120,7 @@ public class ManagerSceneScript : MonoBehaviour
         // ƒQ[ƒ€‹N“®Å‰‚Ìˆ—
         InitMainScene();
 
+        yield return mainScript.BeforeInitFadeIn();
         yield return mainScript.BeforeFadeIn();
         yield return FadeIn();
         yield return mainScript.AfterFadeIn();
