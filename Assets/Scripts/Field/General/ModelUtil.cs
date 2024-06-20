@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D;
 
 /// <summary>
 /// 表示物の汎用機能
 /// </summary>
 public class ModelUtil : MonoBehaviour
 {
+    /// <summary>
+    /// フェード用
+    /// </summary>
+    private DeltaFloat alpha = new DeltaFloat();
+
     /// <summary>
     /// フェードアウト
     /// </summary>
@@ -24,22 +31,40 @@ public class ModelUtil : MonoBehaviour
     public IEnumerator FadeOutCoroutine(float time)
     {
         // SpriteRendererがあればColorのAlpha、CanvasGroupがあればalpha
-        var sprite = GetComponent<SpriteRenderer>();
+        var sprites = GetComponentsInChildren<SpriteRenderer>();
         var canvas = GetComponent<CanvasGroup>();
-        if (sprite == null && canvas == null) yield break;
+        if (sprites.Length == 0 && canvas == null)
+        {
+            alpha.Set(0f);
+            yield break;
+        }
 
-        var alpha = new DeltaFloat();
-        if (sprite != null) alpha.Set(sprite.color.a);
-        else alpha.Set(canvas.alpha);
-
+        var spriteA = sprites.Select(s => s.color.a).ToArray();
+        var canvasA = canvas == null ? 0f : canvas.alpha;
+        alpha.Set(1f);
         alpha.MoveTo(0f, time, DeltaFloat.MoveType.LINE);
         while (alpha.IsActive())
         {
             yield return null;
-
             alpha.Update(Time.deltaTime);
-            if (sprite != null) sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, alpha.Get());
-            else canvas.alpha = alpha.Get();
+
+            foreach (var itm in sprites.Select((s, idx) => new { s, idx }))
+            {
+                itm.s.color = new Color(itm.s.color.r, itm.s.color.g, itm.s.color.b, spriteA[itm.idx] * alpha.Get());
+            }
+            if (canvas != null)
+            {
+                canvas.alpha = canvasA * alpha.Get();
+            }
         }
+    }
+
+    /// <summary>
+    /// フェード途中
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFading()
+    {
+        return alpha.IsActive();
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// F153小春日和　小春音アミ
+/// F132MANA
 /// </summary>
-public class F153Ami : ActionEventBase
+public class F132Mana : ActionEventBase
 {
+    /// <summary>負けカウント</summary>
     private int loseCount = 0;
 
     /// <summary>
@@ -16,7 +17,7 @@ public class F153Ami : ActionEventBase
     {
         base.Start();
 
-        if (Global.GetSaveData().GetGameDataInt(F153System.AMI_WIN_FLG) == 1)
+        if (Global.GetSaveData().GetGameDataInt(F132System.MANA_WIN_FLG) == 1)
         {
             // クリア済みで居なくなる
             gameObject.SetActive(false);
@@ -35,30 +36,30 @@ public class F153Ami : ActionEventBase
 
         msg.Open();
         // 開始会話
-        if (save.GetGameDataInt(F153System.AMI_MEET_FLG) == 1)
+        if (save.GetGameDataInt(F132System.MANA_MEET_FLG) == 1)
         {
-            msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_Retry1_Ami, null);
+            msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F132_Retry1_Mana, null);
             yield return msg.WaitForMessageEnd();
         }
         else
         {
-            save.SetGameData(F153System.AMI_MEET_FLG, 1);
-            msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_New1_Ami, null);
+            save.SetGameData(F132System.MANA_MEET_FLG, 1);
+            msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F132_New1_Mana, null);
             yield return msg.WaitForMessageEnd();
         }
         msg.Close();
 
         // 戦闘
         Global.GetTemporaryData().loseCount = loseCount;
-        manager.StartGame("GameSceneAmiA");
+        manager.StartGame("GameSceneManaA");
         yield return new WaitUntil(() => manager.SceneState == ManagerSceneScript.State.Main);
 
         msg.Open();
         if (Global.GetTemporaryData().gameWon)
         {
-            save.SetGameData(F153System.AMI_WIN_FLG, 1);
+            save.SetGameData(F132System.MANA_WIN_FLG, 1);
             //勝利
-            msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_Win1_Ami, null);
+            msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F132_Win1_Mana, null);
             yield return msg.WaitForMessageEnd();
             msg.Close();
             manager.LoadMainScene("Field004", 4);
@@ -68,7 +69,7 @@ public class F153Ami : ActionEventBase
             //負け
             if (loseCount < 100) loseCount++;
 
-            msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_Lose1_Ami, null);
+            msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F132_Lose1_Mana, null);
             yield return msg.WaitForMessageEnd();
             msg.Close();
         }

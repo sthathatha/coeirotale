@@ -185,9 +185,21 @@ public partial class StringFieldMessage
     #endregion
 
     #region フィールド102　マチ
+
+    public const string F102_New1_Mati = "serif1";
+    public const string F102_Lose1_Mati = "serif2";
+    public const string F102_Retry1_Mati = "serif3";
+    public const string F102_Win1_Mati = "serif4";
+
     #endregion
 
     #region フィールド112　まつかりすく
+
+    public const string F112_New1_Matuka = "serif1";
+    public const string F112_Lose1_Matuka = "serif2";
+    public const string F112_Retry1_Matuka = "serif3";
+    public const string F112_Win1_Matuka = "serif4";
+
     #endregion
 
     #region フィールド122　ピエール
@@ -219,6 +231,12 @@ public partial class StringFieldMessage
     #endregion
 
     #region フィールド132　MANA
+
+    public const string F132_New1_Mana = "serif1";
+    public const string F132_Lose1_Mana = "serif2";
+    public const string F132_Retry1_Mana = "serif3";
+    public const string F132_Win1_Mana = "serif4";
+
     #endregion
 
     #region フィールド143　メンデル
@@ -291,8 +309,37 @@ public partial class StringFieldMessage
     public const string F153_You_Plant7_Worra = "いってあげなさいな";
     public const string F153_You_Plant8_You = "は～い";
 
+    public const string F153_New1_Ami = "serif1";
+    public const string F153_Lose1_Ami = "serif2";
+    public const string F153_Retry1_Ami = "serif3";
+    public const string F153_Win1_Ami = "serif4";
+
     #endregion
 
     #region フィールド200～　ラストダンジョン系
+
+    public const string F008_Normal_Ami = "x";
+    public const string F008_Normal_Mana = "x";
+    public const string F008_Normal_Matuka = "x";
+    public const string F008_Normal_Mati = "x";
+    public const string F008_Normal_Pierre = "x";
+    public const string F008_Normal_Menderu = "x";
+    public const string F008_Normal_Drows = "y";
+    public const string F008_Normal_Exa = "y";
+    public const string F008_Normal_Worra = "y";
+    public const string F008_Normal_Koob = "y";
+    public const string F008_Normal_You = "y";
+
+    public const string F008_Break1_Reko = "z";
+
+    #endregion
+
+    #region フィールド205　ラスボス部屋
+    #endregion
+
+    #region フィールド210　最終部屋
+    #endregion
+
+    #region エンディング
     #endregion
 }
