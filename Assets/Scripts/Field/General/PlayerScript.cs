@@ -30,9 +30,6 @@ public class PlayerScript : CharacterScript
     /// <summary>エリアアクション保持</summary>
     private List<AreaActionEventBase> areaActionList = new List<AreaActionEventBase>();
 
-    /// <summary>カメラ処理有効</summary>
-    private bool enableCamera = true;
-
     #endregion
 
     #region 基底
@@ -44,6 +41,7 @@ public class PlayerScript : CharacterScript
         base.Start();
 
         rigid = GetComponent<Rigidbody2D>();
+        enableCamera = true;
     }
 
     /// <summary>
@@ -55,7 +53,7 @@ public class PlayerScript : CharacterScript
         if (fieldScript.FieldState != MainScriptBase.State.Idle ||
             fieldScript.IsEventPlaying())
         {
-            UpdateCamera();
+            base.Update();
             return;
         }
 
@@ -146,8 +144,6 @@ public class PlayerScript : CharacterScript
             actionCollide.transform.position = transform.position + actionV;
         }
 
-        UpdateCamera();
-
         base.Update();
     }
 
@@ -174,28 +170,9 @@ public class PlayerScript : CharacterScript
     {
         actionCollide.GetComponent<PlayerActionCollider>().RemoveActionEventList(ae);
     }
-
-    /// <summary>
-    /// カメラ有効設定
-    /// </summary>
-    /// <param name="enable"></param>
-    public void SetCameraEnable(bool enable)
-    {
-        enableCamera = enable;
-    }
     #endregion
 
     #region プライベート
-    /// <summary>
-    /// カメラ更新
-    /// </summary>
-    private void UpdateCamera()
-    {
-        if (enableCamera == false) return;
-
-        var cam = ManagerSceneScript.GetInstance().mainCam;
-        cam.SetTargetPos(gameObject);
-    }
 
     /// <summary>
     /// 立ち止まる

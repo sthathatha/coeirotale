@@ -60,6 +60,7 @@ public class F008Barrier : ActionEventBase
         // Ž©•ª‚àÁ‚¦‚é
         yield return new WaitWhile(() => modelUtil.IsFading());
         tukuyomi.SetMode(TukuyomiScript.TukuyomiMode.Trace);
+        Global.GetSaveData().SetGameData(F008System.BARRIER_PHASE, 1);
         gameObject.SetActive(false);
     }
 

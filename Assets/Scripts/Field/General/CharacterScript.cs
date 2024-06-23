@@ -18,10 +18,16 @@ public class CharacterScript : ObjectBase
     #region 変数
 
     /// <summary>モデルアニメーション</summary>
-    protected Animator modelAnim;
+    protected Animator modelAnim
+    {
+        get { return model?.GetComponent<Animator>(); }
+    }
 
     /// <summary>歩き移動管理用</summary>
     private DeltaVector3 walkPosition = new DeltaVector3();
+
+    /// <summary>カメラ処理有効 デフォルトはプレイヤーのみ</summary>
+    protected bool enableCamera = false;
 
     #endregion
 
@@ -33,8 +39,21 @@ public class CharacterScript : ObjectBase
     protected override void Start()
     {
         base.Start();
+    }
 
-        modelAnim = model.GetComponent<Animator>();
+    /// <summary>
+    /// 更新
+    /// </summary>
+    protected override void Update()
+    {
+        if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main)
+        {
+            base.Update();
+            return;
+        }
+
+        UpdateCamera();
+        base.Update();
     }
 
     #endregion
@@ -174,6 +193,32 @@ public class CharacterScript : ObjectBase
         modelAnim.SetFloat("speedX", 0);
         modelAnim.SetFloat("speedY", 0);
     }
+
+    /// <summary>
+    /// カメラ更新
+    /// </summary>
+    protected void UpdateCamera()
+    {
+        if (enableCamera == false) return;
+
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(gameObject);
+    }
+
+    /// <summary>
+    /// カメラ有効設定
+    /// </summary>
+    /// <param name="enable"></param>
+    public void SetCameraEnable(bool enable)
+    {
+        enableCamera = enable;
+    }
+
+    /// <summary>
+    /// カメラ有効フラグ
+    /// </summary>
+    /// <returns></returns>
+    public bool IsCameraEnable() { return enableCamera; }
 
     #endregion
 }

@@ -332,6 +332,28 @@ public partial class StringFieldMessage
 
     public const string F008_Break1_Reko = "z";
 
+    public const string F201_Break1_1_Reko = "s1";
+
+    public const string F201_Break2_1_Drows = "s2";
+    public const string F201_Break2_2_Drows = "s22";
+
+    public const string F201_Break3_1_Mati = "s3";
+    public const string F201_Break3_2_Drows = "s32";
+    public const string F201_Break3_3_Mana = "s33";
+
+    public const string F201_Break4_1_Koob = "s4";
+    public const string F201_Break4_2_Exa = "s42";
+    public const string F201_Break4_3_Worra = "s43";
+    public const string F201_Break4_4_You = "s44";
+
+    public const string F201_Break5_1_Drows = "s5";
+
+    public const string F201_Break6_1_Eraps = "s6";
+    public const string F201_Break6_2_Tukuyomi = "s62";
+
+    public const string F201_Break7_1_Drows = "s7";
+    public const string F201_Break7_2_Exa = "s72";
+
     #endregion
 
     #region フィールド205　ラスボス部屋

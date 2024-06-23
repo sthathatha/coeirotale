@@ -107,7 +107,7 @@ public class Shaker
 
         if (state == ShakeState.Active)
         {
-            if (shakeTime > 0f)
+            if (shakeTime >= 0f)
             {
                 shakeTime -= Time.deltaTime;
                 if (shakeTime < 0f)

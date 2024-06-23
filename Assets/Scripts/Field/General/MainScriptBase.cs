@@ -125,9 +125,13 @@ public class MainScriptBase : MonoBehaviour
     {
         if (playerObj != null)
         {
-            var cam = ManagerSceneScript.GetInstance().mainCam;
-            cam.SetTargetPos(playerObj);
-            cam.Immediate();
+            var scr = playerObj.GetComponent<PlayerScript>();
+            if (scr.IsCameraEnable())
+            {
+                var cam = ManagerSceneScript.GetInstance().mainCam;
+                cam.SetTargetPos(playerObj);
+                cam.Immediate();
+            }
         }
 
         yield break;

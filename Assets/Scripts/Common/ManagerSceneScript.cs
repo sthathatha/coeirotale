@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// 基本マネージャーScene
@@ -163,9 +164,13 @@ public class ManagerSceneScript : MonoBehaviour
     /// フェードアウト
     /// </summary>
     /// <param name="time">フェード時間　未指定でデフォルト</param>
+    /// <param name="color">色指定　未指定で黒</param>
     /// <returns></returns>
-    public IEnumerator FadeOut(float time = -1f)
+    public IEnumerator FadeOut(float time = -1f, Color? color = null)
     {
+        var col = color ?? Color.black;
+        fader.GetComponentInChildren<Image>().color = col;
+
         var fadeTime = time > 0f ? time : FADE_TIME;
         fader.gameObject.SetActive(true);
         var alpha = new DeltaFloat();
@@ -208,8 +213,12 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>
     /// 瞬時に暗くする
     /// </summary>
-    public void FadeOutNoWait()
+    /// <param name="color">色指定　未指定で黒</param>
+    public void FadeOutNoWait(Color? color = null)
     {
+        var col = color ?? Color.black;
+        fader.GetComponentInChildren<Image>().color = col;
+
         fader.alpha = 1f;
         fader.gameObject.SetActive(true);
     }
