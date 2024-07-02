@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class F111System : MainScriptBase
 {
+    /// <summary>‹´‚ÌC—@0:‰Šú@1:ˆË—Š@2:C—Ï‚İ</summary>
     public const string BRIDGE_FLG = "BridgeRepair";
 
     #region Šî’ê

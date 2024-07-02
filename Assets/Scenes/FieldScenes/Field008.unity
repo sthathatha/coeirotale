@@ -395,7 +395,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: pierre
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: b2217f49bdcc24641a413dd7c4a69180, type: 3}
 --- !u!1 &315876203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: matuka
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: 1f728cc325218284d95b25a990ebbb9c, type: 3}
 --- !u!1 &472445193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,9 +2300,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 984509290}
-  - component: {fileID: 984509291}
-  - component: {fileID: 984509293}
   - component: {fileID: 984509292}
+  - component: {fileID: 984509293}
+  - component: {fileID: 984509291}
   m_Layer: 0
   m_Name: BarrierObject
   m_TagString: Untagged
@@ -2340,6 +2340,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
+  voice2: {fileID: 8300000, guid: e08221042bfbfa84397b4689b5f2378c, type: 3}
+  voice4: {fileID: 8300000, guid: 58fb13ba368363d448b2a427bacad02b, type: 3}
+  voice5: {fileID: 8300000, guid: 47d5969e3ec308540be30cf6e68c2f67, type: 3}
+  voice6: {fileID: 8300000, guid: d081bc34037f7ca4b8d3b8c21fe9c6d3, type: 3}
+  voice7: {fileID: 8300000, guid: f8471f086fde05045ba7766236da8c2a, type: 3}
+  voice8: {fileID: 8300000, guid: d6dae08681c5fc34aa557838fda429f6, type: 3}
+  voice9: {fileID: 8300000, guid: f40e20c4f8add514da8c226ea00c41e6, type: 3}
+  voice10: {fileID: 8300000, guid: 6e94b4ce938b88647921e3ecc47fd67f, type: 3}
+  voice11: {fileID: 8300000, guid: d70df219d73533647a52bda1a7b9e25b, type: 3}
+  voice13: {fileID: 8300000, guid: 683d4dd4956e71b49a1ebc7a604db196, type: 3}
+  voice14: {fileID: 8300000, guid: 033c538f9c739154fa01580fa57958a2, type: 3}
+  voice_shout: {fileID: 8300000, guid: e493b0fe73fd93d4e9744f9626974fff, type: 3}
+  voice16: {fileID: 8300000, guid: 658a943c30f02054bbbcd26d67c39fa6, type: 3}
+  voice17: {fileID: 8300000, guid: cd4f962cc99f942448f01e032c65f05c, type: 3}
+  voice18: {fileID: 8300000, guid: 77c09a7ff1305a44aacd53d8a96a8abf, type: 3}
+  voice19: {fileID: 8300000, guid: 0bf6d585ff4fed1459a08c91ff9ff840, type: 3}
+  voice20: {fileID: 8300000, guid: 0a130324e776b754aa98167bcbc6a998, type: 3}
 --- !u!114 &984509292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2526,7 +2543,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: mati
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: 589cd0f6c78604348b5690f927829bc2, type: 3}
 --- !u!1 &1108415558
 GameObject:
   m_ObjectHideFlags: 0
@@ -3803,7 +3820,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: ami
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: 5c70115d08137a0478e05e1ee7b8bb63, type: 3}
 --- !u!1 &1581389603
 GameObject:
   m_ObjectHideFlags: 0
@@ -4357,7 +4374,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: menderu
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: 5a7c61881d3f952429a8fa7f62e81956, type: 3}
 --- !u!1 &1848620435
 GameObject:
   m_ObjectHideFlags: 0
@@ -4769,7 +4786,7 @@ MonoBehaviour:
   SaveViewFlag: 0
   saveName: 
   charaName: mana
-  voice0: {fileID: 0}
+  voice0: {fileID: 8300000, guid: 490f3e566fabcca408ca5deb4b321210, type: 3}
 --- !u!1 &2137686501
 GameObject:
   m_ObjectHideFlags: 0

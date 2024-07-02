@@ -28,6 +28,13 @@ public class F153You : ActionEventBase
             gameObject.SetActive(false);
             return;
         }
+
+        if (Global.GetSaveData().GetGameDataInt(F201System.DUNGEON_OPEN_FLG) >= 1)
+        {
+            // ラストダンジョンイベント後
+            gameObject.SetActive(false);
+            return;
+        }
     }
 
     /// <summary>

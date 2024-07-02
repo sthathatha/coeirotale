@@ -707,6 +707,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
+  voice_new1: {fileID: 8300000, guid: f35dc35912d985c4f8bbd8ba15d609a4, type: 3}
+  voice_new3: {fileID: 8300000, guid: c66883a00752dd24bb66b588f2e5e447, type: 3}
+  voice_new4: {fileID: 8300000, guid: f6965751f31cb454f9563bdace0279cb, type: 3}
+  voice_new6: {fileID: 8300000, guid: dbfaec46eb9ee514da64af2692acf868, type: 3}
+  voice_new7: {fileID: 8300000, guid: de346558a7bcf544788be9ef07e4ec47, type: 3}
+  voice_new9: {fileID: 8300000, guid: f57c1240a17e67f468450453b6a4eac0, type: 3}
+  voice_new10: {fileID: 8300000, guid: ff9a152f716f6754c933f1c38db6cb6c, type: 3}
+  voice_new12: {fileID: 8300000, guid: 045cca5d53c885349903d0c211c848da, type: 3}
+  voice_new13: {fileID: 8300000, guid: 6276ed6adbc3a8543bbb6f9eb9dc9650, type: 3}
+  voice_lose1: {fileID: 8300000, guid: 5a0cc4cfe586796489680c845ef0fadb, type: 3}
+  voice_lose3: {fileID: 8300000, guid: a818678152a84f147ba6b878e4a461df, type: 3}
+  voice_retry1: {fileID: 8300000, guid: 66a440765851e044b9acb921a919fa25, type: 3}
+  voice_win1: {fileID: 8300000, guid: 93ae132004e224844a52f67a73d55ac1, type: 3}
+  voice_win2: {fileID: 8300000, guid: b162f167f4d12644e9e73cc5aae5ab44, type: 3}
+  voice_win3: {fileID: 8300000, guid: 09206eab6df216444a43b8b5eb9139e7, type: 3}
+  voice_win4: {fileID: 8300000, guid: c6c153fa7609a0746b07d3c051b7d234, type: 3}
 --- !u!1 &777145514
 GameObject:
   m_ObjectHideFlags: 0

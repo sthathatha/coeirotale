@@ -103,6 +103,18 @@ public class Global
         public void InitGameData()
         {
             gameData.Clear();
+
+            //todo:テスト用
+            gameData[F101System.PLANT_FLG] = "3";
+            gameData[F111System.BRIDGE_FLG] = "2";
+            gameData[F121System.KEY_FLG] = "3";
+            gameData[F131System.ICE_BLOCK_FLG] = "1";
+            gameData[F131System.ICE_YOU_FLG] = "3";
+            gameData[F141System.CLEAR_FLG] = "1";
+            gameData[F151BoardSource.BOARD_USE_FLG] = "1";
+            gameData[F122System.F122_PIERRE_PHASE] = "2";
+            gameData[F143System.MENDERU_WIN_FLG] = "1";
+            gameData[F153System.AMI_WIN_FLG] = "1";
         }
 
         /// <summary>
@@ -161,6 +173,23 @@ public class Global
             {
                 return def;
             }
+        }
+
+        /// <summary>
+        /// 前半ボスのクリア数を取得
+        /// </summary>
+        /// <returns></returns>
+        public int GetABossClearCount()
+        {
+            var cnt = 0;
+            if (GetGameDataInt(F102System.MATI_WIN_FLG) == 1) cnt++;
+            if (GetGameDataInt(F112System.MATUKA_WIN_FLG) == 1) cnt++;
+            if (GetGameDataInt(F122System.F122_PIERRE_PHASE) >= 2) cnt++;
+            if (GetGameDataInt(F132System.MANA_WIN_FLG) == 1) cnt++;
+            if (GetGameDataInt(F143System.MENDERU_WIN_FLG) == 1) cnt++;
+            if (GetGameDataInt(F153System.AMI_WIN_FLG) == 1) cnt++;
+
+            return cnt;
         }
 
         /// <summary>

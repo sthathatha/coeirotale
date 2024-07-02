@@ -114,6 +114,11 @@ public class MainScriptBase : MonoBehaviour
     /// <returns></returns>
     virtual public IEnumerator BeforeInitFadeIn()
     {
+        if (Global.GetSaveData().GetGameDataInt(F204System.WALL_OPEN_FLG) == 1)
+        {
+            tukuyomiObj.SetActive(false);
+        }
+
         yield break;
     }
 

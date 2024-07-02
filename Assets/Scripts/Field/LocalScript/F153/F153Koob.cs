@@ -18,7 +18,8 @@ public class F153Koob : ActionEventBase
         base.Start();
         var save = Global.GetSaveData();
 
-        if (save.GetGameDataInt(F143System.F143_SHOW_FLG) < 1)
+        if (save.GetGameDataInt(F143System.F143_SHOW_FLG) < 1 ||
+            Global.GetSaveData().GetGameDataInt(F201System.DUNGEON_OPEN_FLG) >= 1)
         {
             gameObject.SetActive(false);
             return;

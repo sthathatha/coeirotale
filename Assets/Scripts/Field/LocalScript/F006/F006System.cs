@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class F006System : MainScriptBase
 {
+    public const string AFTER_OPEN_TALK_FLG = "F006AfterTalk";
+
     #region Šî’ê
     /// <summary>
     /// BGM

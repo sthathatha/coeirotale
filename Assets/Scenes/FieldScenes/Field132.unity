@@ -721,6 +721,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
+  voice_new1: {fileID: 8300000, guid: 5878c1a830bba224cb91f51eedebc6c2, type: 3}
+  voice_new3: {fileID: 8300000, guid: 4ed9dc31204231544b02e9d4e09ea577, type: 3}
+  voice_new5: {fileID: 8300000, guid: aa5d836d902874e488601940508ce932, type: 3}
+  voice_new7: {fileID: 8300000, guid: 4c672ae011f11d044b6fb62f2411c4e1, type: 3}
+  voice_new9: {fileID: 8300000, guid: c011374980530ef409483579ab45d300, type: 3}
+  voice_lose1: {fileID: 8300000, guid: 05e919b06af53f14e8403f478a427e85, type: 3}
+  voice_retry1: {fileID: 8300000, guid: 864b4a8f6a43b55419aececd1e3e1461, type: 3}
+  voice_win1: {fileID: 8300000, guid: 461b54231e492e54da529facfaf92498, type: 3}
+  voice_win2: {fileID: 8300000, guid: 233cdcf1e97b8d44f948770b889be41b, type: 3}
+  voice_win3: {fileID: 8300000, guid: 2c5098eb899aa1d40bfdb415cdbe8e9e, type: 3}
+  voice_win4: {fileID: 8300000, guid: 7bb1c7278129c4448bb15637f3c198b9, type: 3}
 --- !u!1 &777145514
 GameObject:
   m_ObjectHideFlags: 0

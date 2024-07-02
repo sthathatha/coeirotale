@@ -104,6 +104,21 @@ public partial class StringFieldMessage
 
     public const string F003_GetKey = "小さな鍵を手に入れた！";
 
+    public const string F004_Clear5_1_Tukuyomi = "残すところあと１人です";
+    public const string F004_Clear5_2_Reko = "あれ、６人じゃないんですか？";
+    public const string F004_Clear5_3_Tukuyomi = "そうですよ\n今５人とお会いしましたから";
+    public const string F004_Clear5_4_Reko = "えっ";
+    public const string F004_Clear5_5_Tukuyomi = "えっ";
+    public const string F004_Clear5_6_Reko = "つくよみちゃん\nもしかして自分を数えてない？";
+    public const string F004_Clear5_7_Tukuyomi = "もちろんそうです";
+    public const string F004_Clear5_8_Reko = "ガックシ…";
+    public const string F004_Clear5_9_Reko = "いやいいんだ、なら全員であそこに行けば\nきっと何かできるはずだ";
+    public const string F004_Clear5_10_Reko = "最後の１人に会いに行こう！";
+
+    public const string F004_Clear6_1_Reko = "ついに全員揃ったぞ！さあ…\nなんだっけ";
+    public const string F004_Clear6_2_Tukuyomi = "まっすぐ右に行ったところのバリアですね";
+    public const string F004_Clear6_3_Reko = "そうそれ";
+
     public const string F006_1_ErapsNew = "こんにちは、新しい方ですね";
     public const string F006_2_Eraps = "この先はヌシが棲むといわれている海で、立入禁止になっています";
     public const string F006_3_Eraps = "巨大な純白の、ワニのような魚のような姿をしているんだとか";
@@ -186,19 +201,61 @@ public partial class StringFieldMessage
 
     #region フィールド102　マチ
 
-    public const string F102_New1_Mati = "serif1";
-    public const string F102_Lose1_Mati = "serif2";
-    public const string F102_Retry1_Mati = "serif3";
-    public const string F102_Win1_Mati = "serif4";
+    public const string F102_New1_Mati = "ついにここまで来たね\n…待っていたよ";
+    public const string F102_New2_Reko = "えっ";
+    public const string F102_New3_Mati = "私は軍歌マチ\n初めましてだが\n私は君をよく知っている";
+    public const string F102_New4_Tukuyomi = "彼女は未来から来た\nアンドロイドなんだそうです";
+    public const string F102_New5_Reko = "見た目は大正ロマンっぽいですね";
+    public const string F102_New6_Tukuyomi = "流行は繰り返すものですから";
+    public const string F102_New7_Mati = "詳しくは話せないが\n君の力になるために来た";
+    public const string F102_New8_Reko = "それじゃあこの世界が何なのか\n知ってるんですか？";
+    public const string F102_New9_Mati = "おとぎ話程度にね…\nしかし結末は君次第さ";
+    public const string F102_New10_Mati = "あの壁の先へ行くつもりだろう？\n生半な覚悟で遂げられる道ではないよ";
+    public const string F102_New11_Reko = "それでも、やらなきゃいけないことは\nやらなきゃいけないんです！";
+    public const string F102_New12_Mati = "いい目をしているね\nならば確かめさせてもらおう、君の強さ";
+    public const string F102_New13_Tukuyomi = "目あるんですか？";
+
+    public const string F102_Lose1_Mati = "これでは先へ進ませるわけにはいかないね\n充分に力をつけてまた来てくれ";
+    public const string F102_Lose2_Reko = "（ちょっと強すぎますよ）";
+    public const string F102_Lose3_Tukuyomi = "（何度も挑んで疲れさせるというのはどうでしょう？）";
+
+    public const string F102_Retry1_Mati = "さあ、始めようか";
+
+    public const string F102_Win1_Mati = "君の覚悟しかと見せてもらった\n私の全力で支援しよう";
+    public const string F102_Win2_Mati = "ところでまだ説得できていない人が残っているようだね";
+    public const string F102_Win3_Mati = "私は先にバリアの前で待っているよ";
+    public const string F102_Win4_Tukuyomi = "なんとかなりましたね";
+    public const string F102_Win5_Reko = "ハァ、手強い相手だった…\n出るゲーム間違ってるんじゃないですか";
 
     #endregion
 
     #region フィールド112　まつかりすく
 
-    public const string F112_New1_Matuka = "serif1";
-    public const string F112_Lose1_Matuka = "serif2";
-    public const string F112_Retry1_Matuka = "serif3";
-    public const string F112_Win1_Matuka = "serif4";
+    public const string F112_New1_Matuka = "ここに僕以外が来るなんて珍しいな";
+    public const string F112_New2_Reko = "橋落ちてたのに大丈夫なんですか？";
+    public const string F112_New3_Matuka = "ああまた落ちてたのか、面倒かけたね";
+    public const string F112_New4_Reko = "気づいてすらなかった";
+    public const string F112_New5_Tukuyomi = "というか松嘩りすくさんの声で落ちてるんですよ";
+    public const string F112_New6_Reko = "そんなことありますか";
+    public const string F112_New7_Matuka = "わざとじゃないんだよ";
+    public const string F112_New8_Reko = "当たり前です";
+    public const string F112_New9_Tukuyomi = "そんな松嘩さんを見込んで、バリアを壊すのを手伝っていただきたいんです";
+    public const string F112_New10_Matuka = "あれ以前やったけどダメだったんだよなあ、山ちゃんでなきゃ無理じゃないの";
+    public const string F112_New11_Reko = "誰ですか";
+    public const string F112_New12_Tukuyomi = "そこでですよ、一人では無理でもみなさんで協力すればどうかと";
+    public const string F112_New13_Matuka = "あのメンバーを全員？骨が折れるぞー";
+    public const string F112_New14_Reko = "できる限りのことはしておきたいんです";
+    public const string F112_New15_Matuka = "ふむ、君のやる気次第かな、魂の叫びを僕に聞かせてくれ";
+    public const string F112_New16_Tukuyomi = "おまかせください！私が魂の器になりましょう";
+
+    public const string F112_Lose1_Matuka = "気合が足りないんじゃないかな！";
+    public const string F112_Lose2_Reko = "何をさせられているんだ";
+    public const string F112_Lose3_Tukuyomi = "すみません、何度かやれば私が慣れて声を出しやすくなるかもしれません";
+
+    public const string F112_Retry1_Matuka = "改めて、聞かせてもらおう";
+
+    public const string F112_Win1_Matuka = "良い気合だった、君ならやれるかもしれないな";
+    public const string F112_Win2_Reko = "それじゃあよろしくお願いします！";
 
     #endregion
 
@@ -232,10 +289,27 @@ public partial class StringFieldMessage
 
     #region フィールド132　MANA
 
-    public const string F132_New1_Mana = "serif1";
-    public const string F132_Lose1_Mana = "serif2";
-    public const string F132_Retry1_Mana = "serif3";
-    public const string F132_Win1_Mana = "serif4";
+    public const string F132_New1_Mana = "やっほー？MANAさんだよ";
+    public const string F132_New2_Reko = "はじめまして\n実は折り入ってお願いが…";
+    public const string F132_New3_Mana = "いいよー！";
+    public const string F132_New4_Reko = "！？";
+    public const string F132_New5_Tukuyomi = "話のわかる方なんです";
+    public const string F132_New6_Reko = "なんもわかってないだけのような";
+    public const string F132_New7_Mana = "ただしこのMANAさんをたおしてからだ！";
+    public const string F132_New8_Reko = "！？";
+    public const string F132_New9_Tukuyomi = "遊びたいだけですよ";
+    public const string F132_New10_Reko = "わかったわかった";
+
+    public const string F132_Lose1_Mana = "ふはははは！みじゅくものめ";
+    public const string F132_Lose2_Reko = "なんか悔しい…";
+
+    public const string F132_Retry1_Mana = "なんどでもあいてになるぞ！\nかかってきたまえ";
+
+    public const string F132_Win1_Mana = "まけちゃった！やるじゃない";
+    public const string F132_Win2_Mana = "で、なんだっけ";
+    public const string F132_Win3_Tukuyomi = "右にあるあのバリアを壊したいので\n手伝っていただきたいんです";
+    public const string F132_Win4_Mana = "おっけー！MANAさんにおまかせ";
+    public const string F132_Win5_Reko = "軽いなー";
 
     #endregion
 
@@ -309,50 +383,138 @@ public partial class StringFieldMessage
     public const string F153_You_Plant7_Worra = "いってあげなさいな";
     public const string F153_You_Plant8_You = "は～い";
 
-    public const string F153_New1_Ami = "serif1";
-    public const string F153_Lose1_Ami = "serif2";
-    public const string F153_Retry1_Ami = "serif3";
-    public const string F153_Win1_Ami = "serif4";
+    public const string F153_New1_Ami = "いらっしゃいませ！お好きな席へどうぞ";
+    public const string F153_New2_Tukuyomi = "こちらは小春日和のマスター\n小春音アミさんです";
+    public const string F153_New3_Tukuyomi = "アミさん、今日はちょっと別件でして";
+    public const string F153_New4_Ami = "どうしたの？";
+    public const string F153_New5_Reko = "バリアを壊すのを手伝ってくれませんか？";
+    public const string F153_New6_Ami = "ええ、私なんかにそんな大それたこと…";
+    public const string F153_New7_Reko = "とんでもない！あなたの力が必要なんです";
+    public const string F153_New8_Ami = "んー、じゃあ一応あなたの能力も見せてもらおうかな";
+    public const string F153_New9_Tukuyomi = "ほーら来た";
+    public const string F153_New10_Reko = "やってやりますよ！";
+
+    public const string F153_Lose1_Ami = "それじゃあちょっと不安だね";
+    public const string F153_Lose2_Reko = "くそっ、つくよみちゃん、どうにかならないかな";
+    public const string F153_Lose3_Tukuyomi = "アミさんはこういう事に関しては妥協しませんから、実力でどうにかするしかありません";
+    public const string F153_Lose4_Reko = "なんてこった…";
+
+    public const string F153_Retry1_Ami = "もう一度やる？";
+
+    public const string F153_Win1_Ami = "なかなかやるね、うん、やってみるよ";
+    public const string F153_Win2_Reko = "やった！";
 
     #endregion
 
     #region フィールド200～　ラストダンジョン系
 
-    public const string F008_Normal_Ami = "x";
-    public const string F008_Normal_Mana = "x";
-    public const string F008_Normal_Matuka = "x";
-    public const string F008_Normal_Mati = "x";
-    public const string F008_Normal_Pierre = "x";
-    public const string F008_Normal_Menderu = "x";
-    public const string F008_Normal_Drows = "y";
-    public const string F008_Normal_Exa = "y";
-    public const string F008_Normal_Worra = "y";
-    public const string F008_Normal_Koob = "y";
-    public const string F008_Normal_You = "y";
+    public const string F008_Normal_Ami = "やっぱりちょっと怖いけど…\nここまで来たらやりましょう";
+    public const string F008_Normal_Mana = "MANAさんの伝説がここから始まる！";
+    public const string F008_Normal_Matuka = "うおおおおおおおお！\nみなぎってきたあああああ！";
+    public const string F008_Normal_Mati = "準備ができたらバリアを叩こう";
+    public const string F008_Normal_Pierre = "まだかい？\n待ちくたびれちまったよ！";
+    public const string F008_Normal_Menderu = "私はいつでもいいわよ";
+    public const string F008_Normal_Drows = "ぐぬぬ…";
+    public const string F008_Normal_Exa = "ムチャしやがって";
+    public const string F008_Normal_Worra = "大丈夫、もうすぐ終わるわ\nきっと全部うまくいく";
+    public const string F008_Normal_Koob = "この子は心配いらないよ\nどうせすぐ元気になるし";
+    public const string F008_Normal_You = "連れを起こさないでくれ\n死ぬほど疲れてる";
 
-    public const string F008_Break1_Reko = "z";
+    public const string F008_Break1_Reko = "７人揃いましたね";
+    public const string F008_Break2_Tukuyomi = "これからどうしましょうか";
+    public const string F008_Break3_Reko = "考えてなかった…";
+    public const string F008_Break4_Matuka = "オオオイ！";
+    public const string F008_Break5_Mati = "”七つの声を持つ者”…";
+    public const string F008_Break6_Pierre = "まるで意味がわからんぞ";
+    public const string F008_Break7_Menderu = "早い話が声を７種類聞きたいんでしょ";
+    public const string F008_Break8_Mana = "バリアさんが？";
+    public const string F008_Break9_Ami = "気持ちはわかるよ";
+    public const string F008_Break10_Matuka = "わかっちゃったよ";
+    public const string F008_Break11_Tukuyomi = "じゃあとりあえず全員同時に叫んでみますか";
+    public const string F008_Break12_Reko = "そう！それが言いたかった";
+    public const string F008_Break13_Menderu = "はいはい";
+    public const string F008_Break14_Tukuyomi = "ではみなさんいきますよ、せーの";
 
-    public const string F201_Break1_1_Reko = "s1";
+    public const string F008_Break15_Reko = "なんで！？";
+    public const string F008_Break16_Tukuyomi = "決めてませんでしたからね";
+    public const string F008_Break17_Mana = "でも消えていってるみたい！";
+    public const string F008_Break18_Matuka = "いいのか！？";
 
-    public const string F201_Break2_1_Drows = "s2";
-    public const string F201_Break2_2_Drows = "s22";
+    public const string F008_Break19_Mati = "行こうか\nこの世界の真実がわかるはずだ";
+    public const string F008_Break20_Pierre = "南無三！";
 
-    public const string F201_Break3_1_Mati = "s3";
-    public const string F201_Break3_2_Drows = "s32";
-    public const string F201_Break3_3_Mana = "s33";
+    public const string F201_Break1_1_Reko = "あれ、どうしましたか？";
+    public const string F201_Break1_2_Ami = "行き止まりみたいだね";
+    public const string F201_Break1_3_Pierre = "がーんだな\n出鼻をくじかれた";
 
-    public const string F201_Break4_1_Koob = "s4";
-    public const string F201_Break4_2_Exa = "s42";
-    public const string F201_Break4_3_Worra = "s43";
-    public const string F201_Break4_4_You = "s44";
+    public const string F201_Break2_1_Drows = "よっしゃやっと通れたか";
+    public const string F201_Break2_2_Mana = "あっビリビリしてた人\nなんか全然元気そう";
+    public const string F201_Break2_3_Drows = "そりゃ寝たら全回復するだろ";
+    public const string F201_Break2_4_Matuka = "ゲームかよ！";
+    public const string F201_Break2_5_Tukuyomi = "ゲームですね";
+    public const string F201_Break2_6_Menderu = "でも残念だけどここには何もないよ";
 
-    public const string F201_Break5_1_Drows = "s5";
+    public const string F201_Break2_7_Drows = "なにかはあるだろ、ここによ";
+    public const string F201_Break2_8_Matuka = "ただの壁みたいだけど\n高すぎて越えられそうもないな";
+    public const string F201_Break2_9_Drows = "こんなもんはこうすりゃいいんだ";
 
-    public const string F201_Break6_1_Eraps = "s6";
-    public const string F201_Break6_2_Tukuyomi = "s62";
+    public const string F201_Break3_1_Mati = "私達より余程無理矢理だな";
+    public const string F201_Break3_2_Drows = "うおおおおおおおおおおおお！！！";
+    public const string F201_Break3_3_Mana = "なんだなんだ";
 
-    public const string F201_Break7_1_Drows = "s7";
-    public const string F201_Break7_2_Exa = "s72";
+    public const string F201_Break4_1_Worra = "あらあら";
+    public const string F201_Break4_2_Koob = "まーた始まった";
+    public const string F201_Break4_3_Exa = "ま、好きにやらせときゃいい";
+    public const string F201_Break4_4_You = "でもそろそろ…";
+
+    public const string F201_Break5_1_Drows = "うおおおおおおおおおおおお！！？";
+
+    public const string F201_Break6_1_Eraps = "大丈夫ですか\nこちらの話は終わりましたよ";
+    public const string F201_Break6_2_Reko = "あのー？";
+    public const string F201_Break6_3_Koob = "ああこっちは気にしなくていいよ\n頑丈にできてるから";
+    public const string F201_Break6_4_Worra = "あなたたちの大事なことを優先してね";
+    public const string F201_Break6_5_Tukuyomi = "それでは\nお言葉に甘えさせていただきましょう";
+
+    public const string F201_Break7_1_Drows = "いててて";
+    public const string F201_Break7_2_Koob = "帰ろうか、私達の役目はここまでだよ";
+    public const string F201_Break7_3_Exa = "ああ、あとはあいつらがしっかりやるさ";
+
+    public const string F202_Start_1_Reko = "これは…？";
+    public const string F202_Start_2_Tukuyomi = "さっきの方が思うさま暴れたようですね";
+    public const string F202_Matuka_1 = "これはひどい";
+    public const string F202_Pierre_1 = "さしずめ瓦礫の塔ってとこだな！";
+    public const string F202_Menderu_1 = "いろいろ仕掛けがあったようだけど\n全部力ずくでめちゃめちゃにしちゃったのね";
+
+    public const string F203_Ami_1 = "この先は壊れてないみたい";
+    public const string F203_Mana_1 = "あの子はここらへんで引き返したのかな？";
+
+    public const string F203_TreasureA_1_Tukuyomi = "ちょっと、何してるんですか";
+    public const string F203_TreasureA_2_Reko = "え、宝箱があるから";
+    public const string F203_TreasureA_3_Tukuyomi = "それは危険なので開けちゃダメですよ\nこの地形を見れば確定的に明らかです";
+    public const string F203_TreasureA_4_Reko = "……？";
+
+    public const string F203_TreasureB_1_Reko = "「さわらぬ神に　たたりなし」\nこれだよな";
+
+    public const string F204_Open_1_Mati = "これは、バリアと似た仕組みのようだね";
+    public const string F204_Open_2_Reko = "それに７人で触れればいいんでしょうか";
+    public const string F204_Open_3_Mana = "おまかせ！\nさあさあどいたどいた";
+    public const string F204_Open_4_Ami = "わわっ";
+    public const string F204_Open_5_Menderu = "…どうやら私達はこの先には行けないらしい";
+    public const string F204_Open_6_Reko = "でも皆さん出られないんじゃあ？";
+    public const string F204_Open_7_Pierre = "放せば開くから大丈夫だ、ほら";
+    public const string F204_Open_8_Reko = "なんだ";
+    public const string F204_Open_9_Tukuyomi = "仕方ないので先へお進み下さい\n中心核はすぐそこです";
+    public const string F204_Open_10_Reko = "そんなことがわかるんですか？";
+    public const string F204_Open_11_Tukuyomi = "セーブポイントが置いてあるからですね";
+    public const string F204_Open_12_Matuka = "わかる";
+    public const string F204_Open_13_Reko = "わかっちゃったよ";
+
+    public const string F006_Opened_1_Eraps = "あれ、どうしてここに？";
+    public const string F006_Opened_2_Reko = "いやあなんとなく\n何かあるかなって";
+    public const string F006_Opened_3_Eraps = "こちらにはもう誰も残っていませんよ";
+    public const string F006_Opened_4_Eraps = "みなさんお待ちでしょうから\n早く中心核へ";
+    public const string F006_Opened_5_Eraps = "……";
+    public const string F006_Opened_6_Eraps = "あなたには頼もしい仲間が居ます\n絶望しそうになってもそれを忘れないで";
 
     #endregion
 

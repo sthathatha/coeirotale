@@ -30,6 +30,17 @@ public class F201Start : EventBase
     public AudioClip se_drows_roll;
     public AudioClip se_eraps_catch;
 
+    public AudioClip voice1_2;
+    public AudioClip voice1_3;
+    public AudioClip voice2_2;
+    public AudioClip voice2_4;
+    public AudioClip voice2_5;
+    public AudioClip voice2_6;
+    public AudioClip voice2_8;
+    public AudioClip voice3_1;
+    public AudioClip voice3_3;
+    public AudioClip voice6_5;
+
     #endregion
 
     /// <summary>
@@ -61,6 +72,10 @@ public class F201Start : EventBase
         msg.Open();
         msg.StartMessage(MessageWindow.Face.Reko, StringFieldMessage.F201_Break1_1_Reko);
         yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F201_Break1_2_Ami, voice1_2);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Pierre0, StringFieldMessage.F201_Break1_3_Pierre, voice1_3);
+        yield return msg.WaitForMessageEnd();
 
         // ドロシー登場・会話２
         cam.SetTargetPos(drows.gameObject);
@@ -69,13 +84,34 @@ public class F201Start : EventBase
         drows.SetCameraEnable(true);
         msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break2_1_Drows);
         yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F201_Break2_2_Mana, voice2_2);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break2_3_Drows);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Matuka0, StringFieldMessage.F201_Break2_4_Matuka, voice2_4);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Tukuyomi0, StringFieldMessage.F201_Break2_5_Tukuyomi, voice2_5);
+        yield return msg.WaitForMessageEnd();
+
+        ami.SetDirection(Constant.Direction.Up);
+        mati.SetDirection(Constant.Direction.Up);
+        mana.SetDirection(Constant.Direction.Up);
+        menderu.SetDirection(Constant.Direction.Up);
+        matuka.SetDirection(Constant.Direction.Up);
+        pierre.SetDirection(Constant.Direction.Up);
+        msg.StartMessage(MessageWindow.Face.Menderu0, StringFieldMessage.F201_Break2_6_Menderu, voice2_6);
+        yield return msg.WaitForMessageEnd();
         if (drows.IsWalking())
         {
             msg.Close();
             yield return new WaitWhile(() => drows.IsWalking());
             msg.Open();
         }
-        msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break2_2_Drows);
+        msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break2_7_Drows);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Matuka0, StringFieldMessage.F201_Break2_8_Matuka, voice2_8);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break2_9_Drows);
         yield return msg.WaitForMessageEnd();
         msg.Close();
 
@@ -99,28 +135,35 @@ public class F201Start : EventBase
         var shake = DrowsShake();
 
         msg.Open();
-        msg.StartMessage(MessageWindow.Face.Mati0, StringFieldMessage.F201_Break3_1_Mati);
+        msg.StartMessage(MessageWindow.Face.Mati0, StringFieldMessage.F201_Break3_1_Mati, voice3_1);
         yield return msg.WaitForMessageEnd();
         msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break3_2_Drows);
         StartCoroutine(shake);
         yield return msg.WaitForMessageEnd();
-        msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F201_Break3_3_Mana);
+        msg.StartMessage(MessageWindow.Face.Mana0, StringFieldMessage.F201_Break3_3_Mana, voice3_3);
         yield return msg.WaitForMessageEnd();
 
         // エグザ　ウーラ　クー　悠登場・会話４
         cam.SetTargetPos(posBottom.gameObject);
         var plusY = new Vector3(0, posBottom.GetPosition().y - koob.transform.position.y, 0);
+        worra.gameObject.SetActive(true);
+        worra.WalkTo(worra.transform.position + plusY);
+        msg.StartMessage(MessageWindow.Face.Worra0, StringFieldMessage.F201_Break4_1_Worra);
+        yield return msg.WaitForMessageEnd();
+        ami.SetDirection(Constant.Direction.Down);
+        mati.SetDirection(Constant.Direction.Down);
+        mana.SetDirection(Constant.Direction.Down);
+        menderu.SetDirection(Constant.Direction.Down);
+        matuka.SetDirection(Constant.Direction.Down);
+        pierre.SetDirection(Constant.Direction.Down);
+
         koob.gameObject.SetActive(true);
         koob.WalkTo(koob.transform.position + plusY);
-        msg.StartMessage(MessageWindow.Face.Koob0, StringFieldMessage.F201_Break4_1_Koob);
+        msg.StartMessage(MessageWindow.Face.Koob0, StringFieldMessage.F201_Break4_2_Koob);
         yield return msg.WaitForMessageEnd();
         exa.gameObject.SetActive(true);
         exa.WalkTo(exa.transform.position + plusY);
-        msg.StartMessage(MessageWindow.Face.Exa0, StringFieldMessage.F201_Break4_2_Exa);
-        yield return msg.WaitForMessageEnd();
-        worra.gameObject.SetActive(true);
-        worra.WalkTo(worra.transform.position + plusY);
-        msg.StartMessage(MessageWindow.Face.Worra0, StringFieldMessage.F201_Break4_3_Worra);
+        msg.StartMessage(MessageWindow.Face.Exa0, StringFieldMessage.F201_Break4_3_Exa);
         yield return msg.WaitForMessageEnd();
         StopCoroutine(shake);
         you.gameObject.SetActive(true);
@@ -149,6 +192,14 @@ public class F201Start : EventBase
         msg.Open();
         msg.StartMessage(MessageWindow.Face.Eraps0, StringFieldMessage.F201_Break6_1_Eraps);
         yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Reko, StringFieldMessage.F201_Break6_2_Reko);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Koob0, StringFieldMessage.F201_Break6_3_Koob);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Worra0, StringFieldMessage.F201_Break6_4_Worra);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Tukuyomi0, StringFieldMessage.F201_Break6_5_Tukuyomi, voice6_5);
+        yield return msg.WaitForMessageEnd();
         msg.Close();
         cam.SetTargetPos(posCenter.GetPosition());
 
@@ -164,11 +215,6 @@ public class F201Start : EventBase
         ami.WalkTo(posRoll.GetPosition());
         yield return new WaitForSeconds(0.2f);
         mana.WalkTo(posRoll.GetPosition());
-
-        msg.Open();
-        msg.StartMessage(MessageWindow.Face.Tukuyomi0, StringFieldMessage.F201_Break6_2_Tukuyomi);
-        yield return msg.WaitForMessageEnd();
-        msg.Close();
         player.WalkTo(posRoll.GetPosition());
         tukuyomi.WalkTo(posRoll.GetPosition());
         yield return new WaitForSeconds(2f);
@@ -177,13 +223,15 @@ public class F201Start : EventBase
         msg.Open();
         msg.StartMessage(MessageWindow.Face.Drows0, StringFieldMessage.F201_Break7_1_Drows);
         yield return msg.WaitForMessageEnd();
-        msg.StartMessage(MessageWindow.Face.Exa0, StringFieldMessage.F201_Break7_2_Exa);
+        msg.StartMessage(MessageWindow.Face.Koob0, StringFieldMessage.F201_Break7_2_Koob);
+        yield return msg.WaitForMessageEnd();
+        msg.StartMessage(MessageWindow.Face.Exa0, StringFieldMessage.F201_Break7_3_Exa);
         yield return msg.WaitForMessageEnd();
         msg.Close();
 
         // マップ移動
         Global.GetSaveData().SetGameData(F201System.DUNGEON_OPEN_FLG, 1);
-        manager.LoadMainScene("Field007", 0);//todo:Field202
+        manager.LoadMainScene("Field202", 0);
     }
 
     /// <summary>

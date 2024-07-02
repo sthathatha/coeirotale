@@ -4798,6 +4798,16 @@ MonoBehaviour:
   se_drows_berserk: {fileID: 8300000, guid: 3f86fdd787a8fca49b50f07fdfb010be, type: 3}
   se_drows_roll: {fileID: 8300000, guid: c5c5d5c2330467a47a9f8d5f03048b4b, type: 3}
   se_eraps_catch: {fileID: 8300000, guid: 6b930fc317ca6fc499d16e47e284bd7e, type: 3}
+  voice1_2: {fileID: 8300000, guid: 3005bfb6bff7bf64c83e4932906ff476, type: 3}
+  voice1_3: {fileID: 8300000, guid: 6c12573d0358eb24ebd8dbde4f63a1f3, type: 3}
+  voice2_2: {fileID: 8300000, guid: 150a0198af5413e4ab038326f4b2f035, type: 3}
+  voice2_4: {fileID: 8300000, guid: 527bcb7e8f3fdd94682bc5d1d85a6b4a, type: 3}
+  voice2_5: {fileID: 8300000, guid: 06edca1eff9875a4293653faa391875c, type: 3}
+  voice2_6: {fileID: 8300000, guid: c99a2c01bc3e7254089dd65704493183, type: 3}
+  voice2_8: {fileID: 8300000, guid: a07991bd22a629f488b14e6c707bc5fd, type: 3}
+  voice3_1: {fileID: 8300000, guid: 0c49d6825f2f1934095a84c9787e8701, type: 3}
+  voice3_3: {fileID: 8300000, guid: 2024a09cc3a3ae544a4d546992e8bb0f, type: 3}
+  voice6_5: {fileID: 8300000, guid: dc05ec0f33d8d284b8e9b07ac786ff0c, type: 3}
 --- !u!114 &2137686504
 MonoBehaviour:
   m_ObjectHideFlags: 0

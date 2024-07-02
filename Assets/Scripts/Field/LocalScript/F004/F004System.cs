@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class F004System : MainScriptBase
 {
+    public const string MSG5_SHOWN = "F004Msg5Show";
+    public const string MSG6_SHOWN = "F004Msg6Show";
+
     #region 基底
 
     /// <summary>
@@ -45,12 +48,23 @@ public class F004System : MainScriptBase
     {
         yield return base.AfterFadeIn();
 
-        if (Global.GetSaveData().GetGameDataInt("Tutorial") < 3)
+        var save = Global.GetSaveData();
+
+        // チュートリアル
+        if (save.GetGameDataInt("Tutorial") < 3)
         {
-            Global.GetSaveData().SetGameData("Tutorial", 3);
+            save.SetGameData("Tutorial", 3);
 
             var ev = GetComponent<F004Tutorial>();
             ev.ExecEvent();
+        }
+
+        // ５人目、６人目倒した時の会話
+        var clearCnt = save.GetABossClearCount();
+        if (save.GetGameDataInt(MSG5_SHOWN) == 0 && clearCnt == 5 ||
+            save.GetGameDataInt(MSG6_SHOWN) == 0 && clearCnt == 6)
+        {
+            GetComponent<F004Clear>().ExecEvent();
         }
     }
 

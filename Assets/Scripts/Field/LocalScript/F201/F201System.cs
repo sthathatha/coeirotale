@@ -80,6 +80,13 @@ public class F201System : MainScriptBase
         {
             towerBefore.SetActive(false);
             towerAfter.SetActive(true);
+
+            ami.SetActive(false);
+            mana.SetActive(false);
+            mati.SetActive(false);
+            matuka.SetActive(false);
+            menderu.SetActive(false);
+            pierre.SetActive(false);
         }
     }
 

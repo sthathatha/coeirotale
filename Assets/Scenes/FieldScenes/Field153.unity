@@ -3958,6 +3958,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
+  voice_new1: {fileID: 8300000, guid: 660d03ebce1b40d4b81606b71aacff14, type: 3}
+  voice_new2: {fileID: 8300000, guid: dd9cdb9d9b92a0d42a31fbbabdfb185f, type: 3}
+  voice_new3: {fileID: 8300000, guid: c49c5e865bfc30f4dad419d71bcb6186, type: 3}
+  voice_new4: {fileID: 8300000, guid: 276f4f8b2d944864d8a28d1b9187b0d8, type: 3}
+  voice_new6: {fileID: 8300000, guid: afe3fe584473e7748a16afea98c73184, type: 3}
+  voice_new8: {fileID: 8300000, guid: a8d80f0d37a78304ba90a639146c17f7, type: 3}
+  voice_new9: {fileID: 8300000, guid: 585a0d50fb1954b4da0a1b3a962c6a2e, type: 3}
+  voice_lose1: {fileID: 8300000, guid: 9abba3cd175a0774694fcf061fc89a90, type: 3}
+  voice_lose3: {fileID: 8300000, guid: 103e7f8708d83b043a7bc36f344ca6e0, type: 3}
+  voice_retry1: {fileID: 8300000, guid: ac1d0e56653fdf34ebf2f8bda22f9c0b, type: 3}
+  voice_win1: {fileID: 8300000, guid: 4c3d0e56390bb224291b44c07542f095, type: 3}
 --- !u!1 &1909496125
 GameObject:
   m_ObjectHideFlags: 0

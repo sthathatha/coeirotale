@@ -17,7 +17,8 @@ public class F153Worra : ActionEventBase
     {
         base.Start();
 
-        if (Global.GetSaveData().GetGameDataInt(F131System.ICE_YOU_FLG) == 2)
+        if (Global.GetSaveData().GetGameDataInt(F131System.ICE_YOU_FLG) == 2 ||
+            Global.GetSaveData().GetGameDataInt(F201System.DUNGEON_OPEN_FLG) >= 1)
         {
             gameObject.SetActive(false);
         }
