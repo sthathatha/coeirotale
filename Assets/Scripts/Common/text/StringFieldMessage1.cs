@@ -486,7 +486,7 @@ public partial class StringFieldMessage
     public const string F202_Menderu_1 = "いろいろ仕掛けがあったようだけど\n全部力ずくでめちゃめちゃにしちゃったのね";
 
     public const string F203_Ami_1 = "この先は壊れてないみたい";
-    public const string F203_Mana_1 = "あの子はここらへんで引き返したのかな？";
+    public const string F203_Mana_1 = "あの人はここらへんで引き返したのかな？";
 
     public const string F203_TreasureA_1_Tukuyomi = "ちょっと、何してるんですか";
     public const string F203_TreasureA_2_Reko = "え、宝箱があるから";

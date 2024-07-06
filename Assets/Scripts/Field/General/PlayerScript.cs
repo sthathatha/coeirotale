@@ -102,6 +102,7 @@ public class PlayerScript : CharacterScript
         else if (input.GetKeyPress(InputManager.Keys.North))
         {
             // オプション開く
+            StopAnim();
             ManagerSceneScript.GetInstance().StartCoroutine(optionWindow.OpenDialog());
             return;
         }
