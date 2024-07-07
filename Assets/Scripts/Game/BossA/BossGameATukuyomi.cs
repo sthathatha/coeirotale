@@ -29,4 +29,11 @@ public class BossGameATukuyomi : BossGameAPlayers
         model.sprite = image_stand;
     }
 
+    /// <summary>
+    /// ç\Ç¶ÇÈÇæÇØ
+    /// </summary>
+    public void KamaePose()
+    {
+        model.sprite = image_magic;
+    }
 }

@@ -24,14 +24,13 @@ public class MANAGameSystemA : GameSceneScriptBase
     private const float CPU_PLAY_TIME = 1f;
 
     /// <summary>Bゲーム時の間隔に掛け算</summary>
-    private const float CPU_TIME_RATE_B = 0.7f;
+    private const float CPU_TIME_RATE_B = 0.8f;
 
     #endregion
 
     #region メンバー
 
     public GameObject modeA;
-    public GameObject modeB;
 
     public Transform posP1;
     public Transform posP2;
@@ -137,18 +136,16 @@ public class MANAGameSystemA : GameSceneScriptBase
 
         UpdateCursor();
 
-        //todo:
         modeA.SetActive(true);
-        modeB.SetActive(false);
         cpuPlayWait = CPU_PLAY_TIME;
         if (GetLoseCount() > 3)
         {
             cpuPlayWait += (GetLoseCount() - 3) * 0.1f;
         }
-        //if (false)
-        //{
-        //    cpuPlayWait *= CPU_TIME_RATE_B;
-        //}
+        if (IsBossRush())
+        {
+            cpuPlayWait *= CPU_TIME_RATE_B;
+        }
 
         // 山札ランダム作成
         var pRandom = Util.RandomUniqueIntList(1, 26, 26);
@@ -156,7 +153,10 @@ public class MANAGameSystemA : GameSceneScriptBase
         {
             var suit = c > 13 ? MANAGameCard.Suit.Spade : MANAGameCard.Suit.Crub;
             var num = c > 13 ? c - 13 : c;
-            playerYamaList.Add(new CardParam(suit, num));
+            if (IsBossRush())
+                enemyYamaList.Add(new CardParam(suit, num));
+            else
+                playerYamaList.Add(new CardParam(suit, num));
         }
 
         var eRandom = Util.RandomUniqueIntList(1, 26, 26);
@@ -164,7 +164,10 @@ public class MANAGameSystemA : GameSceneScriptBase
         {
             var suit = c > 13 ? MANAGameCard.Suit.Heart : MANAGameCard.Suit.Dia;
             var num = c > 13 ? c - 13 : c;
-            enemyYamaList.Add(new CardParam(suit, num));
+            if (IsBossRush())
+                playerYamaList.Add(new CardParam(suit, num));
+            else
+                enemyYamaList.Add(new CardParam(suit, num));
         }
 
         // 山札Last表示
@@ -203,8 +206,16 @@ public class MANAGameSystemA : GameSceneScriptBase
         // チュートリアル表示
         var tutorial = ManagerSceneScript.GetInstance().GetMinigameTutorialWindow();
         var input = InputManager.GetInstance();
-        tutorial.SetTitle(StringMinigameMessage.ManaA_Title);
-        tutorial.SetText(StringMinigameMessage.ManaA_Tutorial);
+        if (IsBossRush())
+        {
+            tutorial.SetTitle(StringMinigameMessage.ManaB_Title);
+            tutorial.SetText(StringMinigameMessage.ManaB_Tutorial);
+        }
+        else
+        {
+            tutorial.SetTitle(StringMinigameMessage.ManaA_Title);
+            tutorial.SetText(StringMinigameMessage.ManaA_Tutorial);
+        }
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
@@ -681,6 +692,10 @@ public class MANAGameSystemA : GameSceneScriptBase
         {
             // 勝ち
             SetGameResult(true);
+            if (IsBossRush())
+            {
+                Global.GetTemporaryData().bossRushManaWon = true;
+            }
             yield return new WaitForSeconds(1f);
 
             message.SetText(StringMinigameMessage.ManaA_Win);
@@ -694,6 +709,10 @@ public class MANAGameSystemA : GameSceneScriptBase
         {
             // 負け
             SetGameResult(false);
+            if (IsBossRush())
+            {
+                Global.GetTemporaryData().bossRushManaWon = false;
+            }
             yield return new WaitForSeconds(1f);
 
             message.SetText(StringMinigameMessage.ManaA_Lose);
@@ -704,7 +723,15 @@ public class MANAGameSystemA : GameSceneScriptBase
         if (end)
         {
             yield return new WaitForSeconds(2f);
-            ManagerSceneScript.GetInstance().ExitGame();
+
+            if (IsBossRush())
+            {
+                ManagerSceneScript.GetInstance().NextGame("GameSceneMenderuB");
+            }
+            else
+            {
+                ManagerSceneScript.GetInstance().ExitGame();
+            }
         }
     }
 

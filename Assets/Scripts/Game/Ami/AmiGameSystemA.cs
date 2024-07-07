@@ -158,8 +158,16 @@ public class AmiGameSystemA : GameSceneScriptBase
         yield return new WaitForSeconds(1f);
 
         // チュートリアル表示
-        tutorial.SetTitle(StringMinigameMessage.AmiA_Title);
-        tutorial.SetText(StringMinigameMessage.AmiA_Tutorial);
+        if (IsBossRush())
+        {
+            tutorial.SetTitle(StringMinigameMessage.AmiB_Title);
+            tutorial.SetText(StringMinigameMessage.AmiB_Tutorial);
+        }
+        else
+        {
+            tutorial.SetTitle(StringMinigameMessage.AmiA_Title);
+            tutorial.SetText(StringMinigameMessage.AmiA_Tutorial);
+        }
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
@@ -493,12 +501,28 @@ public class AmiGameSystemA : GameSceneScriptBase
         if (point > 0)
         {
             SetGameResult(true);
+            if (IsBossRush())
+            {
+                Global.GetTemporaryData().bossRushAmiWon = true;
+            }
         }
         else
         {
             SetGameResult(false);
+            if (IsBossRush())
+            {
+                Global.GetTemporaryData().bossRushAmiWon = false;
+            }
         }
-        ManagerSceneScript.GetInstance().ExitGame();
+
+        if (IsBossRush())
+        {
+            ManagerSceneScript.GetInstance().NextGame("GameSceneManaB");
+        }
+        else
+        {
+            ManagerSceneScript.GetInstance().ExitGame();
+        }
     }
 
     /// <summary>
@@ -506,7 +530,7 @@ public class AmiGameSystemA : GameSceneScriptBase
     /// </summary>
     private void InitializeNote()
     {
-        if (Global.GetTemporaryData().bossRush == false)
+        if (IsBossRush() == false)
         {
             // Overworld Folk
             headTime = 0f;

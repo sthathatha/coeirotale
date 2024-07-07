@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene/GameSceneMenderuA.unity
     guid: 0ae3d8cb9e2abf3419fb05a791aadcbc
   - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneMenderuB.unity
+    guid: 26b1380271ded0d438394dee4d3baa7e
+  - enabled: 1
     path: Assets/Scenes/GameScene/GameScenePierreA.unity
     guid: 1b763f7f03aeb3e4492825a15b0d20c1
   - enabled: 1
@@ -38,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneManaA.unity
     guid: 86cf7c84d83205b409270cbe4bbecc8f
+  - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneManaB.unity
+    guid: 1a75a277ec2ca2e4a9ebf2545cc84ed3
   - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneAmiA.unity
     guid: 6bc92027417771046bf8d3a27beb811c

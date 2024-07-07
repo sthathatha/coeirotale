@@ -50,6 +50,15 @@ public class GameSceneScriptBase : MonoBehaviour
     }
 
     /// <summary>
+    /// ボスラッシュモード（B）
+    /// </summary>
+    /// <returns></returns>
+    protected bool IsBossRush()
+    {
+        return Global.GetTemporaryData().bossRush;
+    }
+
+    /// <summary>
     /// BGMClip
     /// </summary>
     /// <returns></returns>

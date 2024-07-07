@@ -259,6 +259,19 @@ public class Global
         /// <summary>ボスラッシュフラグ</summary>
         public bool bossRush;
 
+        /// <summary>ボスラッシュ勝敗　小春音アミ</summary>
+        public bool bossRushAmiWon;
+        /// <summary>ボスラッシュ勝敗　MANA</summary>
+        public bool bossRushManaWon;
+        /// <summary>ボスラッシュ勝敗　軍歌マチ</summary>
+        public bool bossRushMatiWon;
+        /// <summary>ボスラッシュ勝敗　メンデル</summary>
+        public bool bossRushMenderuWon;
+        /// <summary>ボスラッシュ勝敗　松嘩りすく</summary>
+        public bool bossRushMatukaWon;
+        /// <summary>ボスラッシュ勝敗　ピエール</summary>
+        public bool bossRushPierreWon;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -267,6 +280,13 @@ public class Global
             loseCount = 0;
             gameWon = false;
             bossRush = false;
+
+            bossRushAmiWon = false;
+            bossRushManaWon = false;
+            bossRushMatiWon = false;
+            bossRushMatukaWon = false;
+            bossRushMenderuWon = false;
+            bossRushPierreWon = false;
         }
     }
 }

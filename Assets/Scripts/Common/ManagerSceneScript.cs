@@ -389,5 +389,47 @@ public class ManagerSceneScript : MonoBehaviour
         yield return mainScript.AfterFadeIn();
         SceneState = State.Main;
     }
+
+    /// <summary>
+    /// 連戦ゲームシーン切り替え
+    /// </summary>
+    /// <param name="sceneName"></param>
+    public void NextGame(string sceneName)
+    {
+        StartCoroutine(NextGameCoroutine(sceneName));
+    }
+
+    /// <summary>
+    /// 連戦ゲームシーン切り替えコルーチン
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <returns></returns>
+    private IEnumerator NextGameCoroutine(string sceneName)
+    {
+        // フェードアウトしながらゲームBGMを停止
+        SceneState = State.Loading;
+        StartCoroutine(soundMan.FadeOutGameBgm());
+        yield return FadeOut();
+
+        // サウンドのフェードアウトを確認してアンロード
+        yield return new WaitWhile(() => soundMan.IsGameBgmPlaying());
+        var unloadSync = SceneManager.UnloadSceneAsync(gameScript.gameObject.scene);
+        yield return unloadSync;
+
+        // ゲームシーンをロード
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        yield return new WaitWhile(() => gameScript == null);
+
+        // フェードアウトを一応確認してゲーム用BGM再生
+        soundMan.StartGameBgm(gameScript.bgmClip);
+
+        // フェードイン
+        yield return FadeIn();
+
+        // フェードイン後の処理
+        yield return gameScript.AfterFadeIn();
+
+        SceneState = State.Game;
+    }
     #endregion
 }

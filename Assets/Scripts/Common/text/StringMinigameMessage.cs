@@ -12,6 +12,9 @@ public class StringMinigameMessage
     public const string MatiA_Title = "風凛花斬";
     public const string MatiA_Tutorial = "「！」マークがあらわれたら、すかさずボタンをおそう！";
 
+    public const string MatiB_Title = "落歌狼藉";
+    public const string MatiB_Tutorial = "表示される方向キーと決定ボタンを左から順におそう！\n７回成功で勝ち、３回失敗で負け！";
+
     #endregion
 
     #region メンデル
@@ -31,6 +34,9 @@ public class StringMinigameMessage
     public const string MenderuA_Serif_ETurn2_0 = "あら、もう取れる種が無いわ";
     public const string MenderuA_Serif_ETurn2_1 = "私の勝ちね、また遊びましょう";
 
+    public const string MenderuB_Title = "メンデルの種";
+    public const string MenderuB_Tutorial = "取った種の数字が得点となり、最後により多くの点を獲得した側が勝利となります。";
+
     #endregion
 
     #region ピエール
@@ -48,6 +54,9 @@ public class StringMinigameMessage
     public const string PierreA_Random6 = "ここまでおいで！";
     public const string PierreA_Win = "まいった！君の勝ちだ！";
     public const string PierreA_Lose = "アッハッハ残念！\nまたいつでもおいで！";
+
+    public const string PierreB_Title = "平地競争";
+    public const string PierreB_Tutorial = "決定ボタンでボールを発射できるぞ！\nやられるまえにやれ！";
 
     #endregion
 
@@ -75,6 +84,9 @@ public class StringMinigameMessage
     public const string ManaA_Win = "だいしょうり！";
     public const string ManaA_Lose = "まけ…";
 
+    public const string ManaB_Title = "ちょうスピード";
+    public const string ManaB_Tutorial = "ちょっとてごわいぞ！";
+
     #endregion
 
     #region アミ
@@ -84,6 +96,9 @@ public class StringMinigameMessage
     public const string AmiA_Great = "Great";
     public const string AmiA_Good = "Good";
     public const string AmiA_Bad = "Bad";
+
+    public const string AmiB_Title = "ボスラッシュ";
+    public const string AmiB_Tutorial = "にせものをたくさん倒すと最後のたたかいが有利になるよ";
 
     #endregion
 

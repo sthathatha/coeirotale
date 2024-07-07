@@ -38,11 +38,10 @@ public class ModelUtil : MonoBehaviour
             alpha.Set(0f);
             yield break;
         }
-        var nowAlpha = sprites.Length > 0 ? sprites[0].color.a : canvas.alpha;
 
         var spriteA = sprites.Select(s => s.color.a).ToArray();
         var canvasA = canvas == null ? 0f : canvas.alpha;
-        alpha.Set(nowAlpha);
+        alpha.Set(1);
         alpha.MoveTo(0f, time, DeltaFloat.MoveType.LINE);
         while (alpha.IsActive())
         {

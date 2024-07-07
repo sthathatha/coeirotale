@@ -6,6 +6,7 @@ using System.Net.WebSockets;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -119,16 +120,19 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         talkWindow.SetActive(false);
         talkMessage.SetText("");
 
-        //todo:フラグによる
-        if (true)
+        if (IsBossRush())
         {
+            pointRNum = 0;
+            pointLNum = 0;
+            pointR.SetText("0");
+            pointL.SetText("0");
             battle1Parent.SetActive(true);
-            battle2Parent.SetActive(false);
+            battle2Parent.SetActive(true);
         }
         else
         {
-            //battle1Parent.SetActive(false);
-            //battle2Parent.SetActive(true);
+            battle1Parent.SetActive(true);
+            battle2Parent.SetActive(false);
         }
 
         // 
@@ -148,13 +152,22 @@ public class MenderuGameSystem1 : GameSceneScriptBase
 
         yield return base.AfterFadeIn();
 
-        yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_Start);
-        MenderuTalkStop();
-        yield return null;
+        if (!IsBossRush())
+        {
+            yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_Start);
+            MenderuTalkStop();
+            yield return null;
 
-        // チュートリアル表示
-        tutorial.SetTitle(StringMinigameMessage.MenderuA_Title);
-        tutorial.SetText(StringMinigameMessage.MenderuA_Tutorial);
+            // チュートリアル表示
+            tutorial.SetTitle(StringMinigameMessage.MenderuA_Title);
+            tutorial.SetText(StringMinigameMessage.MenderuA_Tutorial);
+        }
+        else
+        {
+            tutorial.SetTitle(StringMinigameMessage.MenderuB_Title);
+            tutorial.SetText(StringMinigameMessage.MenderuB_Tutorial);
+        }
+
         yield return tutorial.Open();
         yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
         yield return tutorial.Close();
@@ -344,6 +357,11 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     /// <param name="waitTime"></param>
     private IEnumerator MenderuTalk(string text, TalkWaitType waitType = TalkWaitType.Button, float waitTime = 1f)
     {
+        if (IsBossRush())
+        {
+            yield break;
+        }
+
         talkWindow.SetActive(true);
         talkMessage.SetText(text);
         menderuMouth.SetBool("talking", true);
@@ -391,8 +409,16 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_1, TalkWaitType.Time);
             yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn1_2, TalkWaitType.Time);
 
-            SetGameResult(true);
-            ManagerSceneScript.GetInstance().ExitGame();
+            if (IsBossRush())
+            {
+                yield return new WaitForSeconds(1f);
+                BossRushExit();
+            }
+            else
+            {
+                SetGameResult(true);
+                ManagerSceneScript.GetInstance().ExitGame();
+            }
             yield break;
         }
 
@@ -415,6 +441,10 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             else
             {
                 yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn0_1, TalkWaitType.Time);
+                if (IsBossRush())
+                {
+                    yield return new WaitForSeconds(1f);
+                }
             }
         }
 
@@ -441,8 +471,16 @@ public class MenderuGameSystem1 : GameSceneScriptBase
                 yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_0, TalkWaitType.Time);
                 yield return MenderuTalk(StringMinigameMessage.MenderuA_Serif_ETurn2_1, TalkWaitType.Time);
 
-                SetGameResult(false);
-                ManagerSceneScript.GetInstance().ExitGame();
+                if (IsBossRush())
+                {
+                    yield return new WaitForSeconds(1f);
+                    BossRushExit();
+                }
+                else
+                {
+                    SetGameResult(false);
+                    ManagerSceneScript.GetInstance().ExitGame();
+                }
                 yield break;
             }
         }
@@ -473,6 +511,17 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         }
 
         // 4個以上の場合のAI
+        if (IsBossRush())
+        {
+            // ボスラッシュは多い順に３個とる
+            var sorted = enableSeeds.OrderBy(s =>
+            {
+                var scr = GetLocationSeedScript(s.x, s.y);
+                return -scr.GetNum();
+            });
+            enemyPickList.AddRange(sorted.Take(3));
+            return;
+        }
 
         // 瀕死リスト
         var out0List = new List<Vector2Int>();
@@ -537,7 +586,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         {
             var count = Util.RandomInt(1, TURN_PICK_LIMIT);
 
-            for(int i=0; i<count; ++i)
+            for (int i = 0; i < count; ++i)
             {
                 if (out3List.Count > 0)
                 {
@@ -545,14 +594,15 @@ public class MenderuGameSystem1 : GameSceneScriptBase
                     var v = out3List.Select(p => p.Key).ElementAt(idx);
                     enemyPickList.Add(v);
                     out3List.Remove(v);
-                }else if(out2List.Count > 0)
+                }
+                else if (out2List.Count > 0)
                 {
                     var idx = Util.RandomInt(0, out2List.Count - 1);
                     var v = out2List.Select(p => p.Key).ElementAt(idx);
                     enemyPickList.Add(v);
                     out2List.Remove(v);
                 }
-                else if(out1List.Count > 0)
+                else if (out1List.Count > 0)
                 {
                     var idx = Util.RandomInt(0, out1List.Count - 1);
                     var v = out1List.Select(p => p.Key).ElementAt(idx);
@@ -570,7 +620,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
                 {
                     if (enemyPickList.Count > 0) break;
                     // どうしても無いなら最大のを1個
-                    enemyPickList.Add(maxNumList[Util.RandomInt(0, maxNumList.Count-1)]);
+                    enemyPickList.Add(maxNumList[Util.RandomInt(0, maxNumList.Count - 1)]);
                 }
             }
         };
@@ -584,7 +634,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             if (elsePickCount == 0) { Random3Pick(); }
 
             List<int> pickList = Util.RandomUniqueIntList(0, elseList.Count - 1, elsePickCount);
-            foreach(var pindex in pickList)
+            foreach (var pindex in pickList)
             {
                 enemyPickList.Add(elseList[pindex]);
             }
@@ -865,6 +915,17 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         if (!seedRow.ContainsKey(col)) return null;
 
         return seedRow[col];
+    }
+
+    /// <summary>
+    /// ボスラッシュ用終了処理
+    /// </summary>
+    private void BossRushExit()
+    {
+        Global.GetTemporaryData().bossRushMenderuWon = pointRNum > pointLNum;
+        //todo:
+        //ManagerSceneScript.GetInstance().NextGame("GameSceneMatukaB");
+        ManagerSceneScript.GetInstance().ExitGame();
     }
     #endregion
 }
