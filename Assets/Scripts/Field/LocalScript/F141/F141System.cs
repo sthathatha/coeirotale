@@ -129,13 +129,13 @@ public class F141System : MainScriptBase
 
             // écÇ∑î‡Ç∆ìñÇΩÇËÇÃî‡ÇëIë
             var targetIdx = gates.IndexOf(target);
+            var uniq = Util.RandomUniqueIntList(0, gates.Count - 2, 2);
             // écÇ∑î‡
-            var nokoIndex = Util.RandomInt(0, gates.Count - 2);
+            var nokoIndex = uniq[0];
             if (nokoIndex >= targetIdx) nokoIndex++;
             // Ç†ÇΩÇËÇÃî‡
-            var atariIndex = Util.RandomInt(0, gates.Count - 3);
+            var atariIndex = uniq[1];
             if (atariIndex >= targetIdx) atariIndex++;
-            if (atariIndex >= nokoIndex) atariIndex++;
 
             sound.PlaySE(se_open);
             // ê›íË

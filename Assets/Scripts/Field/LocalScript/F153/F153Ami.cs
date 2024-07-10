@@ -97,7 +97,7 @@ public class F153Ami : ActionEventBase
             //Ÿ—˜
             msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_Win1_Ami, voice_win1);
             yield return msg.WaitForMessageEnd();
-            msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F153_Win2_Reko, null);
+            msg.StartMessage(MessageWindow.Face.Reko, StringFieldMessage.F153_Win2_Reko, null);
             yield return msg.WaitForMessageEnd();
             msg.Close();
             manager.LoadMainScene("Field004", 4);
