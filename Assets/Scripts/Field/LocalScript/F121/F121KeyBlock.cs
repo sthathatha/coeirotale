@@ -23,7 +23,7 @@ public class F121KeyBlock : ActionEventBase
         base.Start();
 
         // ‰ðùÏ‚Ý‚ÍŠJŽnŽž‚ÉÁ‚·
-        if (Global.GetSaveData().GetGameDataInt(F121System.KEY_FLG) >= 2)
+        if (Global.GetSaveData().GetGameDataInt(F121System.KEY_FLG) >= 3)
         {
             gameObject.SetActive(false);
         }
