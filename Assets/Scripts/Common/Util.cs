@@ -43,14 +43,14 @@ public class Util
     }
 
     /// <summary>
-    /// ランダム整数
+    /// ランダム整数 maxも発生の可能性あり
     /// </summary>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
+    /// <param name="min">最低値</param>
+    /// <param name="max">最大値</param>
     /// <returns></returns>
     public static int RandomInt(int min, int max)
     {
-        return Random.Range(min, max);
+        return Random.Range(min, max + 1);
     }
 
     /// <summary>

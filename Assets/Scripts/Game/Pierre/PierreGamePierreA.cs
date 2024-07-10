@@ -100,7 +100,7 @@ public class PierreGamePierreA : PierreGameRoadObject
             {
                 PierreGameSystemA.PierreLevel.L1 => PierreGameBall.BallType.Normal,
                 PierreGameSystemA.PierreLevel.L2 => PierreGameBall.BallType.Drift,
-                _ => (PierreGameBall.BallType)Util.RandomInt(0, 3)
+                _ => (PierreGameBall.BallType)Util.RandomInt(0, 2)
             };
 
             // èŒ³‚É‚Â

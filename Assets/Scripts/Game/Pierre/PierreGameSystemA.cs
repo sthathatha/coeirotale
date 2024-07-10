@@ -308,7 +308,7 @@ public class PierreGameSystemA : GameSceneScriptBase
 
             if (state != GameState.Main) { continue; }
 
-            var idx = Util.RandomInt(0, randomMessage.Length);
+            var idx = Util.RandomInt(0, randomMessage.Length - 1);
             messageUI.SetMessage(randomMessage[idx]);
         }
     }
@@ -408,7 +408,7 @@ public class PierreGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     private GameObject GenerateFrontStoneOne(float posX)
     {
-        var obj = Util.RandomInt(0, 3) switch
+        var obj = Util.RandomInt(0, 2) switch
         {
             int x when x < 2 => GameObject.Instantiate(stone1Template),
             _ => GameObject.Instantiate(stone2Template),
@@ -463,14 +463,14 @@ public class PierreGameSystemA : GameSceneScriptBase
             b.transform.SetParent(wakuParent.transform, false);
             t.transform.localPosition = new Vector3(newWakuTop.transform.localPosition.x - PierreGameBGObject.OBJECT_WIDTH_MAX, WAKU_Y, 0f);
             b.transform.localPosition = new Vector3(newWakuBottom.transform.localPosition.x - PierreGameBGObject.OBJECT_WIDTH_MAX, -WAKU_Y, 0f);
-            t.gameObject.GetComponent<SpriteRenderer>().sprite = Util.RandomInt(0, 4) switch
+            t.gameObject.GetComponent<SpriteRenderer>().sprite = Util.RandomInt(0, 3) switch
             {
                 0 => wakuTopSprite0,
                 1 => wakuTopSprite1,
                 2 => wakuTopSprite2,
                 _ => wakuTopSprite3,
             };
-            b.gameObject.GetComponent<SpriteRenderer>().sprite = Util.RandomInt(0, 4) switch
+            b.gameObject.GetComponent<SpriteRenderer>().sprite = Util.RandomInt(0, 3) switch
             {
                 0 => wakuBottomSprite0,
                 1 => wakuBottomSprite1,

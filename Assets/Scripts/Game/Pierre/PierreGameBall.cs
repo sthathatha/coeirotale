@@ -118,7 +118,7 @@ public class PierreGameBall : PierreGameRoadObject
                 velocity = new Vector2(SPEEDX, 0);
                 break;
             case BallType.Drift: // ç∂âEà⁄ìÆ
-                var pm = Util.RandomInt(0, 2) == 0 ? 1 : -1;
+                var pm = Util.RandomInt(0, 1) == 0 ? 1 : -1;
                 velocity = new Vector2(SPEEDX * 0.8f, SPEEDX * Util.RandomFloat(0.3f, 0.5f) * pm);
                 break;
             default: // ïœë¨
