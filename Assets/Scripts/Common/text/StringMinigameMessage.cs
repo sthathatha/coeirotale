@@ -72,6 +72,9 @@ public class StringMinigameMessage
     public const string MatukaA_Naration2 = "‚Í‚¶‚ßI";
     public const string MatukaA_Naration3 = "‚»‚±‚Ü‚ÅI";
 
+    public const string MatukaB_Win = "Ÿ‚¿";
+    public const string MatukaB_Lose = "•‰‚¯";
+
     #endregion
 
     #region MANA

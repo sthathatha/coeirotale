@@ -923,9 +923,7 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     private void BossRushExit()
     {
         Global.GetTemporaryData().bossRushMenderuWon = pointRNum > pointLNum;
-        //todo:
-        //ManagerSceneScript.GetInstance().NextGame("GameSceneMatukaB");
-        ManagerSceneScript.GetInstance().ExitGame();
+        ManagerSceneScript.GetInstance().NextGame("GameSceneMatukaB");
     }
     #endregion
 }
