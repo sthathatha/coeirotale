@@ -33,8 +33,14 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene/GameScenePierreA.unity
     guid: 1b763f7f03aeb3e4492825a15b0d20c1
   - enabled: 1
+    path: Assets/Scenes/GameScene/GameScenePierreB.unity
+    guid: 655ab7e2db2737144a644fe90fb64ea0
+  - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneIkusautaA.unity
     guid: fd64e49a9fb04cb478faca2c7ff23b20
+  - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneIkusautaB.unity
+    guid: fc8d6859c60eb694b80230c87dffe679
   - enabled: 1
     path: Assets/Scenes/GameScene/GameSceneMatukaA.unity
     guid: cb6450d1fa9896c49a6e186915ff6b4c

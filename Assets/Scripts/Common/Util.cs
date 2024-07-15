@@ -114,4 +114,30 @@ public class Util
                 return Constant.Direction.Up;
         }
     }
+
+    /// <summary>
+    /// Directionの単位ベクトル
+    /// </summary>
+    /// <param name="dir"></param>
+    /// <returns></returns>
+    public static Vector3 GetVector3FromDirection(Constant.Direction dir)
+    {
+        return dir switch
+        {
+            Constant.Direction.Right => new Vector3(1, 0),
+            Constant.Direction.Up => new Vector3(0, 1),
+            Constant.Direction.Down => new Vector3(0, -1),
+            _ => new Vector3(-1, 0),
+        };
+    }
+
+    /// <summary>
+    /// Z軸回転クオータニオン作成（反時計回り）
+    /// </summary>
+    /// <param name="radian"></param>
+    /// <returns></returns>
+    public static Quaternion GetRotateQuaternion(float radian)
+    {
+        return Quaternion.Euler(0, 0, Mathf.Rad2Deg * radian);
+    }
 }

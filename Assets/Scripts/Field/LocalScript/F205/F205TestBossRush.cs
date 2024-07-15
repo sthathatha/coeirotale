@@ -31,7 +31,7 @@ public class F205TestBossRush : ActionEventBase
         }
         else
         {
-            manager.StartGame("GameSceneMatukaB");
+            manager.StartGame("GameSceneIkusautaB");
         }
         yield return new WaitUntil(() => manager.SceneState == ManagerSceneScript.State.Main);
 
