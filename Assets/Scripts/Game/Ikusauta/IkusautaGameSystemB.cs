@@ -11,6 +11,9 @@ public class IkusautaGameSystemB : GameSceneScriptBase
 {
     #region 定数
 
+    /// <summary></summary>
+    private const float COMMAND_SIZE = 80f;
+
     /// <summary>待機時間</summary>
     private const float TIME_MAX = 0.55f;
     /// <summary>追加時間</summary>
@@ -91,6 +94,7 @@ public class IkusautaGameSystemB : GameSceneScriptBase
     public Transform matiA_left;
     public Transform matiB_left;
 
+    public Transform command_bg;
     public Transform time_gauge;
     public Transform arrow_parent;
     public IkusautaGameBArrow arrow_dummy;
@@ -139,6 +143,7 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         DispTimeGauge(-1);
         arrow_dummy.gameObject.SetActive(false);
         slash_dummy.gameObject.SetActive(false);
+        command_bg.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -179,6 +184,12 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         var input = InputManager.GetInstance();
 
         sound.PlaySE(se_stack);
+        command_bg.gameObject.SetActive(true);
+        var bgWidth = (CalcCommandCount() + 1.1f) * COMMAND_SIZE;
+        command_bg.localScale = new Vector3(bgWidth, COMMAND_SIZE * 1.1f, 1f);
+
+        var time_limit = TIME_MAX;
+        DispTimeGauge(time_limit);
 
         yield return new WaitForSeconds(Util.RandomFloat(2f, 4f));
 
@@ -187,8 +198,6 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         CreateArrowList();
 
         // 時間制限開始
-        var time_limit = TIME_MAX;
-        DispTimeGauge(time_limit);
 
         // 入力待ち
         while (true)
@@ -363,14 +372,18 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         }
     }
 
+    private int CalcCommandCount()
+    {
+        return 3 + successCount; //作成数　実際は最後にボタンをつけるので＋１
+    }
+
     /// <summary>
     /// コマンド作成して表示
     /// </summary>
     private void CreateArrowList()
     {
-        const float X_INTERVAL = 128f;
-        var createCnt = 3 + successCount; //作成数　実際は最後にボタンをつけるので＋１
-        var createX = -0.5f * (createCnt) * X_INTERVAL; // 1個目の表示場所
+        var createCnt = CalcCommandCount();
+        var createX = -0.5f * (createCnt) * COMMAND_SIZE; // 1個目の表示場所
 
         var arrowDir = Util.RandomInt((int)ArrowDir.Up, (int)ArrowDir.Left);
         for (var i = 0; i < createCnt; ++i)
@@ -378,7 +391,7 @@ public class IkusautaGameSystemB : GameSceneScriptBase
             var arrow = CreateArrow(arrowDir, createX);
             arrowList.Add(arrow);
 
-            createX += X_INTERVAL;
+            createX += COMMAND_SIZE;
             // 次のコマンド　同じのを連続では出さない
             var next = Util.RandomInt((int)ArrowDir.Up, (int)ArrowDir.Left - 1);
             arrowDir = next >= arrowDir ? next + 1 : next;
@@ -419,6 +432,7 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         }
 
         arrowList.Clear();
+        command_bg.gameObject.SetActive(false);
     }
 
     /// <summary>

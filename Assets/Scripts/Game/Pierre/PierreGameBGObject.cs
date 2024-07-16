@@ -21,7 +21,7 @@ public class PierreGameBGObject : MonoBehaviour
         pos.x += PierreGameSystemA.SCROLL_SPEED * speed * Time.deltaTime;
         transform.localPosition = pos;
        
-        if (pos.x > (Constant.SCREEN_WIDTH + OBJECT_WIDTH_MAX) / 2f)
+        if (pos.x > Constant.SCREEN_WIDTH)
         {
             Destroy(gameObject);
         }

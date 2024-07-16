@@ -39,15 +39,34 @@ public class IkusautaGameBResultCharacter : MonoBehaviour
         if (isWin)
         {
             render.sprite = spr_win;
-            transform.localPosition = new Vector3(win_pos_x, 0);
+            transform.localPosition = new Vector3(win_pos_x * 0.7f, 0);
         }
         else
         {
             render.sprite = spr_lose;
-            transform.localPosition = new Vector3(lose_pos_x, 0);
+            transform.localPosition = new Vector3(lose_pos_x * 0.7f, 0);
         }
 
         dispWon = isWin;
+        StartCoroutine(ResultDispCoroutine());
+    }
+
+    /// <summary>
+    /// ‚PƒtƒŒ’x‚ê‚ÄƒZƒbƒg‚·‚é
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ResultDispCoroutine()
+    {
+        yield return new WaitForSeconds(0.03f);
+        if (dispWon)
+        {
+            transform.localPosition = new Vector3(win_pos_x, 0);
+        }
+        else
+        {
+            transform.localPosition = new Vector3(lose_pos_x, 0);
+        }
+
     }
 
     /// <summary>

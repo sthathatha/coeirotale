@@ -400,10 +400,11 @@ Transform:
   m_GameObject: {fileID: 436599638}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 70, z: 0}
+  m_LocalPosition: {x: 0, y: 40, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1867603754}
   - {fileID: 1801131826}
   - {fileID: 447325876}
   m_Father: {fileID: 943755665}
@@ -482,7 +483,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1000
-  m_Sprite: {fileID: 21300000, guid: 9c9ee17cea6ecf646bfa0c8f2b507977, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c50d8c10df5403a49bc1449134918a68, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -505,8 +506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9314be5c7cfbfb549b1a4edcfe2beafb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spr_arrow: {fileID: 21300000, guid: 9c9ee17cea6ecf646bfa0c8f2b507977, type: 3}
-  spr_button: {fileID: 21300000, guid: 2fd38e0071a67ee42958d71c01949de7, type: 3}
+  spr_arrow: {fileID: 21300000, guid: c50d8c10df5403a49bc1449134918a68, type: 3}
+  spr_button: {fileID: 21300000, guid: 1025c639db385f94f821772dd5fe3509, type: 3}
 --- !u!1 &534650643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,6 +2086,90 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1867603753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1867603754}
+  - component: {fileID: 1867603755}
+  m_Layer: 0
+  m_Name: commandBG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1867603754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867603753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 640, y: 88, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 436599639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1867603755
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867603753}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1924249387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,7 +2247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a400d1246bc22e4187e36f5fb344bbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 0182137e8384f1c408ce942bb4406766, type: 3}
+  bgmClip: {fileID: 8300000, guid: 1e0d33170ad44a84bb136b1c0802142f, type: 3}
   parent_wait: {fileID: 1924249387}
   parent_up: {fileID: 1632558183}
   parent_down: {fileID: 1987973494}
@@ -2179,6 +2264,7 @@ MonoBehaviour:
   matiB_right: {fileID: 257409123}
   matiA_left: {fileID: 909885979}
   matiB_left: {fileID: 1171659988}
+  command_bg: {fileID: 1867603754}
   time_gauge: {fileID: 1801131826}
   arrow_parent: {fileID: 436599639}
   arrow_dummy: {fileID: 447325878}
