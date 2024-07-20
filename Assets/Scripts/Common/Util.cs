@@ -140,4 +140,14 @@ public class Util
     {
         return Quaternion.Euler(0, 0, Mathf.Rad2Deg * radian);
     }
+
+    /// <summary>
+    /// ‰ñ“]Šp‚Ì’PˆÊƒxƒNƒgƒ‹
+    /// </summary>
+    /// <param name="radian"></param>
+    /// <returns></returns>
+    public static Vector3 GetVector3IdentityFromRot(float radian)
+    {
+        return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian));
+    }
 }

@@ -335,14 +335,18 @@ public class IkusautaGameSystemB : GameSceneScriptBase
         StartCoroutine(matiA.BackToBase(RESULT_JUMP_TIME));
         StartCoroutine(matiB.BackToBase(RESULT_JUMP_TIME));
         // èüÇ¡ÇΩÇŸÇ§Ç…ãOê’ï\é¶
-        yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.5f);
+        yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.29f);
         sound.PlaySE(se_suburi);
+        var slashRot = Util.RandomFloat(0, 2f);
         for (var i = 0; i < 3; ++i)
         {
-            CreateSlashToObj(isSuccess ? SlashSituation.BackWin : SlashSituation.BackLose);
-            yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.1f);
+            CreateSlashToObj(isSuccess ? SlashSituation.BackWin : SlashSituation.BackLose, Mathf.PI * slashRot);
+            yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.07f);
+
+            slashRot += 0.67f;
+            if (slashRot >= 2f) slashRot -= 2f;
         }
-        yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.2f);
+        yield return new WaitForSeconds(RESULT_JUMP_TIME * 0.5f);
 
         StartCoroutine(GameCoroutine());
     }
@@ -459,7 +463,8 @@ public class IkusautaGameSystemB : GameSceneScriptBase
     /// ãOê’ï\é¶
     /// </summary>
     /// <param name="sit"></param>
-    private void CreateSlashToObj(SlashSituation sit)
+    /// <param name="rot"></param>
+    private void CreateSlashToObj(SlashSituation sit, float rot = 0f)
     {
         var colorA = Color.white;
         var colorB = new Color(0.8f, 0.4f, 0.4f);
@@ -489,10 +494,10 @@ public class IkusautaGameSystemB : GameSceneScriptBase
                 CreateSlash(matiA.transform.position, IkusautaGameBSlash.Type.Curve, Mathf.PI * -0.2f, colorB);
                 break;
             case SlashSituation.BackWin:
-                CreateSlash(matiA.transform.position, IkusautaGameBSlash.Type.Curve, Mathf.PI * Util.RandomFloat(0, 2f), colorA);
+                CreateSlash(matiA.transform.position, IkusautaGameBSlash.Type.Curve, rot, colorA);
                 break;
             case SlashSituation.BackLose:
-                CreateSlash(matiB.transform.position, IkusautaGameBSlash.Type.Curve, Mathf.PI * Util.RandomFloat(0, 2f), colorB);
+                CreateSlash(matiB.transform.position, IkusautaGameBSlash.Type.Curve, -rot, colorB);
                 break;
         }
     }
@@ -527,7 +532,8 @@ public class IkusautaGameSystemB : GameSceneScriptBase
     /// </summary>
     private void ExitGame()
     {
-        ManagerSceneScript.GetInstance().ExitGame();
+        //ManagerSceneScript.GetInstance().ExitGame();
+        ManagerSceneScript.GetInstance().NextGame("GameScenePierreB");
     }
 
     #endregion

@@ -55,8 +55,12 @@ public class StringMinigameMessage
     public const string PierreA_Win = "まいった！君の勝ちだ！";
     public const string PierreA_Lose = "アッハッハ残念！\nまたいつでもおいで！";
 
-    public const string PierreB_Title = "平地競争";
+    public const string PierreB_Title = "Say Ho!Yo!Yo!More!";
     public const string PierreB_Tutorial = "決定ボタンでボールを発射できるぞ！\nやられるまえにやれ！";
+
+    public const string PierreB_Music = "♪Conjurer";
+    public const string PierreB_Spell1 = "上演「アペイロンの火の輪くぐり」";
+    public const string PierreB_Spell2 = "上演「タンブリングパレード」";
 
     #endregion
 

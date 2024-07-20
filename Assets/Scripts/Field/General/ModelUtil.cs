@@ -64,7 +64,8 @@ public class ModelUtil : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="color">色指定</param>
-    public void FadeIn(float time, Color? color = null)
+    /// <param name="alpha">アルファ指定</param>
+    public void FadeIn(float time, Color? color = null, float alpha = 1f)
     {
         var sprites = GetComponentsInChildren<SpriteRenderer>();
         if (color.HasValue)
@@ -75,7 +76,7 @@ public class ModelUtil : MonoBehaviour
             }
         }
 
-        StartCoroutine(FadeInCoroutine(time, color.HasValue ? color.Value.a : 1f));
+        StartCoroutine(FadeInCoroutine(time, alpha));
     }
 
     /// <summary>
@@ -95,8 +96,6 @@ public class ModelUtil : MonoBehaviour
             yield break;
         }
         var nowAlpha = sprites.Length > 0 ? sprites[0].color.a : canvas.alpha;
-
-        var canvasA = canvas == null ? 0f : canvas.alpha;
         alpha.Set(nowAlpha);
         alpha.MoveTo(targetAlpha, time, DeltaFloat.MoveType.LINE);
         while (alpha.IsActive())
@@ -110,7 +109,7 @@ public class ModelUtil : MonoBehaviour
             }
             if (canvas != null)
             {
-                canvas.alpha = canvasA * alpha.Get();
+                canvas.alpha = alpha.Get();
             }
         }
     }

@@ -179,8 +179,7 @@ public class MatukaGameSystemB : GameSceneScriptBase
             yield return LoseCoroutine();
         }
         yield return new WaitForSeconds(1f);
-        ManagerSceneScript.GetInstance().ExitGame();
-        //ManagerSceneScript.GetInstance().NextGame("GameSceneIkusautaB");
+        ManagerSceneScript.GetInstance().NextGame("GameSceneIkusautaB");
     }
 
     #endregion
