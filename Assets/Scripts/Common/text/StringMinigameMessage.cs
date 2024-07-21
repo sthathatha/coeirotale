@@ -60,7 +60,7 @@ public class StringMinigameMessage
 
     public const string PierreB_Music = "♪Conjurer";
     public const string PierreB_Spell1 = "上演「アペイロンの火の輪くぐり」";
-    public const string PierreB_Spell2 = "上演「タンブリングパレード」";
+    public const string PierreB_Spell2 = "上演「ランブリングパレード」";
 
     #endregion
 

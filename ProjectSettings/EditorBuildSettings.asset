@@ -63,6 +63,12 @@ EditorBuildSettings:
     path: Assets/Scenes/GameScene/GameSceneBossA.unity
     guid: 2ad6c3d3e583f4b4cb481f93c527f0e0
   - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneBossB.unity
+    guid: a21355ca39851004486f8878364596ea
+  - enabled: 1
+    path: Assets/Scenes/GameScene/GameSceneTukuyomi.unity
+    guid: f190725f8886d1d4aa366106503fc2bc
+  - enabled: 1
     path: Assets/Scenes/FieldScenes/Field000.unity
     guid: 9cab465aed76b534c9987f6ed9cc416a
   - enabled: 1

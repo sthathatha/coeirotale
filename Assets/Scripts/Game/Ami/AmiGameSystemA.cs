@@ -139,10 +139,11 @@ public class AmiGameSystemA : GameSceneScriptBase
     public override IEnumerator Start()
     {
         state = GameState.Starting;
-        yield return base.Start();
         InitializeNote();
 
         maxPoint = notes.Count * 2;
+
+        yield return base.Start();
     }
 
     /// <summary>

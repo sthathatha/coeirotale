@@ -136,14 +136,14 @@ public class IkusautaGameSystemB : GameSceneScriptBase
     /// <returns></returns>
     public override IEnumerator Start()
     {
-        yield return base.Start();
-
         arrowList = new List<IkusautaGameBArrow>();
         ShowCharacter(CharacterMode.Waiting);
         DispTimeGauge(-1);
         arrow_dummy.gameObject.SetActive(false);
         slash_dummy.gameObject.SetActive(false);
         command_bg.gameObject.SetActive(false);
+
+        yield return base.Start();
     }
 
     /// <summary>

@@ -130,7 +130,6 @@ public class MANAGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     override public IEnumerator Start()
     {
-        yield return base.Start();
         state = MANAState.Initialize;
         message.SetText("");
 
@@ -183,6 +182,8 @@ public class MANAGameSystemA : GameSceneScriptBase
         eYamaLastCard.ShowCard(false);
         pYamaLastCard.SetPriority(BASE_PRIORITY);
         eYamaLastCard.SetPriority(BASE_PRIORITY);
+
+        yield return base.Start();
     }
 
     /// <summary>

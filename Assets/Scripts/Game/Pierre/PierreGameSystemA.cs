@@ -123,8 +123,6 @@ public class PierreGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     override public IEnumerator Start()
     {
-        yield return base.Start();
-
         hutL.gameObject.SetActive(false);
         hutR.gameObject.SetActive(false);
         messageUI.Close();
@@ -135,6 +133,8 @@ public class PierreGameSystemA : GameSceneScriptBase
         StartCoroutine(GenerateBackStoneCoroutine());
         StartCoroutine(GenerateFrontStoneCoroutine());
         StartCoroutine(GenerateWakuCoroutine());
+
+        yield return base.Start();
     }
 
     /// <summary>

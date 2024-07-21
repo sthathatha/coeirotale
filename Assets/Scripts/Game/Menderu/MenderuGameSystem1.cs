@@ -102,8 +102,6 @@ public class MenderuGameSystem1 : GameSceneScriptBase
     /// </summary>
     override public IEnumerator Start()
     {
-        yield return base.Start();
-
         seedScripts = new Dictionary<int, Dictionary<int, SeedScript>>();
         for (int row = 0; row < 5; ++row)
         {
@@ -139,6 +137,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
         cursorMain.GetComponent<SpriteRenderer>().color = COLOR_PLAYER;
         cursorEnd.GetComponent<SpriteRenderer>().color = COLOR_PLAYER;
         UpdateCursorLocation();
+
+        yield return base.Start();
     }
 
     /// <summary>

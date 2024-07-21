@@ -101,8 +101,6 @@ public class IkusautaGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     override public IEnumerator Start()
     {
-        yield return base.Start();
-
         faultCount = 0;
         tukuyomiWinCount = 0;
         matiWinCount = 0;
@@ -126,6 +124,8 @@ public class IkusautaGameSystemA : GameSceneScriptBase
 
             grassAnim.PlayInFixedTime("obj_grass", 0, Util.RandomFloat(0, 1));
         }
+
+        yield return base.Start();
     }
     #endregion
 

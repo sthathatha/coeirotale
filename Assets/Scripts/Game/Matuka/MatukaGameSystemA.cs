@@ -72,13 +72,13 @@ public class MatukaGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     override public IEnumerator Start()
     {
-        yield return base.Start();
-
         matukaCharaA.ShowObject(true, false, false);
         tukuyomiCharaA.ShowObject(true, false, false);
         SetTimeGauge(0f);
         SetPointGauge(0);
         messageText.SetText("");
+
+        yield return base.Start();
     }
 
     /// <summary>

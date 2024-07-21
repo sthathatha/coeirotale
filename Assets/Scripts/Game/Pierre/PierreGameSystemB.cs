@@ -88,13 +88,13 @@ public class PierreGameSystemB : GameSceneScriptBase
     /// <returns></returns>
     override public IEnumerator Start()
     {
-        yield return base.Start();
-
         DisplayHP(1);
-        StartCoroutine(musicText.Hide());
-        StartCoroutine(cardNameText.Hide());
         GenerateInitObjects();
         StartCoroutine(GenerateGroundCoroutine());
+        yield return musicText.Hide();
+        yield return cardNameText.Hide();
+
+        yield return base.Start();
     }
 
     /// <summary>
