@@ -231,8 +231,7 @@ public class PierreGameSystemB : GameSceneScriptBase
         }
 
         yield return new WaitForSeconds(2f);
-        ManagerSceneScript.GetInstance().ExitGame();
-        //ManagerSceneScript.GetInstance().NextGame("GameSceneBossB");
+        ManagerSceneScript.GetInstance().NextGame("GameSceneBossB");
     }
 
     #endregion
