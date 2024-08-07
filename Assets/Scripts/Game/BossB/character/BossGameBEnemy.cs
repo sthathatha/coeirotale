@@ -7,4 +7,13 @@ using UnityEngine;
 /// </summary>
 public class BossGameBEnemy : BossGameBCharacterBase
 {
+    /// <summary>
+    /// ‰Šú‰»
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+
+        CharacterType = CharaType.Enemy;
+    }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +18,13 @@ public class BossGameBCharacterBase : MonoBehaviour
         RightUp,
         LeftDown,
         RightDown,
+    }
+
+    /// <summary>キャラ属性</summary>
+    public enum CharaType : int
+    {
+        Player = 0,
+        Enemy,
     }
 
     #endregion
@@ -66,8 +74,6 @@ public class BossGameBCharacterBase : MonoBehaviour
     public int param_HP_max;
     /// <summary>現在HP</summary>
     protected int param_HP;
-    /// <summary>基本攻撃力</summary>
-    public int param_ATK_base;
     /// <summary>攻撃力変動値</summary>
     protected float param_ATK_rate;
     /// <summary>基本速度</summary>
@@ -76,6 +82,18 @@ public class BossGameBCharacterBase : MonoBehaviour
     protected float param_SPD_rate;
     /// <summary>行動待ち時間</summary>
     protected int param_wait_time;
+
+    /// <summary>使用可能スキル</summary>
+    protected List<BossGameBDataBase.SkillID> skillList;
+
+    /// <summary>キャラ属性</summary>
+    public CharaType CharacterType { get; set; }
+
+    /// <summary>ダメージ演出再生中</summary>
+    private bool damageEffecting = false;
+
+    /// <summary>無敵フラグ</summary>
+    protected bool isInvincible = false;
 
     #endregion
 
@@ -88,7 +106,9 @@ public class BossGameBCharacterBase : MonoBehaviour
     {
         SetDirection(init_dir_x, init_dir_y);
         location = new Vector2Int(init_locx, init_locy);
-        transform.localPosition = BossGameSystemB.GetCellLocation(init_locx, init_locy);
+        transform.localPosition = BossGameSystemB.GetCellPosition(location);
+
+        skillList = new List<BossGameBDataBase.SkillID>();
     }
 
     #endregion
@@ -156,6 +176,11 @@ public class BossGameBCharacterBase : MonoBehaviour
     public CharaDirection GetDirection() { return nowDirection; }
 
     /// <summary>
+    /// 現在の向きに画像をリセット
+    /// </summary>
+    public void ResetDirection() { SetDirection(nowDirection); }
+
+    /// <summary>
     /// 現在位置
     /// </summary>
     /// <returns></returns>
@@ -191,6 +216,12 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// <param name="t"></param>
     public void DecreaseTime(int t) { param_wait_time -= t; }
     /// <summary>
+    /// 行動遅延
+    /// </summary>
+    /// <param name="turn">遅延回数</param>
+    public void DelayTime(int turn) { param_wait_time += GetMaxWaitTime(); }
+
+    /// <summary>
     /// 待ち時間を再設定
     /// </summary>
     /// <param name="init"></param>
@@ -201,9 +232,20 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// <param name="mul"></param>
     public void ChangeSpeed(float mul)
     {
-        //todo:待ち時間を変動
-
+        var before = param_SPD_rate;
         param_SPD_rate *= mul;
+
+        // 待ち時間を変動
+        ChangeWaitTimeRate(before, param_SPD_rate);
+    }
+
+    /// <summary>
+    /// 攻撃力変化
+    /// </summary>
+    /// <param name="mul"></param>
+    public void ChangeAttackRate(float mul)
+    {
+        param_ATK_rate *= mul;
     }
 
     /// <summary>
@@ -211,17 +253,59 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// </summary>
     public void ResetParam()
     {
-        //todo:待ち時間を変動
+        // 待ち時間を変動
+        ChangeWaitTimeRate(param_SPD_rate, 1f);
 
         param_ATK_rate = 1f;
         param_SPD_rate = 1f;
     }
 
-    #endregion
+    /// <summary>
+    /// SPD変化により待ち時間を変動
+    /// </summary>
+    /// <param name="beforeRate"></param>
+    /// <param name="afterRate"></param>
+    private void ChangeWaitTimeRate(float beforeRate, float afterRate)
+    {
+        var beforeTimeMax = CalcWaitTime(Mathf.FloorToInt(param_SPD_base * beforeRate));
+        var afterTimeMax = CalcWaitTime(Mathf.FloorToInt(param_SPD_base * afterRate));
+        var spdRate = (float)afterTimeMax / beforeTimeMax;
+
+        var newTime = param_wait_time * spdRate;
+        if (afterTimeMax > beforeTimeMax)
+        {
+            // 増える時は切り下げ
+            param_wait_time = Mathf.FloorToInt(newTime);
+        }
+        else
+        {
+            // 減る時は切り上げ
+            param_wait_time = Mathf.CeilToInt(newTime);
+        }
+    }
+
+    /// <summary>
+    /// 現在HP
+    /// </summary>
+    /// <returns></returns>
+    public int GetHp() { return param_HP; }
+    /// <summary>
+    /// 最大HP
+    /// </summary>
+    /// <returns></returns>
+    public int GetHpMax() { return param_HP_max; }
+
+    /// <summary>
+    /// 無敵中
+    /// </summary>
+    /// <returns></returns>
+    public bool IsInvincible() { return isInvincible; }
 
     #endregion
 
-    #region
+    #endregion
+
+    #region 汎用メソッド
 
     /// <summary>
     /// SPDによりかかる標準待機時間
@@ -233,6 +317,33 @@ public class BossGameBCharacterBase : MonoBehaviour
         var tmp = 100 - spd;
         if (tmp < 10) tmp = 10;
         return tmp;
+    }
+
+    /// <summary>
+    /// スキルが当たる相手を検索
+    /// </summary>
+    /// <param name="skillID"></param>
+    /// <param name="center"></param>
+    /// <returns></returns>
+    protected List<BossGameBCharacterBase> GetSkillHitCharacters(BossGameBDataBase.SkillID skillID, Vector2Int center)
+    {
+        var skill = BossGameBDataBase.SkillList[skillID];
+        var list = new List<BossGameBCharacterBase>();
+
+        for (var x = center.x - skill.EffectRange; x <= center.x + skill.EffectRange; ++x)
+            for (var y = center.y - skill.EffectRange; y <= center.y + skill.EffectRange; ++y)
+            {
+                var chara = system.GetCellCharacter(new Vector2Int(x, y));
+                if (chara == null) continue;
+                if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Fellow && chara.CharacterType != CharacterType)
+                    continue;
+                if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Enemy && chara.CharacterType == CharacterType)
+                    continue;
+
+                if (!list.Contains(chara)) list.Add(chara);
+            }
+
+        return list;
     }
 
     #endregion
@@ -255,7 +366,7 @@ public class BossGameBCharacterBase : MonoBehaviour
 
         var deltaPos = new DeltaVector3();
         deltaPos.Set(transform.localPosition);
-        deltaPos.MoveTo(BossGameSystemB.GetCellLocation(location.x, location.y), 0.2f, DeltaFloat.MoveType.LINE);
+        deltaPos.MoveTo(BossGameSystemB.GetCellPosition(location), 0.2f, DeltaFloat.MoveType.LINE);
         while (deltaPos.IsActive())
         {
             yield return null;
@@ -277,7 +388,7 @@ public class BossGameBCharacterBase : MonoBehaviour
 
         var deltaPos = new DeltaVector3();
         deltaPos.Set(transform.localPosition);
-        deltaPos.MoveTo(BossGameSystemB.GetCellLocation(location.x, location.y), 0.05f, DeltaFloat.MoveType.LINE);
+        deltaPos.MoveTo(BossGameSystemB.GetCellPosition(location), 0.05f, DeltaFloat.MoveType.LINE);
         while (deltaPos.IsActive())
         {
             yield return null;
@@ -287,13 +398,216 @@ public class BossGameBCharacterBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 座標そのままで画像のみ移動
+    /// </summary>
+    /// <param name="targetLoc">移動先の座標</param>
+    /// <param name="time">移動時間</param>
+    /// <param name="jumpH">ジャンプする場合</param>
+    /// <returns></returns>
+    public IEnumerator EffectMove(Vector2Int targetLoc, float time, float jumpH = 0f)
+    {
+        var jumpR = new DeltaFloat();
+        jumpR.Set(0f);
+        jumpR.MoveTo(Mathf.PI, time, DeltaFloat.MoveType.LINE);
+        var deltaPos = new DeltaVector3();
+        deltaPos.Set(transform.localPosition);
+        deltaPos.MoveTo(BossGameSystemB.GetCellPosition(targetLoc), time, DeltaFloat.MoveType.LINE);
+        while (deltaPos.IsActive())
+        {
+            yield return null;
+            deltaPos.Update(Time.deltaTime);
+            jumpR.Update(Time.deltaTime);
+
+            var pos = deltaPos.Get();
+            pos += new Vector3(0, Mathf.Sin(jumpR.Get()) * jumpH);
+            transform.localPosition = pos;
+        }
+    }
+
+    /// <summary>
     /// ターン行動
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator TurnProcess()
+    public IEnumerator TurnProcessBase()
+    {
+        model.sortingOrder = 10;
+        isInvincible = false;
+
+        yield return TurnProcess();
+
+        model.sortingOrder = 0;
+    }
+
+    /// <summary>
+    /// ターン行動本体
+    /// </summary>
+    /// <returns></returns>
+    protected virtual IEnumerator TurnProcess()
     {
         // 派生先で実装
         yield return new WaitForSeconds(1f);
+    }
+
+    /// <summary>
+    /// スキル使用
+    /// </summary>
+    /// <param name="skillID"></param>
+    /// <param name="targetCell"></param>
+    /// <returns></returns>
+    protected IEnumerator UseSkillBase(BossGameBDataBase.SkillID skillID, Vector2Int targetCell)
+    {
+        var skill = BossGameBDataBase.SkillList[skillID];
+        var nameUI = system.skillNameUI;
+        var cells = system.cellUI;
+
+        // スキル名表示
+        nameUI.Show(skill.Name);
+
+        // 使う方向を向く
+        var dir = targetCell - GetLocation();
+        SetDirection(dir.x, dir.y);
+
+        // 少し待機
+        if (CharacterType == CharaType.Player)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        else
+        {
+            // CPUは選択UI表示
+
+            yield return new WaitForSeconds(1.5f);
+        }
+
+        // 使用
+        yield return UseSkill(skillID, targetCell);
+
+        // スキル名非表示
+        nameUI.Hide();
+
+        // 立ち絵リセット
+        ResetDirection();
+    }
+
+    /// <summary>
+    /// スキル使用本体
+    /// </summary>
+    /// <param name="skillID"></param>
+    /// <param name="targetCell"></param>
+    /// <returns></returns>
+    protected virtual IEnumerator UseSkill(BossGameBDataBase.SkillID skillID, Vector2Int targetCell)
+    {
+        yield return null;
+    }
+
+    /// <summary>
+    /// ダメージうける
+    /// </summary>
+    /// <param name="dmg"></param>
+    /// <returns></returns>
+    public IEnumerator HitDamage(int dmg)
+    {
+        damageEffecting = true;
+        if (isInvincible) dmg = 0;
+        else if (dmg > 9999) dmg = 9999;
+        var basePos = BossGameSystemB.GetCellPosition(location);
+
+        for (var i = 0; i < 12; ++i)
+        {
+            var addX = (1f - (Mathf.Pow(i, 2) / 144f)) * 10f;
+            transform.localPosition = basePos + new Vector3(addX, 0);
+            yield return new WaitForSeconds(0.03f);
+            transform.localPosition = basePos + new Vector3(-addX, 0);
+            yield return new WaitForSeconds(0.03f);
+        }
+        transform.localPosition = basePos;
+
+        // ダメージUI表示
+        yield return system.ShowDamage(location, dmg);
+
+        param_HP -= dmg;
+        if (param_HP < 0)
+        {
+            // 死亡演出して消去
+            param_HP = 0;
+            yield return DeadEffect();
+            system.RemoveCharacter(this);
+        }
+
+        damageEffecting = false;
+    }
+
+    /// <summary>
+    /// ダメージ表示中
+    /// </summary>
+    /// <returns></returns>
+    public bool IsDamageEffecting()
+    {
+        return damageEffecting;
+    }
+
+    /// <summary>
+    /// 死亡演出
+    /// </summary>
+    protected virtual IEnumerator DeadEffect()
+    {
+        for (var i = 0; i < 14; ++i)
+        {
+            model.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.03f);
+            model.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.03f);
+        }
+
+        model.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 回復する
+    /// </summary>
+    /// <param name="heal"></param>
+    /// <returns></returns>
+    public IEnumerator HealDamage(int heal)
+    {
+        damageEffecting = true;
+
+        // 回復数字表示
+        yield return system.ShowDamage(location, -heal);
+
+        param_HP += heal;
+        if (param_HP > param_HP_max) param_HP = param_HP_max;
+
+        damageEffecting = false;
+    }
+
+    /// <summary>
+    /// ダメージを与える
+    /// </summary>
+    /// <param name="targets"></param>
+    /// <param name="baseDamage"></param>
+    /// <returns></returns>
+    protected IEnumerator AttackDamage(List<BossGameBCharacterBase> targets, int baseDamage)
+    {
+        if (targets.Count == 0)
+        {
+            yield return new WaitForSeconds(0.5f);
+            yield break;
+        }
+
+        foreach (var t in targets)
+        {
+            var dmg = Util.RandomInt(Mathf.FloorToInt(baseDamage * 0.8f), baseDamage);
+            if (dmg >= 0)
+                StartCoroutine(t.HitDamage(dmg));
+            else
+                StartCoroutine(t.HealDamage(-dmg));
+        }
+
+        // 再生待ち
+        foreach (var t in targets)
+        {
+            yield return new WaitWhile(() => t.IsDamageEffecting());
+        }
     }
 
     #endregion

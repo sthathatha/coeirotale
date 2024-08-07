@@ -109,6 +109,46 @@ public class StringMinigameMessage
 
     #endregion
 
-    #region 
+    #region ラスボス本戦
+
+    public const string BossB_Win = "勝利ッ！！";
+    public const string BossB_Lose = "敗北…";
+
+    public const string BossB_SkillA1_Name = "サイクロトロン";
+    public const string BossB_SkillA1_Detail = "Ｃ：\n行動速度アップ";
+    public const string BossB_SkillA2_Name = "オクトストライク";
+    public const string BossB_SkillA2_Detail = "Ｏ：\n連続の打撃で大ダメージを与える";
+    public const string BossB_SkillA3_Name = "イーグルダイブ";
+    public const string BossB_SkillA3_Detail = "Ｅ：\n離れた場所に強力な物理攻撃";
+    public const string BossB_SkillA4_Name = "インビンシブル";
+    public const string BossB_SkillA4_Detail = "Ｉ：\n次の自分のターンまで無敵";
+    public const string BossB_SkillA5_Name = "リインカーネーション";
+    public const string BossB_SkillA5_Detail = "Ｒ：\n体力を全回復";
+    public const string BossB_SkillA6_Name = "オリジン";
+    public const string BossB_SkillA6_Detail = "Ｏ：\n敵味方全員のステータス変化と、全ての地形をクリア";
+    public const string BossB_SkillA7_Name = "イグニッション";
+    public const string BossB_SkillA7_Detail = "Ｉ：\n物理攻撃力アップ";
+    public const string BossB_SkillA8_Name = "ナイトメア";
+    public const string BossB_SkillA8_Detail = "Ｎ：\n範囲に小ダメージを与え、まれに行動を遅らせる";
+    public const string BossB_SkillA9_Name = "キーニングシルフ";
+    public const string BossB_SkillA9_Detail = "Ｋ：\n周囲の広範囲に風のダメージ";
+
+    public const string BossB_SkillBAmi1_Name = "はるのとなり";
+    public const string BossB_SkillBAmi1_Detail = "体力を大回復\nあまつさえ素早さと物理攻撃力アップ";
+    public const string BossB_SkillBMana1_Name = "ショウダウン";
+    public const string BossB_SkillBMana1_Detail = "味方全体になにかがおこる！";
+    public const string BossB_SkillBMatuka1_Name = "喝";
+    public const string BossB_SkillBMatuka1_Detail = "全体を威圧して行動を遅らせる";
+    public const string BossB_SkillBMati1_Name = "刹那の見斬り";
+    public const string BossB_SkillBMati1_Detail = "目にも留まらぬ居合抜き";
+    public const string BossB_SkillBMenderu1_Name = "マントラップヴァイン";
+    public const string BossB_SkillBMenderu1_Detail = "ツタ地形を生成し、足止めする";
+    public const string BossB_SkillBPierre1_Name = "ジャグリングヒット";
+    public const string BossB_SkillBPierre1_Detail = "何かを大量に投げつけて攻撃";
+    public const string BossB_SkillBBoss1_Name = "カーネイジ";
+    public const string BossB_SkillBBoss2_Name = "プラズマフィールド";
+    public const string BossB_SkillBBoss3_Name = "ネオアームストロングサイクロンジェットアームストロング砲";
+    public const string BossB_SkillBBoss4_Name = "トランキーライザー";
+
     #endregion
 }

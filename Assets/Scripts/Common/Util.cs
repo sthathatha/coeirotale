@@ -93,6 +93,16 @@ public class Util
     }
 
     /// <summary>
+    /// ランダム判定
+    /// </summary>
+    /// <param name="percent">パーセントでtrueになる</param>
+    /// <returns></returns>
+    public static bool RandomCheck(int percent)
+    {
+        return RandomInt(0, 99) < percent;
+    }
+
+    /// <summary>
     /// ベクトルをDirectionに変換
     /// </summary>
     /// <param name="pos"></param>
@@ -149,5 +159,16 @@ public class Util
     public static Vector3 GetVector3IdentityFromRot(float radian)
     {
         return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian));
+    }
+
+    /// <summary>
+    /// ベクトルから回転角ラジアンを算出
+    /// </summary>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    public static float GetRadianFromVector(Vector3 v)
+    {
+        v = v.normalized;
+        return Mathf.Atan2(v.y, v.x);
     }
 }
