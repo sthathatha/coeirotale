@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -346,6 +347,25 @@ public class BossGameBCharacterBase : MonoBehaviour
         return list;
     }
 
+    /// <summary>
+    /// ベクトルに該当するDirectionを選択
+    /// </summary>
+    /// <param name="vec"></param>
+    /// <returns></returns>
+    protected CharaDirection GetVectorDirection(Vector2Int vec)
+    {
+        var nowDirVec = BossGameSystemB.GetDirectionCell(nowDirection);
+        // xが0の場合は現在の向きを採用
+        if (vec.x == 0) vec.x = nowDirVec.x;
+        // yが0の場合は現在の向きを採用
+        if (vec.y == 0) vec.y = nowDirVec.y;
+
+        if (vec.x > 0 && vec.y > 0) return CharaDirection.RightUp;
+        else if (vec.x > 0 && vec.y < 0) return CharaDirection.RightDown;
+        else if (vec.x < 0 && vec.y > 0) return CharaDirection.LeftUp;
+        else return CharaDirection.LeftDown;
+    }
+
     #endregion
 
     #region コルーチン
@@ -475,12 +495,33 @@ public class BossGameBCharacterBase : MonoBehaviour
         else
         {
             // CPUは選択UI表示
-
-            yield return new WaitForSeconds(1.5f);
+            var ui = system.cellUI;
+            var cellList = BossGameSystemB.CreateEnableCellList(skillID, this);
+            var cursor = new BossGameBUICellSelect.CellUIParam(targetCell, skill.EffectRange * 2 + 1, skill.EffectRange * 2 + 1, false);
+            ui.Show(cellList, new List<BossGameBUICellSelect.CellUIParam>() { cursor });
+            yield return new WaitForSeconds(1.0f);
+            ui.Hide();
         }
 
         // 使用
-        yield return UseSkill(skillID, targetCell);
+        // 敵味方使えるスキルの場合ここで実装
+        var generalSkills = new[]
+        {
+            BossGameBDataBase.SkillID.Ami1,
+            BossGameBDataBase.SkillID.Mana1,
+            BossGameBDataBase.SkillID.Matuka1,
+            BossGameBDataBase.SkillID.Mati1,
+            BossGameBDataBase.SkillID.Menderu1,
+            BossGameBDataBase.SkillID.Pierre1,
+        };
+        if (generalSkills.Contains(skillID))
+        {
+            yield return UseGeneralSkill(skillID, targetCell);
+        }
+        else
+        {
+            yield return UseSkill(skillID, targetCell);
+        }
 
         // スキル名非表示
         nameUI.Hide();
@@ -498,6 +539,68 @@ public class BossGameBCharacterBase : MonoBehaviour
     protected virtual IEnumerator UseSkill(BossGameBDataBase.SkillID skillID, Vector2Int targetCell)
     {
         yield return null;
+    }
+
+    /// <summary>
+    /// 敵味方共通スキル
+    /// </summary>
+    /// <returns></returns>
+    protected IEnumerator UseGeneralSkill(BossGameBDataBase.SkillID skillID, Vector2Int targetCell)
+    {
+        var skill = BossGameBDataBase.SkillList[skillID];
+        var sound = ManagerSceneScript.GetInstance().soundMan;
+        yield return null;
+
+        var targetList = GetSkillHitCharacters(skillID, targetCell);
+
+        switch (skillID)
+        {
+            case BossGameBDataBase.SkillID.Ami1: // はるのとなり
+                sound.PlaySE(system.dataObj.se_skill_harunotonari);
+                yield return system.PlayHealEffect(location, 3, 3);
+                // 回復
+                yield return AttackDamage(targetList, -skill.Value);
+                // 力アップ
+                yield return system.BuffAttack(targetList, 1.1f);
+                // 速度アップ
+                yield return system.BuffSpeed(targetList, 1.1f);
+                yield return new WaitForSeconds(0.5f);
+                break;
+            case BossGameBDataBase.SkillID.Mana1: //ショウダウン
+                //todo:
+                break;
+            case BossGameBDataBase.SkillID.Mati1: // 刹那の見斬り
+                {
+                    var dist = targetCell - location;
+                    yield return EffectMove(targetCell + dist, 0.03f);
+                    system.CreateSlashEffect(targetCell, BossGameSystemB.GetCellPosition(dist));
+                    sound.PlaySE(system.dataObj.se_skill_setuna);
+                    yield return new WaitForSeconds(0.7f);
+                    yield return EffectMove(location, 0.5f, 270f);
+                    yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                }
+                break;
+            case BossGameBDataBase.SkillID.Matuka1: // 喝
+                {
+                    ManagerSceneScript.GetInstance().mainCam.PlayShakeOne(Shaker.ShakeSize.Weak);
+                    sound.PlayVoice(system.dataObj.se_skill_katu);
+                    yield return new WaitForSeconds(1f);
+                    targetList.Remove(this);
+                    yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                    foreach (var chara in targetList)
+                    {
+                        // 確率で行動時間増加
+                        if (Util.RandomCheck(70)) chara.DelayTime(1);
+                    }
+                }
+                break;
+            case BossGameBDataBase.SkillID.Menderu1: // マントラップヴァイン
+                //todo:
+                break;
+            case BossGameBDataBase.SkillID.Pierre1: // ジャグリングヒット
+                //todo:
+                break;
+        }
     }
 
     /// <summary>
@@ -581,10 +684,10 @@ public class BossGameBCharacterBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ダメージを与える
+    /// ダメージを与える キャラごとに乱数で上下
     /// </summary>
     /// <param name="targets"></param>
-    /// <param name="baseDamage"></param>
+    /// <param name="baseDamage">マイナスで回復</param>
     /// <returns></returns>
     protected IEnumerator AttackDamage(List<BossGameBCharacterBase> targets, int baseDamage)
     {
@@ -598,7 +701,11 @@ public class BossGameBCharacterBase : MonoBehaviour
         {
             var dmg = Util.RandomInt(Mathf.FloorToInt(baseDamage * 0.8f), baseDamage);
             if (dmg >= 0)
+            {
+                // フレンドリーファイアは軽減
+                if (t.CharacterType == this.CharacterType) dmg = Mathf.FloorToInt(dmg * 0.4f);
                 StartCoroutine(t.HitDamage(dmg));
+            }
             else
                 StartCoroutine(t.HealDamage(-dmg));
         }

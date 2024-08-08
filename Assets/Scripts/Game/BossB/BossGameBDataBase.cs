@@ -70,7 +70,7 @@ public static class BossGameBDataBase
         Boss2_Prazma,
         /// <summary>アームストロング</summary>
         Boss3_Canon,
-        /// <summary>アームストロング</summary>
+        /// <summary>トランキーライザー</summary>
         Boss4_Tranqui,
         /// <summary>はるのとなり</summary>
         Ami1,

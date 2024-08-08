@@ -66,13 +66,15 @@ public class BossGameBPlayer : BossGameBCharacterBase
         skillList.Add(BossGameBDataBase.SkillID.Reko7_I);
         skillList.Add(BossGameBDataBase.SkillID.Reko8_N);
         skillList.Add(BossGameBDataBase.SkillID.Reko9_K);
-        //todo:連戦結果でスキル追加
-        skillList.Add(BossGameBDataBase.SkillID.Ami1);
-        skillList.Add(BossGameBDataBase.SkillID.Mana1);
-        skillList.Add(BossGameBDataBase.SkillID.Mati1);
-        skillList.Add(BossGameBDataBase.SkillID.Menderu1);
-        skillList.Add(BossGameBDataBase.SkillID.Matuka1);
-        skillList.Add(BossGameBDataBase.SkillID.Pierre1);
+
+        // 連戦結果でスキル追加
+        var g = Global.GetTemporaryData();
+        if (g.bossRushAmiWon) skillList.Add(BossGameBDataBase.SkillID.Ami1);
+        if (g.bossRushManaWon) skillList.Add(BossGameBDataBase.SkillID.Mana1);
+        if (g.bossRushMatiWon) skillList.Add(BossGameBDataBase.SkillID.Mati1);
+        if (g.bossRushMenderuWon) skillList.Add(BossGameBDataBase.SkillID.Menderu1);
+        if (g.bossRushMatukaWon) skillList.Add(BossGameBDataBase.SkillID.Matuka1);
+        if (g.bossRushPierreWon) skillList.Add(BossGameBDataBase.SkillID.Pierre1);
 
         CharacterType = CharaType.Player;
     }
@@ -128,7 +130,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 // スキル使用
                 yield return UseSkillBase(command.SelectSkill, cells.SelectCell);
 
-                walkCount = 0;
+                system.playerWalkReset = true;
                 break;
             }
             else if (input.GetKeyPress(InputManager.Keys.East))
@@ -342,6 +344,11 @@ public class BossGameBPlayer : BossGameBCharacterBase
         }
 
         return false;
+    }
+
+    public void ResetWalkCount()
+    {
+        walkCount = 0;
     }
 
     #endregion

@@ -31,6 +31,12 @@ public class F205TestBossRush : ActionEventBase
         }
         else
         {
+            Global.GetTemporaryData().bossRushAmiWon = true;
+            Global.GetTemporaryData().bossRushManaWon = true;
+            Global.GetTemporaryData().bossRushMatukaWon = false;
+            Global.GetTemporaryData().bossRushMatiWon = true;
+            Global.GetTemporaryData().bossRushMenderuWon = true;
+            Global.GetTemporaryData().bossRushPierreWon = true;
             manager.StartGame("GameSceneBossB");
         }
         yield return new WaitUntil(() => manager.SceneState == ManagerSceneScript.State.Main);

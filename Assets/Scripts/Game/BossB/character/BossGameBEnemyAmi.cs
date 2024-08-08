@@ -11,8 +11,22 @@ public class BossGameBEnemyAmi : BossGameBEnemy
 
     #endregion
 
+    /// <summary>
+    /// ID
+    /// </summary>
+    /// <returns></returns>
     public override BossGameSystemB.CharacterID GetCharacterID()
     {
         return BossGameSystemB.CharacterID.Ami;
+    }
+
+    /// <summary>
+    /// èâä˙âª
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+
+        skillList.Add(BossGameBDataBase.SkillID.Ami1);
     }
 }

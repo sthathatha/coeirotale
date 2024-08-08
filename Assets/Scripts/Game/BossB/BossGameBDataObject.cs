@@ -62,4 +62,16 @@ public class BossGameBDataObject : MonoBehaviour
     }
 
     #endregion
+
+    #region 汎用スキル用SE
+
+    public AudioClip se_skill_harunotonari;
+    public AudioClip se_skill_setuna;
+    public AudioClip se_skill_juggling;
+    public AudioClip se_skill_katu;
+    public AudioClip se_skill_mantrap;
+    public AudioClip se_skill_showdown_heal;
+    public AudioClip se_skill_showdown_fail;
+
+    #endregion
 }

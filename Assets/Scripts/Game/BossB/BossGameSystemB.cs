@@ -74,7 +74,15 @@ public class BossGameSystemB : GameSceneScriptBase
 
     #endregion
 
+    #region 変数
+
+    /// <summary>生きてるキャラリスト</summary>
     private List<BossGameBCharacterBase> characterList = new List<BossGameBCharacterBase>();
+
+    /// <summary>プレイヤーの歩数リセットするフラグ</summary>
+    public bool playerWalkReset { get; set; } = true;
+
+    #endregion
 
     #region 基底
 
@@ -84,17 +92,24 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <returns></returns>
     public override IEnumerator Start()
     {
+        var g = Global.GetTemporaryData();
         yield return base.Start();
 
         characterList.Add(player);
         characterList.Add(boss);
-        //todo:連戦結果によって削除
-        characterList.Add(ami);
-        characterList.Add(mana);
-        characterList.Add(matuka);
-        characterList.Add(menderu);
-        characterList.Add(mati);
-        characterList.Add(pierre);
+        // 連戦結果によって削除
+        if (g.bossRushAmiWon) ami.gameObject.SetActive(false);
+        else characterList.Add(ami);
+        if (g.bossRushManaWon) mana.gameObject.SetActive(false);
+        else characterList.Add(mana);
+        if (g.bossRushMatukaWon) matuka.gameObject.SetActive(false);
+        else characterList.Add(matuka);
+        if (g.bossRushMenderuWon) menderu.gameObject.SetActive(false);
+        else characterList.Add(menderu);
+        if (g.bossRushMatiWon) mati.gameObject.SetActive(false);
+        else characterList.Add(mati);
+        if (g.bossRushPierreWon) pierre.gameObject.SetActive(false);
+        else characterList.Add(pierre);
 
         foreach (var chara in characterList)
         {
@@ -143,6 +158,12 @@ public class BossGameSystemB : GameSceneScriptBase
         while (true)
         {
             yield return null;
+            // 誰かが行動した後はプレイヤーの歩数リセット
+            if (playerWalkReset)
+            {
+                player.ResetWalkCount();
+            }
+
             // 行動するキャラを決定
             BossGameBCharacterBase turnChara = null;
             var nextTime = int.MaxValue;
@@ -166,10 +187,14 @@ public class BossGameSystemB : GameSceneScriptBase
 
             if (turnChara.CharacterType == BossGameBCharacterBase.CharaType.Player)
             {
-                // プレイヤーターンの開始時
-                sound.PlaySE(se_turnStart);
-                // HP表示
-                yield return ShowHp();
+                if (playerWalkReset)
+                {
+                    // プレイヤーターンの開始時
+                    sound.PlaySE(se_turnStart);
+                    // HP表示
+                    yield return ShowHp();
+                    playerWalkReset = false;
+                }
             }
 
             // 行動処理
@@ -446,6 +471,12 @@ public class BossGameSystemB : GameSceneScriptBase
 
         return true;
     }
+
+    /// <summary>
+    /// プレイヤーの座標
+    /// </summary>
+    /// <returns></returns>
+    public Vector2Int GetPlayerLoc() { return player.GetLocation(); }
 
     /// <summary>
     /// キャラクターを削除

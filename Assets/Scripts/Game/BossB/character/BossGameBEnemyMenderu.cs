@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class BossGameBEnemyMenderu : BossGameBEnemy
 {
+    /// <summary>
+    /// ID
+    /// </summary>
+    /// <returns></returns>
     public override BossGameSystemB.CharacterID GetCharacterID()
     {
         return BossGameSystemB.CharacterID.Menderu;
+    }
+
+    /// <summary>
+    /// ‰Šú‰»
+    /// </summary>
+    protected override void Start()
+    {
+        base.Start();
+
+        skillList.Add(BossGameBDataBase.SkillID.Menderu1);
     }
 }
