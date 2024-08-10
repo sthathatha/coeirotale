@@ -24,6 +24,10 @@ public class Constant
     /// ‰æ–Ê•
     /// </summary>
     public const float SCREEN_WIDTH = 1280f;
+    /// <summary>
+    /// ‰æ–Ê‚‚³
+    /// </summary>
+    public const float SCREEN_HEIGHT = 720f;
 
     /// <summary>
     /// Œü‚«

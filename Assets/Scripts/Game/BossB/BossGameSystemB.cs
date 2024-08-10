@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 /// <summary>
 /// ボス　＊＊＊＊戦
@@ -67,6 +68,16 @@ public class BossGameSystemB : GameSceneScriptBase
     public BossGameBGeneralEffect generalEffectDummy;
     public BossGameBHorrorEffect horrorEffectDummy;
     public BossGameBOriginEffect originEffectDummy;
+    public BossGameBJuggleEffect juggleEffectDummy;
+    public BossGameBCardEffect cardEffectDummy;
+    public BossGameBPlasmaEffect plasmaEffectDummy;
+    public BossGameBChargeEffect chargeEffectDummy;
+    public BossGameBCanonEffect canonEffectDummy;
+    public BossGameBTranquiEffect tranquiEffectDummy;
+    public BossGameBNoFuruteEffect nofutureEffectDummy;
+    public BossGameBCarnageEffect carnageEffectDummy;
+
+    public GameObject fieldEffectDummy;
 
     public AudioClip se_turnStart;
     public AudioClip se_statusUp;
@@ -78,6 +89,9 @@ public class BossGameSystemB : GameSceneScriptBase
 
     /// <summary>生きてるキャラリスト</summary>
     private List<BossGameBCharacterBase> characterList = new List<BossGameBCharacterBase>();
+
+    /// <summary>地形効果リスト</summary>
+    private List<FieldEffectCell> fieldEffectList = new List<FieldEffectCell>();
 
     /// <summary>プレイヤーの歩数リセットするフラグ</summary>
     public bool playerWalkReset { get; set; } = true;
@@ -129,6 +143,16 @@ public class BossGameSystemB : GameSceneScriptBase
         buffEffectDummy.gameObject.SetActive(false);
         horrorEffectDummy.gameObject.SetActive(false);
         originEffectDummy.gameObject.SetActive(false);
+        juggleEffectDummy.gameObject.SetActive(false);
+        cardEffectDummy.gameObject.SetActive(false);
+        plasmaEffectDummy.gameObject.SetActive(false);
+        chargeEffectDummy.gameObject.SetActive(false);
+        canonEffectDummy.gameObject.SetActive(false);
+        tranquiEffectDummy.gameObject.SetActive(false);
+        nofutureEffectDummy.gameObject.SetActive(false);
+        carnageEffectDummy.gameObject.SetActive(false);
+
+        fieldEffectDummy.SetActive(false);
     }
 
     /// <summary>
@@ -158,11 +182,6 @@ public class BossGameSystemB : GameSceneScriptBase
         while (true)
         {
             yield return null;
-            // 誰かが行動した後はプレイヤーの歩数リセット
-            if (playerWalkReset)
-            {
-                player.ResetWalkCount();
-            }
 
             // 行動するキャラを決定
             BossGameBCharacterBase turnChara = null;
@@ -181,6 +200,9 @@ public class BossGameSystemB : GameSceneScriptBase
             {
                 chara.DecreaseTime(nextTime);
             }
+
+            // 地形時間減らす
+            DecreaseFieldEffectTime(nextTime);
 
             // UI更新
             UpdateTurnUI();
@@ -212,6 +234,12 @@ public class BossGameSystemB : GameSceneScriptBase
             {
                 skillNameUI.Show(StringMinigameMessage.BossB_Lose);
                 break;
+            }
+
+            // 誰かが行動した後はプレイヤーの歩数リセット
+            if (playerWalkReset)
+            {
+                player.ResetWalkCount();
             }
 
             // 行動したキャラの待機時間を再設定
@@ -299,6 +327,9 @@ public class BossGameSystemB : GameSceneScriptBase
         }
 
         UpdateTurnUI(false);
+
+        // 地形も減算
+        DecreaseFieldEffectTime(time);
     }
 
     /// <summary>
@@ -332,6 +363,17 @@ public class BossGameSystemB : GameSceneScriptBase
         // 基本位置
         foreach (var r in skill.RangeList)
         {
+            // 0は自分の位置
+            if (r == 0)
+            {
+                for (var x = -outW; x <= outW; ++x)
+                    for (var y = -outH; y <= outH; ++y)
+                    {
+                        offsetList.Add(new Vector2Int(x, y));
+                    }
+                continue;
+            }
+
             switch (rangeType)
             {
                 // 全方位
@@ -340,8 +382,7 @@ public class BossGameSystemB : GameSceneScriptBase
                     {
                         // 上と下辺
                         offsetList.Add(new Vector2Int(x, r + outH));
-                        if (r != 0) // 0の場合は重なるのでOK
-                            offsetList.Add(new Vector2Int(x, -r - outH));
+                        offsetList.Add(new Vector2Int(x, -r - outH));
                     }
                     for (var y = -r - outH + 1; y <= r + outH - 1; ++y)
                     {
@@ -423,6 +464,29 @@ public class BossGameSystemB : GameSceneScriptBase
     }
 
     /// <summary>
+    /// スキル効果範囲を作成
+    /// </summary>
+    /// <param name="skillId"></param>
+    /// <param name="center"></param>
+    /// <returns></returns>
+    public static List<Vector2Int> CreateSkillEffectCellList(BossGameBDataBase.SkillID skillId, Vector2Int center)
+    {
+        var skill = BossGameBDataBase.SkillList[skillId];
+        var list = new List<Vector2Int>();
+
+        for (var x = center.x - skill.EffectRange; x <= center.x + skill.EffectRange; ++x)
+            for (var y = center.y - skill.EffectRange; y <= center.y + skill.EffectRange; ++y)
+            {
+                if (x < 0 || x >= CELL_X_COUNT) continue;
+                if (y < 0 || y >= CELL_Y_COUNT) continue;
+
+                list.Add(new Vector2Int(x, y));
+            }
+
+        return list;
+    }
+
+    /// <summary>
     /// 向いてる方向の単位ベクトル
     /// </summary>
     /// <param name="dir"></param>
@@ -463,11 +527,17 @@ public class BossGameSystemB : GameSceneScriptBase
     /// その場所に移動できるか
     /// </summary>
     /// <param name="loc"></param>
+    /// <param name="isPlayer"></param>
     /// <returns></returns>
-    public bool CanWalk(Vector2Int loc)
+    public bool CanWalk(Vector2Int loc, bool isPlayer = false)
     {
         if (loc.x < 0 || loc.y < 0 || loc.x >= CELL_X_COUNT || loc.y >= CELL_Y_COUNT) return false;
         if (GetCellCharacter(loc) != null) return false;
+        if (!isPlayer)
+        {
+            // プレイヤー意外はマントラップに侵入不可
+            if (GetCellFieldEffect(loc) == BossGameBDataObject.FieldEffect.Mantrap) return false;
+        }
 
         return true;
     }
@@ -559,9 +629,8 @@ public class BossGameSystemB : GameSceneScriptBase
             if (!isUp && character.IsInvincible()) continue;
 
             character.ChangeSpeed(rate);
-            var buff = Instantiate(buffEffectDummy);
+            var buff = Instantiate(buffEffectDummy, cellEffectParent);
             buff.SetParam(isUp, BossGameBStatusBuffEffect.Type.Speed);
-            buff.transform.SetParent(cellEffectParent);
             buff.PlayAndDestroy(GetCellPosition(character.GetLocation()));
         }
 
@@ -584,9 +653,8 @@ public class BossGameSystemB : GameSceneScriptBase
             if (!isUp && character.IsInvincible()) continue;
 
             character.ChangeAttackRate(rate);
-            var buff = Instantiate(buffEffectDummy);
+            var buff = Instantiate(buffEffectDummy, cellEffectParent);
             buff.SetParam(isUp, BossGameBStatusBuffEffect.Type.Strength);
-            buff.transform.SetParent(cellEffectParent);
             buff.PlayAndDestroy(GetCellPosition(character.GetLocation()));
         }
 
@@ -602,8 +670,7 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <param name="kind">種類</param>
     public void CreateGeneralEffect(Vector3 cellPosition, BossGameBDataObject.EffectKind kind)
     {
-        var eff = Instantiate(generalEffectDummy);
-        eff.transform.SetParent(cellEffectParent);
+        var eff = Instantiate(generalEffectDummy, cellEffectParent);
         eff.SetParam(dataObj.GetGeneralEffectList(kind));
         eff.PlayAndDestroy(cellPosition);
     }
@@ -647,8 +714,7 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <param name="center"></param>
     public void PlayHorrorEffect(Vector2Int center)
     {
-        var eff = Instantiate(horrorEffectDummy);
-        eff.transform.SetParent(cellEffectParent);
+        var eff = Instantiate(horrorEffectDummy, cellEffectParent);
         eff.PlayAndDestroy(GetCellPosition(center));
     }
 
@@ -660,8 +726,7 @@ public class BossGameSystemB : GameSceneScriptBase
     public void CreateSlashEffect(Vector2Int center, Vector3 direction)
     {
         var rad = Util.GetRadianFromVector(direction);
-        var eff = Instantiate(generalEffectDummy);
-        eff.transform.SetParent(cellEffectParent);
+        var eff = Instantiate(generalEffectDummy, cellEffectParent);
         eff.SetParam(dataObj.GetGeneralEffectList(BossGameBDataObject.EffectKind.Slash));
         eff.model.transform.localRotation = Util.GetRotateQuaternion(rad);
         eff.PlayAndDestroy(GetCellPosition(center));
@@ -673,9 +738,206 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <param name="center"></param>
     public void CreateOriginEffect(Vector2Int center)
     {
-        var eff = Instantiate(originEffectDummy);
-        eff.transform.SetParent(cellEffectParent);
+        var eff = Instantiate(originEffectDummy, cellEffectParent);
         eff.PlayAndDestroy(GetCellPosition(center));
+    }
+
+    /// <summary>
+    /// ジャグリングエフェクト
+    /// </summary>
+    /// <param name="center"></param>
+    public void CreateJuggleEffect(Vector2Int center, Vector3 p1, Vector3 p2, Vector2Int target, int type)
+    {
+        var ctp = GetCellPosition(center);
+        var eff = Instantiate(juggleEffectDummy, cellEffectParent);
+        eff.SetParam(ctp + p1, ctp + p2, GetCellPosition(target), type);
+        eff.PlayAndDestroy(GetCellPosition(center));
+    }
+
+    /// <summary>
+    /// カード作成
+    /// </summary>
+    /// <param name="center"></param>
+    /// <param name="param"></param>
+    public void CreateCardEffect(Vector2Int center, BossGameBCardEffect.CardParam param, int index)
+    {
+        var eff = Instantiate(cardEffectDummy, cellEffectParent);
+        eff.SetParam(index, param.num, param.suit, GetCellPosition(center));
+        eff.PlayAndDestroy(GetCellPosition(center));
+    }
+
+    /// <summary>
+    /// プラズマフィールドエフェクト
+    /// </summary>
+    /// <param name="cellPosition"></param>
+    public void CreatePlasmaEffect(Vector3 cellPosition)
+    {
+        var eff = Instantiate(plasmaEffectDummy, cellEffectParent);
+        eff.PlayAndDestroy(cellPosition);
+    }
+
+    /// <summary>
+    /// チャージエフェクト
+    /// </summary>
+    /// <param name="center"></param>
+    public void CreateChargeEffect(Vector2Int center)
+    {
+        var eff = Instantiate(chargeEffectDummy, cellEffectParent);
+        eff.PlayAndDestroy(GetCellPosition(center));
+    }
+
+    /// <summary>
+    /// アームストロング砲エフェクト
+    /// </summary>
+    /// <param name="dist"></param>
+    public void CreateCanonEffect(Vector2Int dist)
+    {
+        var eff = Instantiate(canonEffectDummy, effectParent);
+        eff.SetParam(dist);
+        eff.PlayAndDestroy(new Vector3());
+    }
+
+    /// <summary>
+    /// トランキーライザーエフェクト
+    /// </summary>
+    /// <param name="pos1"></param>
+    /// <param name="pos2"></param>
+    public void CreateTranquiEffect(Vector3 pos1, Vector3 pos2)
+    {
+        var eff = Instantiate(tranquiEffectDummy, cellEffectParent);
+        eff.SetParam(pos1, pos2);
+        eff.PlayAndDestroy(pos1);
+    }
+
+    /// <summary>
+    /// NO FUTURE
+    /// </summary>
+    public void CreateNoFutureEffect()
+    {
+        var eff = Instantiate(nofutureEffectDummy, effectParent);
+        eff.PlayAndDestroy(Vector3.zero);
+    }
+
+    /// <summary>
+    /// カーネイジエフェクト
+    /// </summary>
+    public void CreateCarnageEffect(Vector2Int center)
+    {
+        var eff = Instantiate(carnageEffectDummy, cellEffectParent);
+        eff.PlayAndDestroy(GetCellPosition(center));
+    }
+
+    #endregion
+
+    #region 地形管理
+
+    /// <summary>
+    /// 地形効果情報クラス
+    /// </summary>
+    private class FieldEffectCell
+    {
+        /// <summary></summary>
+        public Vector2Int loc;
+        /// <summary>種類</summary>
+        public BossGameBDataObject.FieldEffect effect;
+        /// <summary>残り時間</summary>
+        public int time;
+
+        /// <summary>画面表示</summary>
+        public GameObject obj = null;
+    }
+
+    /// <summary>
+    /// セルの地形効果を取得
+    /// </summary>
+    /// <param name="loc"></param>
+    /// <returns></returns>
+    public BossGameBDataObject.FieldEffect GetCellFieldEffect(Vector2Int loc)
+    {
+        foreach (var eff in fieldEffectList)
+        {
+            if (eff.loc == loc) return eff.effect;
+        }
+
+        return BossGameBDataObject.FieldEffect.None;
+    }
+
+    /// <summary>
+    /// 地形効果をセット
+    /// </summary>
+    /// <param name="loc"></param>
+    /// <param name="eff"></param>
+    /// <param name="time"></param>
+    public void SetFieldEffect(Vector2Int loc, BossGameBDataObject.FieldEffect eff, int time)
+    {
+        // キャラが居る場所には作らない
+        if (GetCellCharacter(loc) != null) return;
+
+        var old = GetCellFieldEffect(loc);
+        //マントラップ優先
+        if (old == BossGameBDataObject.FieldEffect.Mantrap && eff != BossGameBDataObject.FieldEffect.Mantrap) return;
+
+        var eInfo = fieldEffectList.Find(eff => eff.loc == loc);
+        if (eInfo == null)
+        {
+            // 空なら新規作成
+            eInfo = new FieldEffectCell();
+            eInfo.loc = loc;
+            eInfo.obj = Instantiate(fieldEffectDummy);
+            eInfo.obj.SetActive(true);
+            eInfo.obj.transform.SetParent(cellEffectParent);
+            eInfo.obj.transform.localPosition = GetCellPosition(loc);
+            fieldEffectList.Add(eInfo);
+        }
+        eInfo.effect = eff;
+        eInfo.time = time;
+        eInfo.obj.GetComponentInChildren<SpriteRenderer>().sprite = eff switch
+        {
+            BossGameBDataObject.FieldEffect.Mantrap => dataObj.sp_field_mantrap,
+            _ => dataObj.sp_field_plasma,
+        };
+    }
+
+    /// <summary>
+    /// １箇所のフィールドエフェクトを削除
+    /// </summary>
+    /// <param name="loc"></param>
+    public void ClearFieldEffect(Vector2Int loc)
+    {
+        var ei = fieldEffectList.FindIndex(eff => eff.loc == loc);
+        if (ei < 0) return;
+
+        Destroy(fieldEffectList[ei].obj);
+        fieldEffectList.RemoveAt(ei);
+    }
+
+    /// <summary>
+    /// フィールドエフェクト全削除
+    /// </summary>
+    public void ClearFieldEffect()
+    {
+        foreach (var eff in fieldEffectList)
+        {
+            Destroy(eff.obj);
+        }
+        fieldEffectList.Clear();
+    }
+
+    /// <summary>
+    /// 地形から時間減算
+    /// </summary>
+    /// <param name="time"></param>
+    public void DecreaseFieldEffectTime(int time)
+    {
+        foreach (var feff in fieldEffectList)
+        {
+            feff.time -= time;
+            if (feff.time <= 0)
+            {
+                Destroy(feff.obj);
+            }
+        }
+        fieldEffectList.RemoveAll(e => e.time <= 0);
     }
 
     #endregion

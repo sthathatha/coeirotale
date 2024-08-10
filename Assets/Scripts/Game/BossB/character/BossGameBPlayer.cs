@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -156,6 +157,25 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     {
                         yield return Walk(walkLoc.x, walkLoc.y);
 
+                        // 地形効果チェック
+                        var effect = system.GetCellFieldEffect(location);
+                        if (effect == BossGameBDataObject.FieldEffect.Mantrap)
+                        {
+                            // マントラップに入ったら強制終了
+                            sound.PlaySE(system.dataObj.se_skill_mantrap);
+                            system.ClearFieldEffect(location);
+                            yield return new WaitForSeconds(0.4f);
+                            system.playerWalkReset = true;
+                            break;
+                        }
+                        else if (effect == BossGameBDataObject.FieldEffect.Plasma)
+                        {
+                            // ダメージうける
+                            sound.PlaySE(system.dataObj.se_field_plasma);
+                            yield return HitDamage(Util.RandomInt(160, 240), true);
+                            system.ClearFieldEffect(location);
+                        }
+
                         if (WalkEndCheck() == false) break;
                     }
                     else
@@ -220,7 +240,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 }
                 ResetDirection();
                 yield return EffectMove(location, 0.4f);
-                yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                yield return AttackDamage(targetList, skill.Value);
                 break;
             case BossGameBDataBase.SkillID.Reko3_E: // イーグルダイブ
                 yield return EffectMove(targetCell, 0.6f, 400f);
@@ -228,7 +248,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 system.CreateSlashEffect(targetCell, new Vector3(0, -1));
                 yield return new WaitForSeconds(0.4f);
                 yield return EffectMove(location, 0.6f, 300f);
-                yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                yield return AttackDamage(targetList, skill.Value);
                 break;
             case BossGameBDataBase.SkillID.Reko4_I: // インビンシブル
                 system.CreateGeneralEffect(BossGameSystemB.GetCellPosition(location), BossGameBDataObject.EffectKind.Invincible);
@@ -250,6 +270,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 {
                     chara.ResetParam();
                 }
+                system.ClearFieldEffect();
                 break;
             case BossGameBDataBase.SkillID.Reko7_I: // イグニッション
                 system.CreateGeneralEffect(BossGameSystemB.GetCellPosition(location), BossGameBDataObject.EffectKind.Ignition);
@@ -260,13 +281,20 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 yield return new WaitForSeconds(0.5f);
                 break;
             case BossGameBDataBase.SkillID.Reko8_N: // ナイトメア
-                system.PlayHorrorEffect(targetCell);
-                yield return new WaitForSeconds(2.6f);
-                yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value));
-                foreach (var chara in targetList)
                 {
-                    // 確率で行動時間増加
-                    if (Util.RandomCheck(30)) chara.DelayTime(1);
+                    system.PlayHorrorEffect(targetCell);
+                    yield return new WaitForSeconds(2.6f);
+                    yield return AttackDamage(targetList, skill.Value, false);
+                    var slowChara = new List<BossGameBCharacterBase>();
+                    foreach (var chara in targetList)
+                    {
+                        // 確率で行動時間増加
+                        if (Util.RandomCheck(50)) chara.DelayTime(1);
+
+                        // 確率で速度ダウン
+                        if (Util.RandomCheck(50)) slowChara.Add(chara);
+                    }
+                    yield return system.BuffSpeed(slowChara, 0.9f);
                 }
                 break;
             case BossGameBDataBase.SkillID.Reko9_K: // キーニングシルフ
@@ -294,7 +322,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     yield return new WaitForSeconds(0.04f);
                 }
                 ResetDirection();
-                yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value));
+                yield return AttackDamage(targetList, skill.Value, false);
                 break;
         }
     }

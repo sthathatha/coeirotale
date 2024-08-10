@@ -67,7 +67,7 @@ public static class BossGameBDataBase
         /// <summary>カルネージ</summary>
         Boss1_Carnage,
         /// <summary>プラズマ</summary>
-        Boss2_Prazma,
+        Boss2_Plasma,
         /// <summary>アームストロング</summary>
         Boss3_Canon,
         /// <summary>トランキーライザー</summary>
@@ -209,27 +209,29 @@ public static class BossGameBDataBase
                 {
                     Name = StringMinigameMessage.BossB_SkillBBoss1_Name,
                     EffectRange = 6,
+                    RangeList = new List<int>() { 0, 1, 2, 3, 4, 5, 6 },
                     Value = 800,
                 });
-                _skillList.Add(SkillID.Boss2_Prazma, new SkillData()
+                _skillList.Add(SkillID.Boss2_Plasma, new SkillData()
                 {
                     Name = StringMinigameMessage.BossB_SkillBBoss2_Name,
+                    TargetType = TargetTypeEnum.Enemy,
                     EffectRange = 6,
+                    RangeList = new List<int>() { 0, 1, 2, 3, 4, 5, 6 },
                     Value = 300,
                 });
                 _skillList.Add(SkillID.Boss3_Canon, new SkillData()
                 {
                     Name = StringMinigameMessage.BossB_SkillBBoss3_Name,
                     RangeType = RangeTypeEnum.AllCrossLine,
-                    RangeList = new List<int>() { 1, 2, 3, 4, 5, 6 },
-                    EffectRange = 6,
+                    RangeList = new List<int>() { 0, 1, 2, 3, 4, 5, 6 },
                     Value = 1300,
                 });
                 _skillList.Add(SkillID.Boss4_Tranqui, new SkillData()
                 {
                     Name = StringMinigameMessage.BossB_SkillBBoss4_Name,
-                    RangeType = RangeTypeEnum.AllLine,
-                    RangeList = new List<int>() { 1, 2, 3, 4, 5, 6 },
+                    RangeType = RangeTypeEnum.AllPlusLine,
+                    RangeList = new List<int>() { 0, 1, 2, 3, 4, 5, 6 },
                     Value = 300,
                 });
 

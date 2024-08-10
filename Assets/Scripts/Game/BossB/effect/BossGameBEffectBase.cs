@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public abstract class BossGameBEffectBase : MonoBehaviour
 {
+    public BossGameSystemB system;
     public SpriteRenderer model;
     protected Vector3 basePosition;
 

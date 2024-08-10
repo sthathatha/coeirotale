@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -25,6 +26,7 @@ public class BossGameBEnemy : BossGameBCharacterBase
     /// <returns></returns>
     protected override IEnumerator TurnProcess()
     {
+        var sound = ManagerSceneScript.GetInstance().soundMan;
         // 行動決定
         var ai = DecideAI();
 
@@ -39,6 +41,15 @@ public class BossGameBEnemy : BossGameBCharacterBase
                 break;
             case AIResult.ActionType.Walk:
                 yield return Walk(ai.WalkLoc.x, ai.WalkLoc.y);
+                // 地形効果チェック
+                var effect = system.GetCellFieldEffect(location);
+                if (effect == BossGameBDataObject.FieldEffect.Plasma)
+                {
+                    // ダメージうける
+                    sound.PlaySE(system.dataObj.se_field_plasma);
+                    yield return HitDamage(Util.RandomInt(160, 240), true);
+                    system.ClearFieldEffect(location);
+                }
                 break;
         }
 

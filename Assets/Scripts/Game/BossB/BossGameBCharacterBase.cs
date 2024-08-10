@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -330,19 +331,19 @@ public class BossGameBCharacterBase : MonoBehaviour
     {
         var skill = BossGameBDataBase.SkillList[skillID];
         var list = new List<BossGameBCharacterBase>();
+        var cellList = BossGameSystemB.CreateSkillEffectCellList(skillID, center);
 
-        for (var x = center.x - skill.EffectRange; x <= center.x + skill.EffectRange; ++x)
-            for (var y = center.y - skill.EffectRange; y <= center.y + skill.EffectRange; ++y)
-            {
-                var chara = system.GetCellCharacter(new Vector2Int(x, y));
-                if (chara == null) continue;
-                if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Fellow && chara.CharacterType != CharacterType)
-                    continue;
-                if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Enemy && chara.CharacterType == CharacterType)
-                    continue;
+        foreach (var cell in cellList)
+        {
+            var chara = system.GetCellCharacter(cell);
+            if (chara == null) continue;
+            if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Fellow && chara.CharacterType != CharacterType)
+                continue;
+            if (skill.TargetType == BossGameBDataBase.TargetTypeEnum.Enemy && chara.CharacterType == CharacterType)
+                continue;
 
-                if (!list.Contains(chara)) list.Add(chara);
-            }
+            if (!list.Contains(chara)) list.Add(chara);
+        }
 
         return list;
     }
@@ -552,6 +553,7 @@ public class BossGameBCharacterBase : MonoBehaviour
         yield return null;
 
         var targetList = GetSkillHitCharacters(skillID, targetCell);
+        var cellList = BossGameSystemB.CreateSkillEffectCellList(skillID, targetCell);
 
         switch (skillID)
         {
@@ -567,7 +569,79 @@ public class BossGameBCharacterBase : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
                 break;
             case BossGameBDataBase.SkillID.Mana1: //ショウダウン
-                //todo:
+                {
+                    // 役を決定
+                    var rand = Util.RandomInt(0, 99);
+                    var yaku = BossGameBCardEffect.Yaku.Boo;
+                    if (rand < 15) yaku = BossGameBCardEffect.Yaku.Boo;
+                    else if (rand < 35) yaku = BossGameBCardEffect.Yaku.OnePair;
+                    else if (rand < 51) yaku = BossGameBCardEffect.Yaku.TwoPair;
+                    else if (rand < 64) yaku = BossGameBCardEffect.Yaku.ThreeCard;
+                    else if (rand < 74) yaku = BossGameBCardEffect.Yaku.Straight;
+                    else if (rand < 84) yaku = BossGameBCardEffect.Yaku.Flash;
+                    else if (rand < 92) yaku = BossGameBCardEffect.Yaku.FullHouse;
+                    else if (rand < 97) yaku = BossGameBCardEffect.Yaku.FourCard;
+                    else if (rand < 99) yaku = BossGameBCardEffect.Yaku.StraightFlash;
+                    else yaku = BossGameBCardEffect.Yaku.Loyal;
+
+                    var cardParams = BossGameBCardEffect.DecideCard(yaku);
+                    for (var i = 0; i < cardParams.Count; ++i)
+                    {
+                        sound.PlaySE(system.dataObj.se_skill_showdown_init);
+                        system.CreateCardEffect(location, cardParams[i], i);
+                        yield return new WaitForSeconds(BossGameBCardEffect.DELAY_ONE);
+                    }
+                    yield return new WaitForSeconds(1f);
+
+                    //SE
+                    sound.PlaySE(yaku == BossGameBCardEffect.Yaku.Boo ? system.dataObj.se_skill_showdown_fail : system.dataObj.se_skill_showdown_heal);
+                    //エフェクト再生
+                    yield return system.PlayHealEffect(new Vector2Int(BossGameSystemB.CELL_X_COUNT, BossGameSystemB.CELL_Y_COUNT) / 2, BossGameSystemB.CELL_X_COUNT, BossGameSystemB.CELL_Y_COUNT);
+                    // 効果発動
+                    switch (yaku)
+                    {
+                        case BossGameBCardEffect.Yaku.Loyal:
+                            yield return AttackDamage(targetList, -1500);
+                            yield return system.BuffAttack(targetList, 2f);
+                            yield return system.BuffSpeed(targetList, 2f);
+                            break;
+                        case BossGameBCardEffect.Yaku.StraightFlash:
+                            yield return AttackDamage(targetList, -600);
+                            yield return system.BuffAttack(targetList, 1.5f);
+                            yield return system.BuffSpeed(targetList, 1.5f);
+                            break;
+                        case BossGameBCardEffect.Yaku.FourCard:
+                            yield return AttackDamage(targetList, -600);
+                            yield return system.BuffSpeed(targetList, 1.5f);
+                            break;
+                        case BossGameBCardEffect.Yaku.FullHouse:
+                            yield return AttackDamage(targetList, -600);
+                            yield return system.BuffAttack(targetList, 1.5f);
+                            break;
+                        case BossGameBCardEffect.Yaku.Flash:
+                            yield return AttackDamage(targetList, -200);
+                            yield return system.BuffAttack(targetList, 1.2f);
+                            yield return system.BuffSpeed(targetList, 1.2f);
+                            break;
+                        case BossGameBCardEffect.Yaku.Straight:
+                            yield return system.BuffSpeed(targetList, 1.2f);
+                            break;
+                        case BossGameBCardEffect.Yaku.ThreeCard:
+                            yield return system.BuffAttack(targetList, 1.2f);
+                            break;
+                        case BossGameBCardEffect.Yaku.TwoPair:
+                            yield return AttackDamage(targetList, -600);
+                            break;
+                        case BossGameBCardEffect.Yaku.OnePair:
+                            yield return AttackDamage(targetList, -200);
+                            break;
+                        case BossGameBCardEffect.Yaku.Boo:
+                            yield return system.BuffAttack(targetList, 0.9f);
+                            yield return system.BuffSpeed(targetList, 0.9f);
+                            break;
+                    }
+                    yield return new WaitForSeconds(0.5f);
+                }
                 break;
             case BossGameBDataBase.SkillID.Mati1: // 刹那の見斬り
                 {
@@ -577,7 +651,7 @@ public class BossGameBCharacterBase : MonoBehaviour
                     sound.PlaySE(system.dataObj.se_skill_setuna);
                     yield return new WaitForSeconds(0.7f);
                     yield return EffectMove(location, 0.5f, 270f);
-                    yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                    yield return AttackDamage(targetList, skill.Value);
                 }
                 break;
             case BossGameBDataBase.SkillID.Matuka1: // 喝
@@ -586,7 +660,7 @@ public class BossGameBCharacterBase : MonoBehaviour
                     sound.PlayVoice(system.dataObj.se_skill_katu);
                     yield return new WaitForSeconds(1f);
                     targetList.Remove(this);
-                    yield return AttackDamage(targetList, Mathf.FloorToInt(skill.Value * param_ATK_rate));
+                    yield return AttackDamage(targetList, skill.Value, false);
                     foreach (var chara in targetList)
                     {
                         // 確率で行動時間増加
@@ -595,10 +669,85 @@ public class BossGameBCharacterBase : MonoBehaviour
                 }
                 break;
             case BossGameBDataBase.SkillID.Menderu1: // マントラップヴァイン
-                //todo:
+                {
+                    // エフェクト
+                    var basePos = BossGameSystemB.GetCellPosition(targetCell);
+                    basePos.y += 30f;
+                    var ofsX = BossGameSystemB.CELL_WIDTH * 0.75f;
+                    var ofsY = BossGameSystemB.CELL_HEIGHT * 0.7f;
+                    var base1 = basePos + new Vector3(ofsX, ofsY);
+                    var base2 = basePos + new Vector3(-ofsX, -ofsY);
+                    var base3 = basePos + new Vector3(-ofsX, ofsY);
+                    var base4 = basePos + new Vector3(ofsX, -ofsY);
+
+                    for (var i = 0; i < 5; ++i)
+                    {
+                        sound.PlaySE(system.dataObj.se_skill_mantrap);
+                        var rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
+                        system.CreateGeneralEffect(base1 + rand, BossGameBDataObject.EffectKind.Mantrap);
+                        yield return new WaitForSeconds(0.03f);
+                        rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
+                        system.CreateGeneralEffect(base2 + rand, BossGameBDataObject.EffectKind.Mantrap);
+                        yield return new WaitForSeconds(0.03f);
+                        sound.PlaySE(system.dataObj.se_skill_mantrap);
+                        rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
+                        system.CreateGeneralEffect(base3 + rand, BossGameBDataObject.EffectKind.Mantrap);
+                        yield return new WaitForSeconds(0.03f);
+                        rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
+                        system.CreateGeneralEffect(base4 + rand, BossGameBDataObject.EffectKind.Mantrap);
+                        yield return new WaitForSeconds(0.03f);
+                    }
+                    yield return new WaitForSeconds(0.4f);
+
+                    // 地形生成
+                    foreach (var cell in cellList)
+                    {
+                        if (Util.RandomCheck(10)) continue;
+                        system.SetFieldEffect(cell, BossGameBDataObject.FieldEffect.Mantrap, Util.RandomInt(60, 170));
+                    }
+
+                    // ダメージ
+                    yield return AttackDamage(targetList, skill.Value, false);
+                }
                 break;
             case BossGameBDataBase.SkillID.Pierre1: // ジャグリングヒット
-                //todo:
+                {
+                    var oldDir = nowDirection;
+                    var p1 = new Vector3(40f, 20f);
+                    var p2 = new Vector3(-40f, 20f);
+                    var dmg = 0;
+                    for (var i = 0; i < 5; ++i)
+                    {
+                        yield return new WaitForSeconds(0.05f);
+                        SetDirection(1, 0);
+                        if (Util.RandomCheck(50))
+                        {
+                            dmg += 30;
+                            system.CreateJuggleEffect(location, p1, p2, targetCell, 0);
+                        }
+                        else
+                        {
+                            dmg += 110;
+                            system.CreateJuggleEffect(location, p1, p2, targetCell, 1);
+                        }
+
+                        yield return new WaitForSeconds(0.05f);
+                        SetDirection(-1, 0);
+                        if (Util.RandomCheck(50))
+                        {
+                            dmg += 30;
+                            system.CreateJuggleEffect(location, p2, p1, targetCell, 0);
+                        }
+                        else
+                        {
+                            dmg += 110;
+                            system.CreateJuggleEffect(location, p2, p1, targetCell, 1);
+                        }
+                    }
+                    SetDirection(oldDir);
+                    yield return new WaitForSeconds(BossGameBJuggleEffect.JUGGLE_TIME + 0.5f);
+                    yield return AttackDamage(targetList, dmg);
+                }
                 break;
         }
     }
@@ -607,8 +756,9 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// ダメージうける
     /// </summary>
     /// <param name="dmg"></param>
+    /// <param name="safe">true: １残る</param>
     /// <returns></returns>
-    public IEnumerator HitDamage(int dmg)
+    public IEnumerator HitDamage(int dmg, bool safe = false)
     {
         damageEffecting = true;
         if (isInvincible) dmg = 0;
@@ -629,12 +779,19 @@ public class BossGameBCharacterBase : MonoBehaviour
         yield return system.ShowDamage(location, dmg);
 
         param_HP -= dmg;
-        if (param_HP < 0)
+        if (param_HP <= 0)
         {
-            // 死亡演出して消去
-            param_HP = 0;
-            yield return DeadEffect();
-            system.RemoveCharacter(this);
+            if (safe)
+            {
+                param_HP = 1;
+            }
+            else
+            {
+                // 死亡演出して消去
+                param_HP = 0;
+                yield return DeadEffect();
+                system.RemoveCharacter(this);
+            }
         }
 
         damageEffecting = false;
@@ -689,13 +846,16 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// <param name="targets"></param>
     /// <param name="baseDamage">マイナスで回復</param>
     /// <returns></returns>
-    protected IEnumerator AttackDamage(List<BossGameBCharacterBase> targets, int baseDamage)
+    protected IEnumerator AttackDamage(List<BossGameBCharacterBase> targets, int baseDamage, bool useRate = true)
     {
         if (targets.Count == 0)
         {
             yield return new WaitForSeconds(0.5f);
             yield break;
         }
+
+        // 攻撃のバフ倍率
+        if (useRate && baseDamage > 0) baseDamage = Mathf.FloorToInt(baseDamage * param_ATK_rate);
 
         foreach (var t in targets)
         {
