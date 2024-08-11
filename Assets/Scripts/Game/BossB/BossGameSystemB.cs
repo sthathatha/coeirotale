@@ -623,6 +623,9 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <returns></returns>
     public IEnumerator BuffSpeed(List<BossGameBCharacterBase> characterList, float rate)
     {
+        characterList = characterList.Where(c => c.GetHp() > 0).ToList();
+        if (!characterList.Any()) yield break;
+
         var isUp = rate > 1f;
         foreach (var character in characterList)
         {
@@ -647,6 +650,9 @@ public class BossGameSystemB : GameSceneScriptBase
     /// <returns></returns>
     public IEnumerator BuffAttack(List<BossGameBCharacterBase> characterList, float rate)
     {
+        characterList = characterList.Where(c => c.GetHp() > 0).ToList();
+        if (!characterList.Any()) yield break;
+
         var isUp = rate > 1f;
         foreach (var character in characterList)
         {

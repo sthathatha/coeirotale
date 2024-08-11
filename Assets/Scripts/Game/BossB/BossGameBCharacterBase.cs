@@ -221,7 +221,7 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// 行動遅延
     /// </summary>
     /// <param name="turn">遅延回数</param>
-    public void DelayTime(int turn) { param_wait_time += GetMaxWaitTime(); }
+    public void DelayTime(int turn) { param_wait_time += turn * GetMaxWaitTime(); }
 
     /// <summary>
     /// 待ち時間を再設定
@@ -664,7 +664,15 @@ public class BossGameBCharacterBase : MonoBehaviour
                     foreach (var chara in targetList)
                     {
                         // 確率で行動時間増加
-                        if (Util.RandomCheck(70)) chara.DelayTime(1);
+                        if (chara.CharacterType == CharacterType)
+                        {
+                            // 味方は低確率
+                            if (Util.RandomCheck(20)) chara.DelayTime(1);
+                        }
+                        else
+                        {
+                            if (Util.RandomCheck(70)) chara.DelayTime(1);
+                        }
                     }
                 }
                 break;

@@ -218,7 +218,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 }
                 ResetDirection();
                 // 自分の速度アップ
-                yield return system.BuffSpeed(targetList, 1.2f);
+                yield return system.BuffSpeed(targetList, skill.Value / 100f);
                 yield return new WaitForSeconds(0.5f);
                 break;
             case BossGameBDataBase.SkillID.Reko2_O: // オクトストライク
@@ -230,13 +230,13 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     system.CreateGeneralEffect(targetCellPos + randPos, BossGameBDataObject.EffectKind.Hit);
                     sound.PlaySE(se_octstrike1);
                     model.sprite = sp_leftup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.03f);
                     model.sprite = sp_rightup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.03f);
                     model.sprite = sp_leftup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.03f);
                     model.sprite = sp_rightup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.03f);
                 }
                 ResetDirection();
                 yield return EffectMove(location, 0.4f);
@@ -277,7 +277,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                 yield return new WaitForSeconds(0.2f);
                 sound.PlaySE(se_ignition1);
                 yield return new WaitForSeconds(0.6f);
-                yield return system.BuffAttack(targetList, 1.2f);
+                yield return system.BuffAttack(targetList, skill.Value / 100f);
                 yield return new WaitForSeconds(0.5f);
                 break;
             case BossGameBDataBase.SkillID.Reko8_N: // ナイトメア
@@ -289,10 +289,10 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     foreach (var chara in targetList)
                     {
                         // 確率で行動時間増加
-                        if (Util.RandomCheck(50)) chara.DelayTime(1);
+                        if (Util.RandomCheck(40)) chara.DelayTime(1);
 
                         // 確率で速度ダウン
-                        if (Util.RandomCheck(50)) slowChara.Add(chara);
+                        else if (Util.RandomCheck(50)) slowChara.Add(chara);
                     }
                     yield return system.BuffSpeed(slowChara, 0.9f);
                 }

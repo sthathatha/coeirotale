@@ -181,7 +181,7 @@ public static class BossGameBDataBase
                 {
                     Name = StringMinigameMessage.BossB_SkillA7_Name,
                     Detail = StringMinigameMessage.BossB_SkillA7_Detail,
-                    Value = 250,
+                    Value = 120,
                 });
                 _skillList.Add(SkillID.Reko8_N, new SkillData()
                 {
@@ -191,7 +191,7 @@ public static class BossGameBDataBase
                     RangeType = BossGameBDataBase.RangeTypeEnum.All,
                     RangeList = new List<int>() { 1, 2 },
                     EffectRange = 1,
-                    Value = 400,
+                    Value = 300,
                 });
                 _skillList.Add(SkillID.Reko9_K, new SkillData()
                 {
@@ -199,7 +199,7 @@ public static class BossGameBDataBase
                     Detail = StringMinigameMessage.BossB_SkillA9_Detail,
                     TargetType = TargetTypeEnum.Enemy,
                     EffectRange = 2,
-                    Value = 260,
+                    Value = 500,
                 });
 
                 #endregion
