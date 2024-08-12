@@ -102,8 +102,11 @@ public class BossGameBEnemy : BossGameBCharacterBase
         var pLoc = system.GetPlayerLoc();
         var dist = pLoc - location;
 
-        // 距離1ならプレイヤーの方を向いて終了
-        if (Mathf.Abs(dist.x) <= 1 && Mathf.Abs(dist.y) <= 1)
+        // 所持スキルの中で一番長い射程
+        var maxRange = skillList.Max(s => BossGameBDataBase.SkillList[s].RangeList.Max());
+
+        // 最大射程以内ならプレイヤーの方を向いて終了
+        if (Mathf.Abs(dist.x) <= maxRange && Mathf.Abs(dist.y) <= maxRange)
         {
             ret.Act = AIResult.ActionType.ChangeDir;
             ret.ChangeDir = GetVectorDirection(dist);
