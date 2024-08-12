@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using UnityEngine;
 
@@ -224,7 +225,8 @@ public class BossGameBEnemyBoss : BossGameBEnemy
                     }
                     yield return new WaitForSeconds(0.2f);
                     yield return AttackDamage(targetList, skill.Value);
-                    if (Util.RandomCheck(80))
+                    targetList = targetList.Where(t => t.GetHp() > 0).ToList();
+                    if (targetList.Any() && Util.RandomCheck(80))
                     {
                         yield return system.BuffAttack(targetList, 0.8f);
                     }
