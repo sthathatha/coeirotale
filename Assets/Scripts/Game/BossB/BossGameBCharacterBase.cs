@@ -221,7 +221,11 @@ public class BossGameBCharacterBase : MonoBehaviour
     /// s“®’x‰„
     /// </summary>
     /// <param name="turn">’x‰„‰ñ”</param>
-    public void DelayTime(int turn) { param_wait_time += turn * GetMaxWaitTime(); }
+    public void DelayTime(int turn)
+    {
+        if (isInvincible) return;
+        param_wait_time += turn * GetMaxWaitTime();
+    }
 
     /// <summary>
     /// ‘Ò‚¿ŠÔ‚ğÄİ’è
@@ -236,6 +240,7 @@ public class BossGameBCharacterBase : MonoBehaviour
     {
         var before = param_SPD_rate;
         param_SPD_rate *= mul;
+        if (param_SPD_rate > 10f) param_SPD_rate = 10f;
 
         // ‘Ò‚¿ŠÔ‚ğ•Ï“®
         ChangeWaitTimeRate(before, param_SPD_rate);
@@ -248,6 +253,7 @@ public class BossGameBCharacterBase : MonoBehaviour
     public void ChangeAttackRate(float mul)
     {
         param_ATK_rate *= mul;
+        if (param_ATK_rate > 1000f) param_ATK_rate = 1000f;
     }
 
     /// <summary>

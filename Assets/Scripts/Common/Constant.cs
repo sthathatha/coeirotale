@@ -34,7 +34,8 @@ public class Constant
     /// </summary>
     public enum Direction : int
     {
-        Up = 0,
+        None = 0,
+        Up,
         Down,
         Left,
         Right,

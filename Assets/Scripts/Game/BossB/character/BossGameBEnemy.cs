@@ -105,12 +105,17 @@ public class BossGameBEnemy : BossGameBCharacterBase
         // 所持スキルの中で一番長い射程
         var maxRange = skillList.Max(s => BossGameBDataBase.SkillList[s].RangeList.Max());
 
-        // 最大射程以内ならプレイヤーの方を向いて終了
+        // 最大射程以内、かつ現在の向きが違うならプレイヤーの方を向いて終了
         if (Mathf.Abs(dist.x) <= maxRange && Mathf.Abs(dist.y) <= maxRange)
         {
-            ret.Act = AIResult.ActionType.ChangeDir;
-            ret.ChangeDir = GetVectorDirection(dist);
-            return ret;
+            // 向きたい方向
+            var chgDir = GetVectorDirection(dist);
+            if (GetDirection() != chgDir)
+            {
+                ret.Act = AIResult.ActionType.ChangeDir;
+                ret.ChangeDir = chgDir;
+                return ret;
+            }
         }
 
         // 座標が大きい方を目標

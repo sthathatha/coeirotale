@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -29,6 +30,12 @@ public class CharacterScript : ObjectBase
     /// <summary>カメラ処理有効 デフォルトはプレイヤーのみ</summary>
     protected bool enableCamera = false;
 
+    /// <summary>現在の向き</summary>
+    protected Constant.Direction direction = Constant.Direction.None;
+
+    /// <summary>上下左右の共通アニメーションを持つか</summary>
+    protected bool generalDirection = true;
+
     #endregion
 
     #region 基底
@@ -46,7 +53,7 @@ public class CharacterScript : ObjectBase
     /// </summary>
     protected override void Update()
     {
-        if (ManagerSceneScript.GetInstance()?.SceneState != ManagerSceneScript.State.Main)
+        if (ManagerSceneScript.GetInstance()?.SceneState == ManagerSceneScript.State.Game)
         {
             base.Update();
             return;
@@ -54,6 +61,14 @@ public class CharacterScript : ObjectBase
 
         UpdateCamera();
         base.Update();
+    }
+
+    /// <summary>
+    /// ゲーム復帰時などに向きが下になってしまうためリセットする
+    /// </summary>
+    public void AwakeResetDirection()
+    {
+        SetDirection(direction);
     }
 
     #endregion
@@ -107,15 +122,22 @@ public class CharacterScript : ObjectBase
     /// 向き変更
     /// </summary>
     /// <param name="dir">向き</param>
-    public void SetDirection(Constant.Direction dir)
+    public virtual void SetDirection(Constant.Direction dir)
     {
-        modelAnim?.Play(dir switch
+        direction = dir;
+        if (dir == Constant.Direction.None) return;
+
+        if (generalDirection &&
+            modelAnim?.isActiveAndEnabled == true)
         {
-            Constant.Direction.Up => "up",
-            Constant.Direction.Down => "down",
-            Constant.Direction.Right => "right",
-            _ => "left"
-        });
+            modelAnim.Play(dir switch
+            {
+                Constant.Direction.Up => "up",
+                Constant.Direction.Down => "down",
+                Constant.Direction.Right => "right",
+                _ => "left"
+            });
+        }
     }
 
     /// <summary>
@@ -183,6 +205,31 @@ public class CharacterScript : ObjectBase
     {
         modelAnim.SetFloat("speedX", vec.x);
         modelAnim.SetFloat("speedY", vec.y);
+
+        // ゼロでなければ向きを設定
+        if (vec.sqrMagnitude < 0.1f) return;
+        if (Mathf.Abs(vec.x) > Mathf.Abs(vec.y))
+        {
+            if (vec.x > 0)
+            {
+                SetDirection(Constant.Direction.Right);
+            }
+            else
+            {
+                SetDirection(Constant.Direction.Left);
+            }
+        }
+        else
+        {
+            if (vec.y > 0)
+            {
+                SetDirection(Constant.Direction.Up);
+            }
+            else
+            {
+                SetDirection(Constant.Direction.Down);
+            }
+        }
     }
 
     /// <summary>

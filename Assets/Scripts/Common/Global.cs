@@ -271,6 +271,11 @@ public class Global
         public bool bossRushMatukaWon;
         /// <summary>ボスラッシュ勝敗　ピエール</summary>
         public bool bossRushPierreWon;
+        /// <summary>ラスボスに負けたフラグ</summary>
+        public bool lastBossLost;
+
+        /// <summary>クリア時の選択声</summary>
+        public int ending_select_voice;
 
         /// <summary>
         /// コンストラクタ

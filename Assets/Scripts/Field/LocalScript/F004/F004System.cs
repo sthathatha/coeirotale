@@ -44,9 +44,9 @@ public class F004System : MainScriptBase
     /// フェードイン後処理
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator AfterFadeIn()
+    public override IEnumerator AfterFadeIn(bool init)
     {
-        yield return base.AfterFadeIn();
+        yield return base.AfterFadeIn(init);
 
         var save = Global.GetSaveData();
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 
@@ -178,6 +179,7 @@ public class BossGameSystemB : GameSceneScriptBase
     {
         var sound = ManagerSceneScript.GetInstance().soundMan;
         var input = InputManager.GetInstance();
+        var won = false;
 
         while (true)
         {
@@ -226,6 +228,7 @@ public class BossGameSystemB : GameSceneScriptBase
             if (!characterList.Contains(boss))
             {
                 skillNameUI.Show(StringMinigameMessage.BossB_Win);
+                won = true;
                 break;
             }
 
@@ -247,7 +250,17 @@ public class BossGameSystemB : GameSceneScriptBase
         }
 
         yield return new WaitForSeconds(2f);
-        ManagerSceneScript.GetInstance().ExitGame();
+        Global.GetTemporaryData().lastBossLost = !won;
+        Global.GetTemporaryData().bossRush = false;
+        if (won)
+        {
+            ManagerSceneScript.GetInstance().ExitGame();
+        }
+        else
+        {
+            // 負けたら前のマップに戻る
+            ManagerSceneScript.GetInstance().ExitGame("Field204", 2);
+        }
     }
 
     #endregion

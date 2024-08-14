@@ -41,9 +41,9 @@ public class F003System : MainScriptBase
     /// フェードイン後処理
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator AfterFadeIn()
+    public override IEnumerator AfterFadeIn(bool init)
     {
-        yield return base.AfterFadeIn();
+        yield return base.AfterFadeIn(init);
 
         if (Global.GetSaveData().GetGameDataInt("Tutorial") < 2)
         {

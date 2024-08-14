@@ -41,7 +41,15 @@ public class PlayerScript : CharacterScript
         base.Start();
 
         rigid = GetComponent<Rigidbody2D>();
-        enableCamera = true;
+        generalDirection = false;
+    }
+
+    /// <summary>
+    ///  Start‚ÍGameScene•œ‹A‚É‚àŒÄ‚Î‚ê‚Ä‚µ‚Ü‚¤‚½‚ß‰Šú‰»ˆ—‚Í‚±‚Á‚¿
+    /// </summary>
+    public void FieldInit()
+    {
+        SetCameraEnable(true);
     }
 
     /// <summary>

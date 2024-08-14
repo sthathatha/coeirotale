@@ -94,9 +94,9 @@ public class F201System : MainScriptBase
     /// フェードイン後
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator AfterFadeIn()
+    public override IEnumerator AfterFadeIn(bool init)
     {
-        yield return base.AfterFadeIn();
+        yield return base.AfterFadeIn(init);
 
         if (Global.GetSaveData().GetGameDataInt(DUNGEON_OPEN_FLG) < 1)
         {

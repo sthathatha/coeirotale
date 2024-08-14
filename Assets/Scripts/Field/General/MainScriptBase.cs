@@ -94,7 +94,7 @@ public class MainScriptBase : MonoBehaviour
     /// <summary>
     /// ゲーム終了時に再開
     /// </summary>
-    virtual public void Awake()
+    virtual public void AwakeFromGame()
     {
         objectParent?.SetActive(true);
 
@@ -102,14 +102,24 @@ public class MainScriptBase : MonoBehaviour
 
         if (playerObj != null)
         {
-            var cam = ManagerSceneScript.GetInstance().mainCam;
-            cam.SetTargetPos(playerObj);
-            cam.Immediate();
+            var scr = playerObj.GetComponent<PlayerScript>();
+            if (scr?.IsCameraEnable() == true)
+            {
+                var cam = ManagerSceneScript.GetInstance().mainCam;
+                cam.SetTargetPos(playerObj);
+                cam.Immediate();
+            }
+        }
+
+        var characters = objectParent.GetComponentsInChildren<CharacterScript>();
+        foreach (var chara in characters)
+        {
+            if (chara.isActiveAndEnabled) chara.AwakeResetDirection();
         }
     }
 
     /// <summary>
-    /// 
+    /// ロード後最初の１回
     /// </summary>
     /// <returns></returns>
     virtual public IEnumerator BeforeInitFadeIn()
@@ -117,6 +127,12 @@ public class MainScriptBase : MonoBehaviour
         if (Global.GetSaveData().GetGameDataInt(F204System.WALL_OPEN_FLG) == 1)
         {
             tukuyomiObj.SetActive(false);
+        }
+
+        var playerScr = playerObj?.GetComponent<PlayerScript>();
+        if (playerScr != null)
+        {
+            playerScr.FieldInit();
         }
 
         yield break;
@@ -146,7 +162,7 @@ public class MainScriptBase : MonoBehaviour
     /// フェードイン終わったらやること
     /// </summary>
     /// <returns></returns>
-    virtual public IEnumerator AfterFadeIn()
+    virtual public IEnumerator AfterFadeIn(bool init)
     {
         FieldState = State.Idle;
         yield break;

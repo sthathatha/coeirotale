@@ -124,7 +124,7 @@ public class ManagerSceneScript : MonoBehaviour
         yield return mainScript.BeforeInitFadeIn();
         yield return mainScript.BeforeFadeIn();
         yield return FadeIn();
-        yield return mainScript.AfterFadeIn();
+        yield return mainScript.AfterFadeIn(true);
         SceneState = State.Main;
     }
     #endregion
@@ -297,7 +297,7 @@ public class ManagerSceneScript : MonoBehaviour
         // フェードイン
         yield return FadeIn();
         // フェードイン後の処理
-        yield return mainScript.AfterFadeIn();
+        yield return mainScript.AfterFadeIn(true);
 
         SceneState = State.Main;
     }
@@ -359,16 +359,20 @@ public class ManagerSceneScript : MonoBehaviour
     /// <summary>
     /// ゲームシーン終了
     /// </summary>
-    public void ExitGame()
+    /// <param name="changeMainScene">メインシーンを強制的に変更</param>
+    /// <param name="changeId">強制変更用の汎用座標ID</param>
+    public void ExitGame(string changeMainScene = "", int changeId = 0)
     {
-        StartCoroutine(ExitGameCoroutine());
+        StartCoroutine(ExitGameCoroutine(changeMainScene, changeId));
     }
 
     /// <summary>
     /// ゲーム終了コルーチン
     /// </summary>
+    /// <param name="changeMainScene">メインシーンを強制的に変更</param>
+    /// <param name="changeId">変更用の汎用座標ID</param>
     /// <returns></returns>
-    private IEnumerator ExitGameCoroutine()
+    private IEnumerator ExitGameCoroutine(string changeMainScene, int changeId)
     {
         // フェードアウトしながらゲームBGMを停止
         SceneState = State.Loading;
@@ -380,14 +384,22 @@ public class ManagerSceneScript : MonoBehaviour
         var unloadSync = SceneManager.UnloadSceneAsync(gameScript.gameObject.scene);
         yield return unloadSync;
 
-        //メインシーンを復帰
-        StartCoroutine(soundMan.ResumeFieldBgm());
-        mainScript.Awake();
+        if (string.IsNullOrEmpty(changeMainScene))
+        {
+            //メインシーンを復帰
+            StartCoroutine(soundMan.ResumeFieldBgm());
+            mainScript.AwakeFromGame();
 
-        yield return mainScript.BeforeFadeIn();
-        yield return FadeIn();
-        yield return mainScript.AfterFadeIn();
-        SceneState = State.Main;
+            yield return mainScript.BeforeFadeIn();
+            yield return FadeIn();
+            yield return mainScript.AfterFadeIn(false);
+            SceneState = State.Main;
+        }
+        else
+        {
+            // 変更先がある場合メインシーンを移動
+            LoadMainScene(changeMainScene, changeId);
+        }
     }
 
     /// <summary>

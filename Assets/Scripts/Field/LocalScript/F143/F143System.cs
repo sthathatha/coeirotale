@@ -49,9 +49,9 @@ public class F143System : MainScriptBase
     /// フェードイン後
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator AfterFadeIn()
+    public override IEnumerator AfterFadeIn(bool init)
     {
-        yield return base.AfterFadeIn();
+        yield return base.AfterFadeIn(init);
 
         // 3回以下ならクーイベント開始
         if (Global.GetSaveData().GetGameDataInt(F143_SHOW_FLG) <= 0 &&

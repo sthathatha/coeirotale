@@ -37,9 +37,9 @@ public class OpeningSceneSystem : MainScriptBase
     /// フェードイン後
     /// </summary>
     /// <returns></returns>
-    public override IEnumerator AfterFadeIn()
+    public override IEnumerator AfterFadeIn(bool init)
     {
-        yield return base.AfterFadeIn();
+        yield return base.AfterFadeIn(init);
         yield return new WaitForSeconds(2f);
         // 主人公
         player.MoveTo(Vector3.zero, 1f, DeltaFloat.MoveType.DECEL);

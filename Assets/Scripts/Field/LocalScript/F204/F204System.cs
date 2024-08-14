@@ -70,5 +70,26 @@ public class F204System : MainScriptBase
         }
     }
 
+    /// <summary>
+    /// フェードイン後
+    /// </summary>
+    /// <param name="init"></param>
+    /// <returns></returns>
+    public override IEnumerator AfterFadeIn(bool init)
+    {
+        yield return base.AfterFadeIn(init);
+
+        // ラスボスに負けてきた場合
+        if (Global.GetTemporaryData().lastBossLost)
+        {
+            var msg = ManagerSceneScript.GetInstance().GetMessageWindow();
+            msg.Open();
+            msg.StartMessage(MessageWindow.Face.Reko, StringFieldMessage.F204_Lose_Reko);
+            yield return msg.WaitForMessageEnd();
+            msg.Close();
+            Global.GetTemporaryData().lastBossLost = false;
+        }
+    }
+
     #endregion
 }
