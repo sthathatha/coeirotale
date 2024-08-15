@@ -434,13 +434,6 @@ public class AmiGameSystemA : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator ExecuteNotesCoroutine()
     {
-        //todo:テスト
-        if (IsBossRush())
-        {
-            Global.GetTemporaryData().gameWon = true;
-            ManagerSceneScript.GetInstance().ExitGame();
-        }
-
         // 秒に乗算して四分音符にする値
         var timeRate = bpm / 60f;
         // 矢印作成から判定までの時間

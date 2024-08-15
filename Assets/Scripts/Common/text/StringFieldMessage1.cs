@@ -643,7 +643,7 @@ public partial class StringFieldMessage
     public const string F210_Not_5_Mati = "ああ、それもいいだろう";
     public const string F210_Not_6_Matuka = "自分の魂の声に耳を傾けるんだ";
     public const string F210_Not_7_Pierre = "さらばだ若きサーカス・スター！";
-    public const string F210_Not_8_Mana = "楽しかったよ！";
+    public const string F210_Not_8_Mana = "たのしかったよ！";
     public const string F210_Not_9_Ami = "いつかあなたの声を聴かせてね！";
     public const string F210_Not_10_Reko = "みなさんありがとうございます\nお元気で！";
 
@@ -654,10 +654,10 @@ public partial class StringFieldMessage
     public const string F210_Get_Pierre_1 = "僕の声を使うかい？";
     public const string F210_Get_Mana_1 = "MANAさんの声が欲しいか？";
 
-    public const string F210_Get_Ami_2 = "素敵な物語を作ってね！";
-    public const string F210_Get_Menderu_2 = "さあ受け取りなさい、あなたの未来に幸多からんことを";
-    public const string F210_Get_Matuka_2 = "心ゆくまで叫ぶと良い！";
-    public const string F210_Get_Mati_2 = "うむ、持っていくといい";
+    public const string F210_Get_Ami_2 = "あなたの旅が素敵な物語でありますように！";
+    public const string F210_Get_Menderu_2 = "あなたの未来に幸多からんことを";
+    public const string F210_Get_Matuka_2 = "心ゆくまで叫ぶがいいぞ！";
+    public const string F210_Get_Mati_2 = "よく頑張ったね";
     public const string F210_Get_Pierre_2 = "オーケー！宣伝よろしくな！";
     public const string F210_Get_Mana_2 = "よかろう！うけとりたまえ";
 
@@ -665,7 +665,7 @@ public partial class StringFieldMessage
     public const string F210_Exit_2_Tukuyomi = "はい！それではこのあたり実装が大変なので早速旅立ちましょう！お元気で！";
     public const string F210_Exit_3_Reko = "え？何ですかそれは";
     public const string F210_Exit_4_Tukuyomi = "いけませんよ！喋るたびにデータが増えちゃいます！ほらほら";
-    public const string F210_Exit_5_Mana = "仕方ないね";
+    public const string F210_Exit_5_Mana = "しょうがないね";
     public const string F210_Exit_6_Matuka = "まったく忙しいな";
     public const string F210_Exit_7_Pierre = "元気でな！";
     public const string F210_Exit_8_Menderu = "しっかりやるんだよ";
@@ -674,20 +674,50 @@ public partial class StringFieldMessage
     public const string F210_Exit_11_Reko = "あ、みなさんありがとうございました！";
 
     public const string F210_Exit2_1_Tukuyomi = "行ってしまいましたね…";
-    public const string F210_Exit2_2_Matuka = "誰のせいじゃい！";
+    public const string F210_Exit2_2_Matuka = "どの口が言うとるんじゃい！";
     public const string F210_Exit2_3_Menderu = "この世界はこれからどうなるんだろう";
-    public const string F210_Exit2_4_Tukuyomi = "あっ、作った人が居なくなったから消えちゃう？私達も出ていったほうがいいかな？";
-    public const string F210_Exit2_5_Tukuyomi = "いや、そう焦る必要も無いだろう";
-    public const string F210_Exit2_6_Tukuyomi = "ちゃんと新しい管理者が居るからね";
-    public const string F210_Exit2_7_Tukuyomi = "ハッハー！あれなら安心だ！";
-    public const string F210_Exit2_8_Tukuyomi = "となるとここも結構居心地いいんだよな";
-    public const string F210_Exit2_9_Tukuyomi = "もっと色んな人が遊びに来たら楽しくなるよ！";
-    public const string F210_Exit2_10_Tukuyomi = "でも、私は…";
-    public const string F210_Exit2_11_Tukuyomi = "弟さんもいつか来るかもしれませんよ";
+    public const string F210_Exit2_4_Mana = "作った人が居なくなったから消えちゃう？\n私達も出ていったほうがいいかな？";
+    public const string F210_Exit2_5_Mati = "いや、そう焦る必要も無いだろう";
+    public const string F210_Exit2_6_Mati = "ちゃんと新しい管理者が居るからね";
+    public const string F210_Exit2_7_Pierre = "ハッハー！あれなら安心だ！";
+    public const string F210_Exit2_8_Matuka = "となるとここも結構居心地いいんだよな";
+    public const string F210_Exit2_9_Mana = "もっと色んな人が遊びに来たら楽しくなるよ！";
+    public const string F210_Exit2_10_Menderu = "でも、私は…";
+    public const string F210_Exit2_11_Ami = "弟さんもいつか来るんじゃないでしょうか？";
     public const string F210_Exit2_12_Tukuyomi = "その時のためにもしっかり整備しておきませんと";
-    public const string F210_Exit2_13_Tukuyomi = "…そうかもね";
-    public const string F210_Exit2_14_Tukuyomi = "それじゃあみなさん、小春日和でパーティしませんか？世界が生まれ変わったお祝い！";
+    public const string F210_Exit2_13_Menderu = "…そうかもね";
+    public const string F210_Exit2_14_Ami = "それじゃあみなさん、小春日和でパーティしませんか？世界が生まれ変わったお祝い！";
     public const string F210_Exit2_15_Tukuyomi = "それは名案です！今日はパーッと楽しみましょう！";
+
+    public const string F210_TukuyomiBefore_1_Tukuyomi = "なんと　この私の声が　ほしいとおっしゃいますか！？";
+    public const string F210_TukuyomiBefore_2_Tukuyomi = "それではもう１度　お考えください。";
+    public const string F210_TukuyomiBefore_3_Tukuyomi = "もちろんかまいませんよ！それでは…";
+    public const string F210_TukuyomiBefore_4_Mana = "あーっダメダメ！";
+    public const string F210_TukuyomiBefore_5_Tukuyomi = "はい？";
+    public const string F210_TukuyomiBefore_6_Ami = "私達とは遊んだけど、まだつくよみちゃんには勝ってないよね";
+    public const string F210_TukuyomiBefore_7_Mati = "やはり何かを得るには相応の力を示す必要があるだろうね";
+    public const string F210_TukuyomiBefore_8_Tukuyomi = "そういうものなのですか？";
+    public const string F210_TukuyomiBefore_9_Pierre = "王道展開ってヤツだな！";
+    public const string F210_TukuyomiBefore_10_Matuka = "あーあ始まった";
+    public const string F210_TukuyomiBefore_11_Menderu = "私しーらない";
+    public const string F210_TukuyomiBefore_12_Tukuyomi = "だそうです、私と勝負しますか？";
+    public const string F210_TukuyomiBefore_13_Tukuyomi = "ふふふ、楽しみですね！";
+    public const string F210_TukuyomiBefore_14_Tukuyomi = "うーん、それでは私の声はお預けですね！";
+    public const string F210_TukuyomiLose_Tukuyomi = "残念、私の声はお預けですね！";
+    public const string F210_TukuyomiRetry_Tukuyomi = "私と勝負しますか？";
+
+    public const string F210_TukuyomiWin_1_Tukuyomi = "おめでとうございます！見事試練に打ち勝ちましたね";
+    public const string F210_TukuyomiWin_2_Mana = "すごーい！つくよみちゃんに勝っちゃった！";
+    public const string F210_TukuyomiWin_3_Menderu = "まさかここまでとは";
+    public const string F210_TukuyomiWin_4_Matuka = "すげええええええ！";
+    public const string F210_TukuyomiWin_5_Reko = "え？え？";
+    public const string F210_TukuyomiWin_6_Mati = "いやはや大したものだ";
+    public const string F210_TukuyomiWin_7_Pierre = "よくやった！";
+    public const string F210_TukuyomiWin_8_Ami = "つくよみちゃんに勝った人、初めて見たよ";
+    public const string F210_TukuyomiWin_9_Reko = "え？初めてのとか本気とか言ってたのは？";
+    public const string F210_TukuyomiWin_10_Tukuyomi = "ふふふ…さあ、なんでしょうね？";
+    public const string F210_TukuyomiWin_11_Reko = "えぇ…";
+    public const string F210_TukuyomiWin_12_Tukuyomi = "さて、約束通り私の声をお受け取りください";
 
     #endregion
 

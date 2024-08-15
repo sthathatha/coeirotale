@@ -40,6 +40,17 @@ public class TitleSceneSystem : MainScriptBase
     /// ‰Šú‰»
     /// </summary>
     /// <returns></returns>
+    public override IEnumerator BeforeInitFadeIn()
+    {
+        yield return base.BeforeInitFadeIn();
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(Vector2.zero);
+    }
+
+    /// <summary>
+    /// ‰Šú‰»
+    /// </summary>
+    /// <returns></returns>
     protected override IEnumerator Start()
     {
         yield return base.Start();

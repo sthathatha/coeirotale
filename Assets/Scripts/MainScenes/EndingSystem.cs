@@ -10,6 +10,17 @@ public class EndingSystem : MainScriptBase
     public AudioClip endingBgm;
 
     /// <summary>
+    /// 初期化
+    /// </summary>
+    /// <returns></returns>
+    public override IEnumerator BeforeInitFadeIn()
+    {
+        yield return base.BeforeInitFadeIn();
+        var cam = ManagerSceneScript.GetInstance().mainCam;
+        cam.SetTargetPos(Vector2.zero);
+    }
+
+    /// <summary>
     /// フェードイン後
     /// </summary>
     /// <param name="init"></param>
@@ -18,6 +29,7 @@ public class EndingSystem : MainScriptBase
     {
         yield return base.AfterFadeIn(init);
         Global.GetSaveData().system.clearFlag = 1;
+        Global.GetSaveData().SaveSystemData();
         StartCoroutine(EndingCoroutine());
     }
 

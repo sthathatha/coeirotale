@@ -129,10 +129,13 @@ public class MainScriptBase : MonoBehaviour
             tukuyomiObj.SetActive(false);
         }
 
-        var playerScr = playerObj?.GetComponent<PlayerScript>();
-        if (playerScr != null)
+        if (playerObj != null)
         {
-            playerScr.FieldInit();
+            var playerScr = playerObj.GetComponent<PlayerScript>();
+            if (playerScr != null)
+            {
+                playerScr.FieldInit();
+            }
         }
 
         yield break;
