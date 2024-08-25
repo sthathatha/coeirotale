@@ -80,6 +80,23 @@ public class ModelUtil : MonoBehaviour
     }
 
     /// <summary>
+    /// 表示状態にする
+    /// </summary>
+    public void FadeInImmediate()
+    {
+        var sprites = GetComponentsInChildren<SpriteRenderer>();
+        var canvas = GetComponent<CanvasGroup>();
+        foreach (var s in sprites)
+        {
+            s.color = Color.white;
+        }
+        if (canvas != null)
+        {
+            canvas.alpha = 1f;
+        }
+    }
+
+    /// <summary>
     /// フェードイン
     /// </summary>
     /// <param name="time"></param>
@@ -111,6 +128,23 @@ public class ModelUtil : MonoBehaviour
             {
                 canvas.alpha = alpha.Get();
             }
+        }
+    }
+
+    /// <summary>
+    /// 非表示状態にする
+    /// </summary>
+    public void FadeOutImmediate()
+    {
+        var sprites = GetComponentsInChildren<SpriteRenderer>();
+        var canvas = GetComponent<CanvasGroup>();
+        foreach (var s in sprites)
+        {
+            s.color = new Color(1, 1, 1, 0);
+        }
+        if (canvas != null)
+        {
+            canvas.alpha = 0f;
         }
     }
 

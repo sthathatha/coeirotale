@@ -178,7 +178,8 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     /// <param name="fieldBgmType"></param>
     /// <param name="source"></param>
-    public void PlayFieldBgm(FieldBgmType fieldBgmType, AudioClip source = null)
+    /// <param name="loop"></param>
+    public void PlayFieldBgm(FieldBgmType fieldBgmType, AudioClip source = null, bool loop = true)
     {
         if (IsNeedChangeFieldBgm(fieldBgmType))
         {
@@ -193,6 +194,7 @@ public class SoundManager : MonoBehaviour
             {
                 fieldBgmSource.volume = CalcBgmVolume();
                 fieldBgmSource.clip = clip;
+                fieldBgmSource.loop = loop;
                 fieldBgmSource.Play();
             }
         }

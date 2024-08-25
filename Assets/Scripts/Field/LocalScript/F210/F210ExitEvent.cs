@@ -125,11 +125,12 @@ public class F210ExitEvent : EventBase
         msg.StartMessage(MessageWindow.Face.Ami0, StringFieldMessage.F210_Exit2_14_Ami, voice_14_ami);
         yield return msg.WaitForMessageEnd();
         msg.StartMessage(MessageWindow.Face.Tukuyomi0, StringFieldMessage.F210_Exit2_15_Tukuyomi, voice_15_tukuyomi);
+        var timer = Time.realtimeSinceStartup;
         yield return msg.WaitForMessageEnd();
 
         msg.Close();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitWhile(() => Time.realtimeSinceStartup - timer < 4f);
 
         manager.LoadMainScene("EndingScene", 0);
     }

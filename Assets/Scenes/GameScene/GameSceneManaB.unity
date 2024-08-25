@@ -649,15 +649,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u3059\u305F\u30FC\u3068\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c40f8092a3428784882ac8e85c959fb6, type: 2}
-  m_sharedMaterial: {fileID: 1648175968017570283, guid: c40f8092a3428784882ac8e85c959fb6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac1e987951e4c1e4aa798b02f56bb29f, type: 2}
+  m_sharedMaterial: {fileID: 1648175968017570283, guid: ac1e987951e4c1e4aa798b02f56bb29f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190847
-  m_fontColor: {r: 1, g: 0.0096915485, b: 0, a: 1}
+    rgba: 4278202367
+  m_fontColor: {r: 1, g: 0.185643, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

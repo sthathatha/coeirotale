@@ -722,5 +722,28 @@ public partial class StringFieldMessage
     #endregion
 
     #region エンディング
+
+    public const string End_Ami = "小春音アミ\n\nCOEIROINK : あみたろ\n\nあみたろ\nあみたろの声素材工房";
+    public const string End_Mana = "MANA\n\nCOEIROINK : MANA\n\n鹿仲茉菜";
+    public const string End_Matuka = "松嘩りすく\n\nCOEIROINK : 松嘩りすく\n\nまつかりすく";
+    public const string End_Menderu = "遠藤愛\n\nCOEIROINK : 遠藤愛\n\n町田子\nメンデル愛の法則";
+    public const string End_Mati = "軍歌マチ\n\nCOEIROINK : 軍歌マチ\n\nいろは酢\nALPHASCAPE";
+    public const string End_Pierre = "ピエール・クラウン\n\nCOEIROINK : ピエール・クラウン\n\nピエール・クラウン";
+    public const string End_Tukuyomi = "つくよみちゃん\n\nCOEIROINK : つくよみちゃん\n\n夢前黎\nつくよみちゃんproject";
+
+    public const string End_BgmSe = "BGM : PeriTune\nSE : 効果音ラボ";
+    public const string End_Song = "エンディングテーマ\n「紡ぐ軌跡」\nMusic : PeriTune\nVocal Library : Sinsy Yoko\n\n歌 : UTAU\nつくよみちゃん\n遠藤愛\n軍歌マチ\n小春音アミ\nMANA";
+    public const string End_Reko_Ami = "COEIROINK : 小春音アミ";
+    public const string End_Reko_Mana = "COEIROINK : MANA";
+    public const string End_Reko_Matuka = "COEIROINK : 松嘩りすく";
+    public const string End_Reko_Menderu = "COEIROINK : 遠藤愛";
+    public const string End_Reko_Mati = "COEIROINK : 軍歌マチ";
+    public const string End_Reko_Pierre = "COEIROINK : ピエール・クラウン";
+    public const string End_Reko_Tukuyomi = "COEIROINK : つくよみちゃん";
+    public const string End_Reko_Mycoe = "You can create MYCOEIROINK!";
+
+    public const string End_Last_Tuku1 = "えらいっ";
+    public const string End_Last_Tuku2 = "こんな　げーむに　まじに　なっちゃって　どうするの";
+
     #endregion
 }

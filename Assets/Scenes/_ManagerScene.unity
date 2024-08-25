@@ -182,8 +182,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF11\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF12\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF13\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF14\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF15\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF16\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF17\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\u3042\uFF18"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
-  m_sharedMaterial: {fileID: -1606455754690337242, guid: 98bbe5259e4dde94a89b3dca10e764e7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6eb656ee1342ee949a2168807c44bc89, type: 2}
+  m_sharedMaterial: {fileID: 2312946831355014518, guid: 6eb656ee1342ee949a2168807c44bc89, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4318,7 +4318,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 30000

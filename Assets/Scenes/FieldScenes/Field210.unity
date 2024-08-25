@@ -2592,12 +2592,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SaveViewFlag: 0
   saveName: 
-  chr_ami: {fileID: 0}
-  chr_menderu: {fileID: 0}
-  chr_matuka: {fileID: 0}
-  chr_mati: {fileID: 0}
-  chr_pierre: {fileID: 0}
-  chr_mana: {fileID: 0}
+  chr_ami: {fileID: 279147746}
+  chr_menderu: {fileID: 730211449}
+  chr_matuka: {fileID: 675550280}
+  chr_mati: {fileID: 497521996}
+  chr_pierre: {fileID: 445802265}
+  chr_mana: {fileID: 1844801041}
   voice_1_tukuyomi: {fileID: 8300000, guid: 7b7c6946dc9d8b14eb0d50bd8ff4e286, type: 3}
   voice_2_tukuyomi: {fileID: 8300000, guid: 0e1ecb512c1043249a77b39a3baaaea0, type: 3}
   voice_3_menderu: {fileID: 8300000, guid: 2a18b5e511d7f8a4aab7ab9b0984e47a, type: 3}

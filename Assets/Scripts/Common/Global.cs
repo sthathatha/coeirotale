@@ -292,6 +292,9 @@ public class Global
             bossRushMatukaWon = false;
             bossRushMenderuWon = false;
             bossRushPierreWon = false;
+
+            lastBossLost = false;
+            ending_select_voice = -1;
         }
     }
 }

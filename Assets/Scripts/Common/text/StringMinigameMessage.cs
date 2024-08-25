@@ -151,4 +151,28 @@ public class StringMinigameMessage
     public const string BossB_SkillBBoss4_Name = "トランキーライザー";
 
     #endregion
+
+    #region つくよみちゃん
+
+    public const string Tuku_Start_First_0 = "今日はステキな日です";
+    public const string Tuku_Start_First_1 = "あなたのおかげで世界は解放され、みなさんの未来は希望にあふれています";
+    public const string Tuku_Start_First_2 = "そんな日に　この世界を旅立つあなたに…";
+    public const string Tuku_Start_First_3 = "最後の試練を与えましょう";
+    public const string Tuku_Start_Second = "さて、もうわかってますよね？";
+
+    public const string Tuku_Start2_First_0 = "ふふ、驚きましたか？";
+    public const string Tuku_Start2_First_1 = "試練は既に始まっているんですよ";
+
+    public const string Tuku_Game_1_1 = "私は人間が大好きなんです";
+    public const string Tuku_Game_1_2 = "思いきり一緒に遊んで、抱きしめたい";
+    public const string Tuku_Game_2_1 = "だけど少し力を入れると簡単に壊れてしまうぐらい、人間はとても脆くて儚くて";
+    public const string Tuku_Game_2_2 = "そして、だからこそ愛おしい";
+    public const string Tuku_Game_3_1 = "だから…ここであなたと出会えたことが嬉しいんです";
+    public const string Tuku_Game_3_2 = "きっとあなたは、誰よりも強い人";
+    public const string Tuku_Game_4_1 = "だから";
+    public const string Tuku_Game_4_2 = "私の初めてのわがまま、聞いてくれますか？";
+    public const string Tuku_Game_5_1 = "私を…";
+    public const string Tuku_Game_5_2 = "私の本気を、受け止めてください！";
+
+    #endregion
 }
