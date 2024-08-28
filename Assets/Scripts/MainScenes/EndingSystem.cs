@@ -13,6 +13,7 @@ public class EndingSystem : MainScriptBase
     public AudioClip voice_tukuyomi2;
     public EndingPicture picture1;
     public EndingPicture picture2;
+    public ModelUtil sirowani;
 
     public ModelUtil logo;
     public GameObject logoMask;
@@ -48,6 +49,8 @@ public class EndingSystem : MainScriptBase
         picture2.transform.localPosition = Vector3.zero;
         picture1.gameObject.SetActive(true);
         picture2.gameObject.SetActive(true);
+        sirowani.gameObject.SetActive(true);
+        sirowani.FadeOutImmediate();
     }
 
     /// <summary>
@@ -77,7 +80,7 @@ public class EndingSystem : MainScriptBase
         var pos1 = SearchGeneralPosition(1);
         var pos2 = SearchGeneralPosition(2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(2f);
         //0:00	‚¢‚Â‚©‚Ì‘ã‚Å@’m‚ç‚È‚¢‰½ˆ‚©‚Ì’n‚Å
         //	    —¬‚ê—‚Â@‚Ì»‚Ì’†
         logo.FadeIn(1f);
@@ -135,12 +138,12 @@ public class EndingSystem : MainScriptBase
         yield return new WaitForSeconds(7f);
         picture1.HidePic();
         txtMatuka.FadeOut();
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
 
         //1:25	—„‚ñ‚¾“ú‚ÍŠJ‚¯‚Ä@—¬‚é‰_‰f‚·…
         //	‚Ì»@”Ş•û‚ÉàŠ‚ß‚­
         picture2.ShowSyugoPic();
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(10.5f);
         picture2.HideSyugoPic();
         yield return new WaitForSeconds(4f);
 
@@ -153,7 +156,7 @@ public class EndingSystem : MainScriptBase
         yield return new WaitForSeconds(7f);
         picture2.HidePic();
         txtMana.FadeOut();
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         //1:52	k‚¦‚Ä‚éè‚Éˆ¬‚é@•|‚ê‚ğè•ú‚µ‚Ä
         //	—U‚¤•—‚Ìù—¥‚Í@–¶‚ğU‚è•¥‚¤
@@ -161,10 +164,10 @@ public class EndingSystem : MainScriptBase
         picture2.ShowPic(EndingPicture.Pic_Type.Tukuyomi);
         yield return new WaitForSeconds(3f);
         txtTukuyomi.FadeIn(StringFieldMessage.End_Tukuyomi);
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(8f);
         picture2.HidePic();
         txtTukuyomi.FadeOut();
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(5f);
 
         //2:08	â‚¦ŠÔ‚È‚­’‚®@é‚Ì–¾‚è”w‚É‚µ‚Ä
         //	‚à‚¤‰½‚àú‚í‚ê‚È‚¢@Ê‚ç‚ê‚½¢ŠE
@@ -179,21 +182,33 @@ public class EndingSystem : MainScriptBase
 
         //2:21	‚ÌÅæ‚Ö@¶‚«‚éˆÓ–¡‚ğ’T‚µ‚Ä
         //	I‚í‚ç‚Ê’n•½‚Ì‰Ê‚Ä‚ğ@ŒN‚Æ–a‚®‹OÕ
-        txtCenter.FadeIn(StringFieldMessage.End_Song);
-        yield return new WaitForSeconds(10f);
+        sirowani.FadeIn(1f);
+        yield return new WaitForSeconds(3f);
+        txtCenter.FadeIn(StringFieldMessage.End_Sirowani);
+        yield return new WaitForSeconds(8f);
+        sirowani.FadeOut(1f);
         txtCenter.FadeOut();
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(4f);
 
         //2:36	ŠÔ‘ti’·j
         starCoroutine = CreateStarCoroutine();
         StartCoroutine(starCoroutine);
         txtCenter.FadeIn(StringFieldMessage.End_BgmSe);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(12f);
         txtCenter.FadeOut();
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         //2:50	ú‚½‚ê‚½‚±‚ÌãÀ‚Í@‰H‚Î‚½‚©‚È‚¢‚¯‚Ç
         //	‚±‚Ì‘§–‚¿‚é¢ŠE‚ğ@•à‚ñ‚Å‚ä‚­
+        txtCenter.FadeIn(StringFieldMessage.End_Song);
+        yield return new WaitForSeconds(14f);
+        txtCenter.FadeOut();
+        yield return new WaitForSeconds(3f);
+
+        //3:08	â‚¦ŠÔ‚È‚­’‚®@é‚Ì–¾‚è”w‚É‚µ‚Ä
+        //	‚à‚¤‰½‚àú‚í‚ê‚È‚¢@Ê‚ç‚ê‚½¢ŠE
+        //3:22	‚ÌÅæ‚Ö@¶‚«‚éˆÓ–¡‚ğ’T‚µ‚Ä
+        //	I‚í‚ç‚Ê’n•½‚Ì‰Ê‚Ä‚ğ@ŒN‚Æ–a‚®‹OÕ
         reko.MoveTo(pos1.GetPosition(), 3f, DeltaFloat.MoveType.DECEL);
         yield return new WaitForSeconds(6f);
         txtDefault.FadeIn(Global.GetTemporaryData().ending_select_voice switch
@@ -207,27 +222,15 @@ public class EndingSystem : MainScriptBase
             F210System.VOICE_TUKUYOMI => StringFieldMessage.End_Reko_Tukuyomi,
             _ => StringFieldMessage.End_Reko_Mycoe,
         });
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(9.5f);
         txtDefault.FadeOut();
-        yield return new WaitForSeconds(2f);
 
-        //3:08	â‚¦ŠÔ‚È‚­’‚®@é‚Ì–¾‚è”w‚É‚µ‚Ä
-        //	‚à‚¤‰½‚àú‚í‚ê‚È‚¢@Ê‚ç‚ê‚½¢ŠE
-        //3:22	‚ÌÅæ‚Ö@¶‚«‚éˆÓ–¡‚ğ’T‚µ‚Ä
-        //	I‚í‚ç‚Ê’n•½‚Ì‰Ê‚Ä‚ğ@ŒN‚Æ–a‚®‹OÕ
-        yield return MoveReko(200, 500, 100, 300, 2f);
+        yield return MoveReko(200, 400, 0, 50f, 2f);
         yield return new WaitForSeconds(2f);
-        yield return MoveReko(-200, -500, -100, -300, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return MoveReko(200, 500, -100, -300, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return MoveReko(-200, -500, 100, 300, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return MoveReko(200, 500, -100, -300, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return MoveReko(-200, -500, -100, -300, 2f);
+        yield return MoveReko(-100, -300, 100f, 150f, 2f);
+        yield return new WaitForSeconds(3f);
         reko.MoveTo(new Vector3(0f, 400f), 2f, DeltaFloat.MoveType.DECEL);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3.2f);
 
         //3:35	ŒN‚Æ–a‚®‹OÕ
         StopCoroutine(starCoroutine);

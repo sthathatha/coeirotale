@@ -724,12 +724,13 @@ public partial class StringFieldMessage
     #region エンディング
 
     public const string End_Ami = "小春音アミ\n\nCOEIROINK : あみたろ\n\nあみたろ\nあみたろの声素材工房";
-    public const string End_Mana = "MANA\n\nCOEIROINK : MANA\n\n鹿仲茉菜";
+    public const string End_Mana = "MANA\n\nCOEIROINK : MANA\n\n鹿仲茉菜\n073 TEGUSE - Kanaka Font";
     public const string End_Matuka = "松嘩りすく\n\nCOEIROINK : 松嘩りすく\n\nまつかりすく";
     public const string End_Menderu = "遠藤愛\n\nCOEIROINK : 遠藤愛\n\n町田子\nメンデル愛の法則";
     public const string End_Mati = "軍歌マチ\n\nCOEIROINK : 軍歌マチ\n\nいろは酢\nALPHASCAPE";
     public const string End_Pierre = "ピエール・クラウン\n\nCOEIROINK : ピエール・クラウン\n\nピエール・クラウン";
     public const string End_Tukuyomi = "つくよみちゃん\n\nCOEIROINK : つくよみちゃん\n\n夢前黎\nつくよみちゃんproject";
+    public const string End_Sirowani = "シロワニさん\n\nCOEIROINK\n\n\n\n\n\n";
 
     public const string End_BgmSe = "BGM : PeriTune\nSE : 効果音ラボ";
     public const string End_Song = "エンディングテーマ\n「紡ぐ軌跡」\nMusic : PeriTune\nVocal Library : Sinsy Yoko\n\n歌 : UTAU\nつくよみちゃん\n遠藤愛\n軍歌マチ\n小春音アミ\nMANA";
