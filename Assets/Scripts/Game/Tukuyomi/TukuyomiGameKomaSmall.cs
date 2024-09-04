@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TukuyomiGameSystem;
 
 /// <summary>
 /// つくよみちゃん戦　小コマ
@@ -9,14 +10,34 @@ public class TukuyomiGameKomaSmall : MonoBehaviour
 {
     #region 定数
 
-    public readonly Color COLOR_OU = new Color(0.8f, 0.9f, 1);
-    public readonly Color COLOR_HISYA = new Color(1, 0.5f, 0.5f);
-    public readonly Color COLOR_KAKU = new Color(0.5f, 0.5f, 1);
-    public readonly Color COLOR_KIN = new Color(1, 0.85f, 1);
-    public readonly Color COLOR_GIN = new Color(0.6f, 0.6f, 0.6f);
-    public readonly Color COLOR_KEI = new Color(0.65f, 0.4f, 0.3f);
-    public readonly Color COLOR_KYOU = new Color(0.5f, 1, 0.5f);
-    public readonly Color COLOR_HU = Color.white;
+    public static readonly Color COLOR_OU = new Color(0.8f, 0.9f, 1);
+    public static readonly Color COLOR_HISYA = new Color(1, 0.5f, 0.5f);
+    public static readonly Color COLOR_KAKU = new Color(0.5f, 0.5f, 1);
+    public static readonly Color COLOR_KIN = new Color(1, 0.85f, 0);
+    public static readonly Color COLOR_GIN = new Color(0.6f, 0.6f, 0.6f);
+    public static readonly Color COLOR_KEI = new Color(0.65f, 0.4f, 0.3f);
+    public static readonly Color COLOR_KYOU = new Color(0.5f, 1, 0.5f);
+    public static readonly Color COLOR_HU = Color.white;
+
+    /// <summary>
+    /// 色取得
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns></returns>
+    public static Color GetKomaColor(TukuyomiGameSystem.Koma kind)
+    {
+        return kind switch
+        {
+            TukuyomiGameSystem.Koma.Ou => COLOR_OU,
+            TukuyomiGameSystem.Koma.Hisya => COLOR_HISYA,
+            TukuyomiGameSystem.Koma.Kaku => COLOR_KAKU,
+            TukuyomiGameSystem.Koma.Kin => COLOR_KIN,
+            TukuyomiGameSystem.Koma.Gin => COLOR_GIN,
+            TukuyomiGameSystem.Koma.Kei => COLOR_KEI,
+            TukuyomiGameSystem.Koma.Kyou => COLOR_KYOU,
+            _ => COLOR_HU,
+        };
+    }
 
     #endregion
 
@@ -37,18 +58,7 @@ public class TukuyomiGameKomaSmall : MonoBehaviour
     public void SetKoma(TukuyomiGameSystem.Koma koma)
     {
         komaKind = koma;
-
-        GetComponent<SpriteRenderer>().color = koma switch
-        {
-            TukuyomiGameSystem.Koma.Ou => COLOR_OU,
-            TukuyomiGameSystem.Koma.Hisya => COLOR_HISYA,
-            TukuyomiGameSystem.Koma.Kaku => COLOR_KAKU,
-            TukuyomiGameSystem.Koma.Kin => COLOR_KIN,
-            TukuyomiGameSystem.Koma.Gin => COLOR_GIN,
-            TukuyomiGameSystem.Koma.Kei => COLOR_KEI,
-            TukuyomiGameSystem.Koma.Kyou => COLOR_KYOU,
-            _ => COLOR_HU,
-        };
+        GetComponent<SpriteRenderer>().color = GetKomaColor(koma);
     }
 
     /// <summary>

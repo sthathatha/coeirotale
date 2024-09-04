@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
@@ -12,7 +13,8 @@ public class TukuyomiGameSystem : GameSceneScriptBase
 {
     #region 定数
 
-    private bool DEBUG = true;
+    private bool DEBUG_SERIF = true;
+    private bool DEBUG_A_SKIP = true;
 
     /// <summary></summary>
     public const string START_FLG = "TukuGameShow";
@@ -60,10 +62,10 @@ public class TukuyomiGameSystem : GameSceneScriptBase
 
     public TukuyomiGameTukuyomiA tukuyomiA;
     public TukuyomiGamePlayer reko;
+    public TukuyomiGameTukuyomiB tukuyomiB;
 
     public TukuyomiGamePlayField playField;
 
-    public TukuyomiGameKomaBig koma_ou;
     public TukuyomiGameKomaBig koma_hisya;
     public TukuyomiGameKomaBig koma_kaku;
     public TukuyomiGameKomaBig koma_kin;
@@ -72,14 +74,17 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     public TukuyomiGameKomaBig koma_kyou;
     public TukuyomiGameKomaBig koma_hu;
     public TukuyomiGameKomaSmall small_dummy;
+    public TukuyomiGameKomaSmallB smallb_dummy;
     public TukuyomiGameAttackEffect attack_dummy;
     public TukuyomiGameShot shot_dummy;
+    public TukuyomiGameLaser laser_dummy;
 
     public Transform objectParent;
 
     public TukuyomiGameMessageUI serifUI;
     public TukuyomiGameMessageUI systemUI;
     public TukuyomiGameLifeUI lifeUI;
+    public TukuyomiGameLifeUI lifeUIT;
     public GameObject pressUI;
 
     #endregion
@@ -106,6 +111,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     }
 
     private int reko_life = 5;
+    public int tukuyomi_life { get; set; } = 5;
 
     /// <summary>ダメージで一旦消える状態</summary>
     private bool reko_damage_hide_mode = false;
@@ -122,7 +128,6 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     {
         yield return base.Start();
 
-        koma_ou.Show(false);
         koma_hisya.Show(false);
         koma_kaku.Show(false);
         koma_kin.Show(false);
@@ -132,8 +137,10 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         koma_hu.Show(false);
 
         small_dummy.gameObject.SetActive(false);
+        smallb_dummy.gameObject.SetActive(false);
         attack_dummy.gameObject.SetActive(false);
         shot_dummy.gameObject.SetActive(false);
+        laser_dummy.gameObject.SetActive(false);
 
         flg_beat_kin = false;
         flg_beat_gin = false;
@@ -144,9 +151,11 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         serifUI.Hide();
         systemUI.Hide();
         lifeUI.Hide();
+        lifeUIT.Hide();
         pressUI.SetActive(false);
 
         // 開始時の状態
+        tukuyomiA.gameObject.SetActive(true);
         tukuyomiA.PlayAnim(TukuyomiGameTukuyomiA.AnimType.Before);
         ADefaultField();
     }
@@ -213,9 +222,6 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         var shot = Instantiate(shot_dummy, playField.transform);
         shotList.Add(shot);
 
-        if (type == TukuyomiGameShot.ShotType.Enemy)
-        {
-        }
         shot.Shoot(pos, vec, type);
     }
 
@@ -226,6 +232,17 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     public void ShotRemove(TukuyomiGameShot s)
     {
         shotList.Remove(s);
+    }
+
+    /// <summary>
+    /// レーザー発射
+    /// </summary>
+    /// <param name="root"></param>
+    /// <param name="rot"></param>
+    public void CreateLaser(Vector3 root, float rot)
+    {
+        var laser = Instantiate(laser_dummy, objectParent);
+        laser.Shoot(root, rot);
     }
 
     #endregion
@@ -310,7 +327,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         }
 
         // 全部終わったら後半戦
-        ManagerSceneScript.GetInstance().ExitGame();
+        StartCoroutine(MainBCoroutine());
     }
 
     /// <summary>
@@ -319,9 +336,15 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator APlaySerif()
     {
-        if (DEBUG)
+        if (DEBUG_SERIF)
         {
             yield return new WaitForSeconds(1f);
+            if (NokoriKoma == 0)
+            {
+                tukuyomiA.GetComponent<ModelUtil>().FadeOut(1.5f);
+                yield return new WaitForSeconds(2.5f);
+            }
+
             yield break;
         }
         if (NokoriKoma == 4)
@@ -354,8 +377,9 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         }
         else if (NokoriKoma == 0)
         {
+            tukuyomiA.GetComponent<ModelUtil>().FadeOut(1.5f);
             serifUI.Show(StringMinigameMessage.Tuku_Game_5_1, resource.voice_game_5_1);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2.5f);
             serifUI.Show(StringMinigameMessage.Tuku_Game_5_2, resource.voice_game_5_2);
             yield return new WaitForSeconds(4f);
         }
@@ -372,7 +396,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         var save = Global.GetSaveData();
 
         // 会話から
-        if (DEBUG)
+        if (DEBUG_SERIF)
         {
             yield return new WaitForSeconds(1f);
         }
@@ -411,7 +435,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         yield return new WaitForSeconds(1f);
 
         // セリフ
-        if (save.GetGameDataInt(START_FLG) != 1 && !DEBUG)
+        if (save.GetGameDataInt(START_FLG) != 1 && !DEBUG_SERIF)
         {
             serifUI.Show(StringMinigameMessage.Tuku_Start_First_3, resource.voice_start_first_3);
             yield return new WaitForSeconds(3f);
@@ -426,7 +450,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         yield return ATukuTurnCoroutine(true);
 
         // 攻撃後のセリフ
-        if (DEBUG)
+        if (DEBUG_SERIF)
         {
             yield return new WaitForSeconds(1f);
         }
@@ -473,15 +497,19 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         }
         yield return new WaitForSeconds(1f);
 
-        // 飛車と角をランダム生成
-        var cnt = firstAttack ? 10 : 6;
-        for (var i = 0; i < cnt; ++i)
+        if (DEBUG_A_SKIP) yield return new WaitForSeconds(1f);
+        else
         {
-            StartCoroutine(AttackHisyaKaku(Util.RandomCheck(50)));
+            // 飛車と角をランダム生成
+            var cnt = firstAttack ? 10 : 6;
+            for (var i = 0; i < cnt; ++i)
+            {
+                StartCoroutine(AttackHisyaKaku(Util.RandomCheck(50)));
 
-            yield return new WaitForSeconds(firstAttack ? 0.4f : 0.6f);
+                yield return new WaitForSeconds(firstAttack ? 0.4f : 0.6f);
+            }
+            yield return new WaitForSeconds(1.5f);
         }
-        yield return new WaitForSeconds(1.5f);
         koma_hisya.Disappear();
         koma_kaku.Disappear();
     }
@@ -683,67 +711,74 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator AKinCoroutine()
     {
-        // フィールド表示
-        AKinPlayMode = true;
-        playField.ShowCellField(7, 5);
-        reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
-        reko.CellLocation = new Vector2(3, 0);
-        reko.gameObject.SetActive(true);
-
-        // ゴールマス
-        AKinGoal = new Vector2(Util.RandomInt(2, 4), 4);
-        playField.ShowTargetCell(AKinGoal);
-
-        // 金を生成
-        var kin = Instantiate(small_dummy, playField.transform);
-        kin.SetKoma(Koma.Kin);
-        var kinPos = new Vector2(3, 4);
-        kin.transform.localPosition = playField.GetCellPosition(kinPos);
-        kin.transform.localRotation = Util.GetRotateQuaternion(Mathf.PI);
-        kin.gameObject.SetActive(true);
-        kin.CellLocation = kinPos;
-        enemyKomaList.Add(kin);
-
-        // 動き出すまで待機
-        yield return new WaitWhile(() => reko.CellLocation == new Vector2(3, 0));
-
-        while (true)
+        if (!DEBUG_A_SKIP)
         {
-            // プレイヤーめがけて動く
-            var moveVec = Vector2.zero;
-            var dist = reko.CellLocation - kinPos;
-            if (dist.x > 0 && dist.y < 0) moveVec = new Vector2(1, -1); // 右下
-            else if (dist.x < 0 && dist.y < 0) moveVec = new Vector2(-1, -1); // 左下
-            else if (dist.x == 0) moveVec.y = dist.y > 0 ? 1 : -1; //上、下
-            else if (dist.y == 0) moveVec.x = dist.x > 0 ? 1 : -1; //右、左
-            else
-            {
-                // 右上、左上は縦横で遠い側を選択
-                if (Mathf.Abs(dist.x) >= Mathf.Abs(dist.y)) moveVec.x = dist.x > 0 ? 1 : -1;
-                else moveVec.y = 1;
-            }
-            kinPos += moveVec;
-            kin.CellLocation = kinPos;
+            // フィールド表示
+            AKinPlayMode = true;
+            playField.ShowCellField(7, 5);
+            reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
+            reko.CellLocation = new Vector2(3, 0);
+            reko.gameObject.SetActive(true);
+
+            // ゴールマス
+            AKinGoal = new Vector2(Util.RandomInt(2, 4), 4);
+            playField.ShowTargetCell(AKinGoal);
+
+            // 金を生成
+            var kin = Instantiate(small_dummy, playField.transform);
+            kin.SetKoma(Koma.Kin);
+            var kinPos = new Vector2(3, 4);
             kin.transform.localPosition = playField.GetCellPosition(kinPos);
-            resource.PlaySE(resource.se_koma_set);
-            // そこにプレイヤーが居たらダメージ
-            if (reko.CellLocation == kinPos)
+            kin.transform.localRotation = Util.GetRotateQuaternion(Mathf.PI);
+            kin.gameObject.SetActive(true);
+            kin.CellLocation = kinPos;
+            enemyKomaList.Add(kin);
+
+            // 動き出すまで待機
+            yield return new WaitWhile(() => reko.CellLocation == new Vector2(3, 0));
+
+            while (true)
             {
-                PlayerDamage();
+                // プレイヤーめがけて動く
+                var moveVec = Vector2.zero;
+                var dist = reko.CellLocation - kinPos;
+                if (dist.x > 0 && dist.y < 0) moveVec = new Vector2(1, -1); // 右下
+                else if (dist.x < 0 && dist.y < 0) moveVec = new Vector2(-1, -1); // 左下
+                else if (dist.x == 0) moveVec.y = dist.y > 0 ? 1 : -1; //上、下
+                else if (dist.y == 0) moveVec.x = dist.x > 0 ? 1 : -1; //右、左
+                else
+                {
+                    // 右上、左上は縦横で遠い側を選択
+                    if (Mathf.Abs(dist.x) >= Mathf.Abs(dist.y)) moveVec.x = dist.x > 0 ? 1 : -1;
+                    else moveVec.y = 1;
+                }
+                kinPos += moveVec;
+                kin.CellLocation = kinPos;
+                kin.transform.localPosition = playField.GetCellPosition(kinPos);
+                resource.PlaySE(resource.se_koma_set);
+                // そこにプレイヤーが居たらダメージ
+                if (reko.CellLocation == kinPos)
+                {
+                    PlayerDamage();
+                }
+
+                yield return new WaitForSeconds(0.35f);
+
+                if (!reko.gameObject.activeSelf || leachKinGoal) break;
             }
+            AKinPlayMode = false;
+            yield return new WaitForSeconds(0.6f);
 
-            yield return new WaitForSeconds(0.35f);
+            enemyKomaList.Clear();
+            Destroy(kin.gameObject);
 
-            if (!reko.gameObject.activeSelf || leachKinGoal) break;
+            // プレイヤーが生きてたら成功
+            if (leachKinGoal)
+            {
+                flg_beat_kin = true;
+            }
         }
-        AKinPlayMode = false;
-        yield return new WaitForSeconds(0.6f);
-
-        enemyKomaList.Clear();
-        Destroy(kin.gameObject);
-
-        // プレイヤーが生きてたら成功
-        if (leachKinGoal)
+        else
         {
             flg_beat_kin = true;
         }
@@ -763,85 +798,92 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator AGinCoroutine()
     {
-        // フィールド表示
-        playField.ShowCellField(3, 3);
-        reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
-        reko.CellLocation = new Vector2(1, 0);
-        reko.gameObject.SetActive(true);
-
-        // 銀を生成
-        var gin = Instantiate(small_dummy, playField.transform);
-        gin.SetKoma(Koma.Gin);
-        gin.transform.localPosition = playField.GetCellPosition(new Vector2(1, 1));
-        var rot = Mathf.PI;
-        gin.transform.localRotation = Util.GetRotateQuaternion(rot);
-        gin.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
-
-        var timer = new DeltaFloat();
-        timer.Set(0);
-        for (var i = 0; i < 5; ++i)
+        if (!DEBUG_A_SKIP)
         {
+            // フィールド表示
+            playField.ShowCellField(3, 3);
+            reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
+            reko.CellLocation = new Vector2(1, 0);
+            reko.gameObject.SetActive(true);
+
+            // 銀を生成
+            var gin = Instantiate(small_dummy, playField.transform);
+            gin.SetKoma(Koma.Gin);
+            gin.transform.localPosition = playField.GetCellPosition(new Vector2(1, 1));
+            var rot = Mathf.PI;
+            gin.transform.localRotation = Util.GetRotateQuaternion(rot);
             gin.gameObject.SetActive(true);
-            // 向きを決定
-            var muki = Util.RandomInt(0, 3);
-            var mukiRot = muki switch
-            {
-                0 => 0f,                //0:上
-                1 => Mathf.PI * 0.5f,   //1:左
-                2 => Mathf.PI,          //2:下
-                _ => Mathf.PI * 1.5f    //3:右
-            };
-            var atkCell = muki switch
-            {
-                0 => new Vector2(1, 2),
-                1 => new Vector2(0, 1),
-                2 => new Vector2(1, 0),
-                _ => new Vector2(2, 1),
-            };
-            // 回転
-            timer.MoveTo(0, Util.RandomFloat(2f, 3f), DeltaFloat.MoveType.LINE);
-            while (timer.IsActive())
-            {
-                yield return null;
-                timer.Update(Time.deltaTime);
-                rot -= Mathf.PI * 16f * Time.deltaTime;
-                if (rot < 0f) rot += Mathf.PI * 2f;
-                gin.transform.localRotation = Util.GetRotateQuaternion(rot);
-            }
-            // 1回転するまで
-            while (rot > 0f)
-            {
-                yield return null;
-                rot -= Mathf.PI * 16f * Time.deltaTime;
-                gin.transform.localRotation = Util.GetRotateQuaternion(rot);
-            }
-            // 決まった方向で止める
-            while (rot > mukiRot)
-            {
-                yield return null;
-                rot -= Mathf.PI * 16f * Time.deltaTime;
-                gin.transform.localRotation = Util.GetRotateQuaternion(rot);
-            }
-            gin.transform.localRotation = Util.GetRotateQuaternion(mukiRot);
-            resource.PlaySE(resource.se_koma_set);
-            // 攻撃
-            yield return new WaitForSeconds(0.6f);
-            resource.PlaySE(resource.se_attack_effect_A);
-            CreateAttackCell(new Vector2(0, 0));
-            CreateAttackCell(new Vector2(2, 0));
-            CreateAttackCell(new Vector2(0, 2));
-            CreateAttackCell(new Vector2(2, 2));
-            CreateAttackCell(new Vector2(1, 1));
-            CreateAttackCell(atkCell);
             yield return new WaitForSeconds(1f);
-            if (!reko.gameObject.activeSelf) break;
+
+            var timer = new DeltaFloat();
+            timer.Set(0);
+            for (var i = 0; i < 5; ++i)
+            {
+                gin.gameObject.SetActive(true);
+                // 向きを決定
+                var muki = Util.RandomInt(0, 3);
+                var mukiRot = muki switch
+                {
+                    0 => 0f,                //0:上
+                    1 => Mathf.PI * 0.5f,   //1:左
+                    2 => Mathf.PI,          //2:下
+                    _ => Mathf.PI * 1.5f    //3:右
+                };
+                var atkCell = muki switch
+                {
+                    0 => new Vector2(1, 2),
+                    1 => new Vector2(0, 1),
+                    2 => new Vector2(1, 0),
+                    _ => new Vector2(2, 1),
+                };
+                // 回転
+                timer.MoveTo(0, Util.RandomFloat(2f, 3f), DeltaFloat.MoveType.LINE);
+                while (timer.IsActive())
+                {
+                    yield return null;
+                    timer.Update(Time.deltaTime);
+                    rot -= Mathf.PI * 16f * Time.deltaTime;
+                    if (rot < 0f) rot += Mathf.PI * 2f;
+                    gin.transform.localRotation = Util.GetRotateQuaternion(rot);
+                }
+                // 1回転するまで
+                while (rot > 0f)
+                {
+                    yield return null;
+                    rot -= Mathf.PI * 16f * Time.deltaTime;
+                    gin.transform.localRotation = Util.GetRotateQuaternion(rot);
+                }
+                // 決まった方向で止める
+                while (rot > mukiRot)
+                {
+                    yield return null;
+                    rot -= Mathf.PI * 16f * Time.deltaTime;
+                    gin.transform.localRotation = Util.GetRotateQuaternion(rot);
+                }
+                gin.transform.localRotation = Util.GetRotateQuaternion(mukiRot);
+                resource.PlaySE(resource.se_koma_set);
+                // 攻撃
+                yield return new WaitForSeconds(0.6f);
+                resource.PlaySE(resource.se_attack_effect_A);
+                CreateAttackCell(new Vector2(0, 0));
+                CreateAttackCell(new Vector2(2, 0));
+                CreateAttackCell(new Vector2(0, 2));
+                CreateAttackCell(new Vector2(2, 2));
+                CreateAttackCell(new Vector2(1, 1));
+                CreateAttackCell(atkCell);
+                yield return new WaitForSeconds(1f);
+                if (!reko.gameObject.activeSelf) break;
+            }
+
+            Destroy(gin.gameObject);
+
+            // プレイヤーが生きてたら成功
+            if (reko.gameObject.activeSelf)
+            {
+                flg_beat_gin = true;
+            }
         }
-
-        Destroy(gin.gameObject);
-
-        // プレイヤーが生きてたら成功
-        if (reko.gameObject.activeSelf)
+        else
         {
             flg_beat_gin = true;
         }
@@ -861,27 +903,34 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator AKeiCoroutine()
     {
-        // フィールド表示
-        enemyKomaList.Clear();
-        playField.ShowCellField(5, 5);
-        reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
-        reko.CellLocation = new Vector2(2, 2);
-        reko.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
-
-        // 桂馬をランダム生成
-        for (var i = 0; i < 8; ++i)
+        if (!DEBUG_A_SKIP)
         {
-            if (!reko.gameObject.activeSelf) break;
-
-            StartCoroutine(AttackKei());
-
+            // フィールド表示
+            enemyKomaList.Clear();
+            playField.ShowCellField(5, 5);
+            reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
+            reko.CellLocation = new Vector2(2, 2);
+            reko.gameObject.SetActive(true);
             yield return new WaitForSeconds(1f);
-        }
-        yield return new WaitForSeconds(1.5f);
 
-        // プレイヤーが生きてたら成功
-        if (reko.gameObject.activeSelf)
+            // 桂馬をランダム生成
+            for (var i = 0; i < 8; ++i)
+            {
+                if (!reko.gameObject.activeSelf) break;
+
+                StartCoroutine(AttackKei());
+
+                yield return new WaitForSeconds(1f);
+            }
+            yield return new WaitForSeconds(1.5f);
+
+            // プレイヤーが生きてたら成功
+            if (reko.gameObject.activeSelf)
+            {
+                flg_beat_kei = true;
+            }
+        }
+        else
         {
             flg_beat_kei = true;
         }
@@ -968,56 +1017,63 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator AKyouCoroutine()
     {
-        // フィールド表示
-        playField.transform.localPosition = new Vector3(0, AFIELD_Y_KYOU);
-        playField.ShowCellField(1, 1);
-        reko.moveMode = TukuyomiGamePlayer.MoveMode.Disable;
-        reko.ShotEnable = true;
-        reko.CellLocation = new Vector2(0, 0);
-        reko.gameObject.SetActive(true);
-
-        // 香車を生成
-        var kyou = Instantiate(small_dummy, playField.transform);
-        kyou.transform.localPosition = playField.GetCellPosition(new Vector2(0, 7));
-        kyou.SetKoma(Koma.Kyou);
-        kyou.EnableDamageMode();
-        kyou.transform.localRotation = Util.GetRotateQuaternion(Mathf.PI);
-        kyou.gameObject.SetActive(true);
-
-        yield return new WaitForSeconds(1f);
-
-        pressUI.SetActive(true);
-        yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
-        pressUI.SetActive(false);
-
-        // 香車のショット開始
-        shotList.Clear();
-        while (true)
+        if (!DEBUG_A_SKIP)
         {
-            if (!kyou.gameObject.activeSelf || !reko.gameObject.activeSelf)
+            // フィールド表示
+            playField.transform.localPosition = new Vector3(0, AFIELD_Y_KYOU);
+            playField.ShowCellField(1, 1);
+            reko.moveMode = TukuyomiGamePlayer.MoveMode.Disable;
+            reko.ShotEnable = true;
+            reko.CellLocation = new Vector2(0, 0);
+            reko.gameObject.SetActive(true);
+
+            // 香車を生成
+            var kyou = Instantiate(small_dummy, playField.transform);
+            kyou.transform.localPosition = playField.GetCellPosition(new Vector2(0, 7));
+            kyou.SetKoma(Koma.Kyou);
+            kyou.EnableDamageMode();
+            kyou.transform.localRotation = Util.GetRotateQuaternion(Mathf.PI);
+            kyou.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
+
+            pressUI.SetActive(true);
+            yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
+            pressUI.SetActive(false);
+
+            // 香車のショット開始
+            shotList.Clear();
+            while (true)
             {
-                // 香車撃破またはプレイヤー消滅で終了
-                break;
+                if (!kyou.gameObject.activeSelf || !reko.gameObject.activeSelf)
+                {
+                    // 香車撃破またはプレイヤー消滅で終了
+                    break;
+                }
+
+                // 続いてたら香車ショット生成
+                CreateShot(kyou.transform.localPosition, new Vector3(0, -500f), TukuyomiGameShot.ShotType.Enemy);
+
+                yield return new WaitForSeconds(Util.RandomFloat(0.1f, 0.16f));
             }
 
-            // 続いてたら香車ショット生成
-            CreateShot(kyou.transform.localPosition, new Vector3(0, -500f), TukuyomiGameShot.ShotType.Enemy);
+            reko.ShotEnable = false;
+            // ショット消えるまで待機
+            yield return new WaitWhile(() => shotList.Any());
 
-            yield return new WaitForSeconds(Util.RandomFloat(0.1f, 0.16f));
+            // プレイヤーが生きてたら成功
+            if (reko.gameObject.activeSelf)
+            {
+                flg_beat_kyou = true;
+            }
+            Destroy(kyou.gameObject);
+            playField.transform.localPosition = new Vector3(0, AFIELD_Y_DEFAULT);
         }
-
-        reko.ShotEnable = false;
-        // ショット消えるまで待機
-        yield return new WaitWhile(() => shotList.Any());
-
-        // プレイヤーが生きてたら成功
-        if (reko.gameObject.activeSelf)
+        else
         {
             flg_beat_kyou = true;
         }
 
-        playField.transform.localPosition = new Vector3(0, AFIELD_Y_DEFAULT);
-        Destroy(kyou.gameObject);
         koma_kyou.Disappear();
         tukuyomiA.Move(new Vector3(0, tukuyomiA.transform.localPosition.y), 0.5f);
         yield return new WaitForSeconds(1f);
@@ -1045,48 +1101,55 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     /// <returns></returns>
     private IEnumerator AHuCoroutine()
     {
-        // フィールド表示
-        enemyKomaList.Clear();
-        playField.ShowCellField(5, 5);
-        reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
-        reko.CellLocation = new Vector2(2, 2);
-        reko.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
-
-        // 歩を作成
-        const int Offset = 8;
-        var tmp0 = 2;
-        var tmp1 = 2;
-        var tmp2 = 2;
-        var add0 = Util.RandomInt(1, 3);
-        var add1 = Util.RandomInt(1, 3);
-        var add2 = Util.RandomInt(1, 3);
-        for (var i = 0; i < 5; ++i)
+        if (!DEBUG_A_SKIP)
         {
-            // 上から下
-            enemyKomaList.Add(ACreateHu(0, i, tmp0 + Offset));
-            // 右から左
-            enemyKomaList.Add(ACreateHu(1, tmp1 + Offset, i));
-            // 左から右
-            enemyKomaList.Add(ACreateHu(2, tmp2 - Offset, i));
+            // フィールド表示
+            enemyKomaList.Clear();
+            playField.ShowCellField(5, 5);
+            reko.moveMode = TukuyomiGamePlayer.MoveMode.Cell;
+            reko.CellLocation = new Vector2(2, 2);
+            reko.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
 
-            var hugo = i % 2 == 0 ? 1 : -1;
-            tmp0 += add0 * hugo;
-            tmp1 += add1 * hugo;
-            tmp2 += add2 * hugo;
-            add0 = (add0 == 1) ? 2 : Util.RandomInt(1, 3);
-            add1 = (add1 == 1) ? 2 : Util.RandomInt(1, 3);
-            add2 = (add2 == 1) ? 2 : Util.RandomInt(1, 3);
+            // 歩を作成
+            const int Offset = 8;
+            var tmp0 = 2;
+            var tmp1 = 2;
+            var tmp2 = 2;
+            var add0 = Util.RandomInt(1, 3);
+            var add1 = Util.RandomInt(1, 3);
+            var add2 = Util.RandomInt(1, 3);
+            for (var i = 0; i < 5; ++i)
+            {
+                // 上から下
+                enemyKomaList.Add(ACreateHu(0, i, tmp0 + Offset));
+                // 右から左
+                enemyKomaList.Add(ACreateHu(1, tmp1 + Offset, i));
+                // 左から右
+                enemyKomaList.Add(ACreateHu(2, tmp2 - Offset, i));
+
+                var hugo = i % 2 == 0 ? 1 : -1;
+                tmp0 += add0 * hugo;
+                tmp1 += add1 * hugo;
+                tmp2 += add2 * hugo;
+                add0 = (add0 == 1) ? 2 : Util.RandomInt(1, 3);
+                add1 = (add1 == 1) ? 2 : Util.RandomInt(1, 3);
+                add2 = (add2 == 1) ? 2 : Util.RandomInt(1, 3);
+            }
+
+            // 全部消えるまで待つ
+            yield return new WaitWhile(() => enemyKomaList.Any(hu => hu.gameObject.activeSelf));
+            yield return new WaitForSeconds(1f);
+            foreach (var hu in enemyKomaList) Destroy(hu);
+            enemyKomaList.Clear();
+
+            // プレイヤーが生きてたら成功
+            if (reko.gameObject.activeSelf)
+            {
+                flg_beat_hu = true;
+            }
         }
-
-        // 全部消えるまで待つ
-        yield return new WaitWhile(() => enemyKomaList.Any(hu => hu.gameObject.activeSelf));
-        yield return new WaitForSeconds(1f);
-        foreach (var hu in enemyKomaList) Destroy(hu);
-        enemyKomaList.Clear();
-
-        // プレイヤーが生きてたら成功
-        if (reko.gameObject.activeSelf)
+        else
         {
             flg_beat_hu = true;
         }
@@ -1166,6 +1229,174 @@ public class TukuyomiGameSystem : GameSceneScriptBase
     }
 
     #endregion
+
+    #endregion
+
+    #region 後半
+
+    private List<TukuyomiGameKomaSmallB> bKomaList = new List<TukuyomiGameKomaSmallB>();
+    /// <summary>つくよみちゃんがダメージ受けた時</summary>
+    public bool bTukuyomiDamaged { get; set; } = false;
+
+    /// <summary>
+    /// つくよみちゃんがダメージ受ける
+    /// </summary>
+    public void TukuyomiDamage()
+    {
+        tukuyomi_life--;
+        lifeUIT.ShowLife(tukuyomi_life);
+        bTukuyomiDamaged = true;
+    }
+
+    /// <summary>
+    /// Bのコマ削除
+    /// </summary>
+    /// <param name="koma"></param>
+    public void BRemoveKoma(TukuyomiGameKomaSmallB koma)
+    {
+        bKomaList.Remove(koma);
+    }
+
+    /// <summary>
+    /// Bのコマ作成
+    /// </summary>
+    /// <param name="idx"></param>
+    /// <param name="kind"></param>
+    private void BCreateNormalKoma(int idx, Koma kind)
+    {
+        var root = new Vector3(0, 76f);
+        var p = new Vector3((idx - 4) * TukuyomiGameKomaSmallB.KOMAB_SIZE, 0f);
+        var k = Instantiate(smallb_dummy, objectParent);
+        bKomaList.Add(k);
+        k.WorkStart(root, p, kind);
+    }
+
+    /// <summary>
+    /// コマ9個作成
+    /// </summary>
+    /// <param name="includeKing">王を作成</param>
+    /// <returns></returns>
+    private List<Koma> BCreateRandomKomaList(bool includeKing)
+    {
+        // 歩以外は全部2個まで
+        var kyouCnt = 0;
+        var keiCnt = 0;
+        var ginCnt = 0;
+        var kinCnt = includeKing ? 1 : 0;
+
+        var ret = new List<Koma>();
+        for (var i = 0; i < 9; ++i)
+        {
+            // つくよみちゃんの体力によって種類が増える
+            if (tukuyomi_life <= 1 && kinCnt < 2 && Util.RandomCheck(12))
+            {
+                ret.Add(Koma.Kin);
+                kinCnt++;
+                continue;
+            }
+            if (tukuyomi_life <= 2 && ginCnt < 2 && Util.RandomCheck(15))
+            {
+                ret.Add(Koma.Gin);
+                ginCnt++;
+                continue;
+            }
+            if (tukuyomi_life <= 3 && keiCnt < 2 && Util.RandomCheck(18))
+            {
+                ret.Add(Koma.Kei);
+                keiCnt++;
+                continue;
+            }
+            if (tukuyomi_life <= 4 && kyouCnt < 2 && Util.RandomCheck(20))
+            {
+                ret.Add(Koma.Kyou);
+                kyouCnt++;
+                continue;
+            }
+            ret.Add(Koma.Hu);
+        }
+
+        // 王を含む時
+        if (includeKing)
+        {
+            var kingIdx = Util.RandomInt(0, ret.Count - 1);
+            if (ret[kingIdx] == Koma.Kin) kinCnt--;
+            ret[kingIdx] = Koma.Ou;
+
+            // 内側を金にする
+            if (kingIdx < 5) ret[kingIdx + 1] = Koma.Kin;
+            else ret[kingIdx - 1] = Koma.Kin;
+        }
+
+        return ret;
+    }
+
+    /// <summary>
+    /// 後半戦コルーチン
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator MainBCoroutine()
+    {
+        var manager = ManagerSceneScript.GetInstance();
+        var input = InputManager.GetInstance();
+
+        // フィールド作成
+        playField.Show(400f, 250f);
+        yield return tukuyomiB.AppearAnimation();
+        tukuyomi_life = 5;
+        lifeUIT.ShowLife(tukuyomi_life);
+        reko.moveMode = TukuyomiGamePlayer.MoveMode.Free;
+        reko.ShotEnable = true;
+        pressUI.SetActive(true);
+        yield return new WaitUntil(() => input.GetKeyPress(InputManager.Keys.South));
+        pressUI.SetActive(false);
+
+        //つくよみちゃん攻撃開始
+        var bTukuyomiAttackCount = 0;
+        while (true)
+        {
+            bTukuyomiAttackCount++;
+            if (bTukuyomiAttackCount >= 3) bTukuyomiAttackCount = 0;
+            // 9個作成 3回ごとに王が入る
+            var list = BCreateRandomKomaList(bTukuyomiAttackCount == 0);
+
+            // 王の隣に金が居たら守り設定
+            var ouIdx = list.FindIndex(k => k == Koma.Ou);
+            var kinIdx = ouIdx < 5 ? ouIdx + 1 : ouIdx - 1;
+            foreach (var itm in list.Select((koma, idx) => new { koma, idx }))
+            {
+                BCreateNormalKoma(itm.idx, itm.koma);
+
+                if (ouIdx > 0 && ouIdx <= itm.idx && kinIdx <= itm.idx)
+                {
+                    // 守り
+                    bKomaList[kinIdx].SetDefenceKing(bKomaList[ouIdx]);
+                }
+                yield return new WaitForSeconds(0.15f);
+            }
+
+            // コマが全部消えるまで待つ
+            yield return new WaitWhile(() => bKomaList.Any());
+
+            // 倒してたら終了
+            if (tukuyomi_life <= 0) break;
+
+            // 負けてたら終了待ち
+            if (reko_life <= 0) yield break;
+
+            // 王が倒された時
+            if (bTukuyomiDamaged)
+            {
+                bTukuyomiAttackCount = 0;
+                // todo:左右の手の特殊攻撃を行う
+
+                bTukuyomiDamaged = false;
+            }
+        }
+
+        // 倒したら勝利
+        SetGameResult(true);
+        manager.ExitGame();
+    }
 
     #endregion
 }

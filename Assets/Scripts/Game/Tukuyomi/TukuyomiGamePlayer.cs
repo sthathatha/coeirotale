@@ -138,6 +138,9 @@ public class TukuyomiGamePlayer : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // ‚Â‚­‚æ‚İ‚¿‚á‚ñ“|‚µ‚½uŠÔ‚©‚ç–³“G
+        if (system.tukuyomi_life <= 0) return;
+
         // ©•ª‚ÌƒVƒ‡ƒbƒg‚Í–³‹
         var shot = collision.GetComponent<TukuyomiGameShot>();
         if (shot != null) { return; }
