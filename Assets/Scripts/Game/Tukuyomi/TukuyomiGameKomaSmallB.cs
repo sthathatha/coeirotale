@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// つくよみちゃん後半戦　小コマ
@@ -69,6 +68,7 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
         {
             // ダメージ受けて死ぬ場合、
             GetComponent<Rigidbody2D>().simulated = false;
+            system.resource.PlaySE(system.resource.se_koma_damage);
 
             // 王が死ぬ時はシステムに通知
             if (komaKind == TukuyomiGameSystem.Koma.Ou)
@@ -177,7 +177,6 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WorkOu()
     {
-        //一旦内側に動く
         var p = transform.position;
         while (p.y > -OUT_Y)
         {
@@ -191,6 +190,7 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
             p.x += moveXRetu * KOMAB_SIZE;
             p.y -= KOMAB_SIZE;
             yield return MoveCoroutine(p, 120f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -228,6 +228,7 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
             p.x += moveXRetu * KOMAB_SIZE;
             p.y -= KOMAB_SIZE;
             yield return MoveCoroutine(p, 120f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -237,7 +238,27 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WorkGin()
     {
-        yield return new WaitForSeconds(1f);
+        var endPos = transform.position.y;
+        // 後ろに移動
+        var p = transform.position;
+        p.y = -348f;
+        transform.position = p;
+        yield return new WaitForSeconds(0.5f);
+
+        while (p.y < endPos)
+        {
+            if (destroying) yield break;
+
+            // 後ろ２マスからランダム
+            var moveXRetu = 0;
+            if (p.x <= (-KOMAB_SIZE * 3.9f)) moveXRetu = 1;
+            else if (p.x >= (KOMAB_SIZE * 3.9f)) moveXRetu = -1;
+            else moveXRetu = Util.RandomCheck(50) ? 1 : -1;
+            p.x += moveXRetu * KOMAB_SIZE;
+            p.y += KOMAB_SIZE;
+            yield return MoveCoroutine(p, 150f);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     /// <summary>
@@ -246,8 +267,29 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WorkKei()
     {
+        var p = transform.position;
+        while (p.y > -OUT_Y)
+        {
+            if (destroying) yield break;
 
-        yield return new WaitForSeconds(1f);
+            // 桂馬飛び４マスからランダム 左から0123
+            var moveMasu = 0;
+            if (p.x <= (-KOMAB_SIZE * 3.9f)) moveMasu = Util.RandomInt(2, 3);
+            else if (p.x <= (-KOMAB_SIZE * 2.9f)) moveMasu = Util.RandomInt(1, 3);
+            else if (p.x >= KOMAB_SIZE * 2.9f) moveMasu = Util.RandomInt(0, 2);
+            else if (p.x >= (KOMAB_SIZE * 3.9f)) moveMasu = Util.RandomInt(0, 1);
+            else moveMasu = Util.RandomInt(0, 3);
+
+            if (moveMasu == 0) p.x -= KOMAB_SIZE * 2f;
+            else if (moveMasu == 1) p.x -= KOMAB_SIZE;
+            else if (moveMasu == 2) p.x += KOMAB_SIZE;
+            else p.x += KOMAB_SIZE * 2f;
+            if (moveMasu == 0 || moveMasu == 3) p.y -= KOMAB_SIZE;
+            else p.y -= KOMAB_SIZE * 2f;
+
+            yield return MoveCoroutine(p, 180f);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
     /// <summary>
@@ -257,6 +299,7 @@ public class TukuyomiGameKomaSmallB : MonoBehaviour
     private IEnumerator WorkKyou()
     {
         // レーザー発射
+        system.resource.PlaySE(system.resource.se_attack_effect_A);
         var laserRot = Mathf.Deg2Rad * transform.rotation.eulerAngles.z + Mathf.PI / 2f;
         system.CreateLaser(transform.position, laserRot);
         // 少し後ろに下がる

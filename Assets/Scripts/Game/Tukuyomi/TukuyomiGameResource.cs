@@ -30,8 +30,8 @@ public class TukuyomiGameResource : MonoBehaviour
     public AudioClip se_attack_effect_A;
     public AudioClip se_player_damage;
     public AudioClip se_koma_damage;
-    public AudioClip se_kyou_battle_loop;
-
+    public AudioClip se_warning;
+    public AudioClip se_defeat_loop;
 
 
 

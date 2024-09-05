@@ -16,6 +16,8 @@ public class TukuyomiGameBHand : MonoBehaviour
     private Vector3 basePos;
     private Vector3 nowPos;
 
+    private bool idling = true;
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -31,6 +33,7 @@ public class TukuyomiGameBHand : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!idling) return;
         // 常に上下している
         posRot -= Mathf.PI * Time.deltaTime;
         if (posRot < 0f) posRot += Mathf.PI * 2f;
@@ -53,14 +56,16 @@ public class TukuyomiGameBHand : MonoBehaviour
             1 => sp_shake,
             _ => sp_finger,
         };
+
+        idling = phase == 0;
     }
 
     /// <summary>
-    /// 発射の指先座標を取得
+    /// 発射の指先座標を取得（ワールド座標）
     /// </summary>
     /// <returns></returns>
     public Vector3 GetShotRoot()
     {
-        return nowPos + new Vector3(IsRight ? -100f : 100f, -97f);
+        return transform.parent.position + nowPos + new Vector3(IsRight ? -100f : 100f, -97f);
     }
 }
