@@ -694,22 +694,22 @@ public class BossGameBCharacterBase : MonoBehaviour
                     var base3 = basePos + new Vector3(-ofsX, ofsY);
                     var base4 = basePos + new Vector3(ofsX, -ofsY);
 
-                    for (var i = 0; i < 5; ++i)
+                    for (var i = 0; i < 3; ++i)
                     {
                         sound.PlaySE(system.dataObj.se_skill_mantrap);
                         var rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreateGeneralEffect(base1 + rand, BossGameBDataObject.EffectKind.Mantrap);
-                        yield return new WaitForSeconds(0.03f);
+                        yield return new WaitForSeconds(0.05f);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreateGeneralEffect(base2 + rand, BossGameBDataObject.EffectKind.Mantrap);
-                        yield return new WaitForSeconds(0.03f);
+                        yield return new WaitForSeconds(0.05f);
                         sound.PlaySE(system.dataObj.se_skill_mantrap);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreateGeneralEffect(base3 + rand, BossGameBDataObject.EffectKind.Mantrap);
-                        yield return new WaitForSeconds(0.03f);
+                        yield return new WaitForSeconds(0.05f);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreateGeneralEffect(base4 + rand, BossGameBDataObject.EffectKind.Mantrap);
-                        yield return new WaitForSeconds(0.03f);
+                        yield return new WaitForSeconds(0.05f);
                     }
                     yield return new WaitForSeconds(0.4f);
 
@@ -779,13 +779,13 @@ public class BossGameBCharacterBase : MonoBehaviour
         else if (dmg > 9999) dmg = 9999;
         var basePos = BossGameSystemB.GetCellPosition(location);
 
-        for (var i = 0; i < 12; ++i)
+        for (var i = 0; i < 7; ++i)
         {
-            var addX = (1f - (Mathf.Pow(i, 2) / 144f)) * 10f;
+            var addX = (1f - (Mathf.Pow(i, 2) / 49f)) * 10f;
             transform.localPosition = basePos + new Vector3(addX, 0);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
             transform.localPosition = basePos + new Vector3(-addX, 0);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
         }
         transform.localPosition = basePos;
 

@@ -680,8 +680,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u3059\u305F\u30FC\u3068\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ac1e987951e4c1e4aa798b02f56bb29f, type: 2}
-  m_sharedMaterial: {fileID: 1648175968017570283, guid: ac1e987951e4c1e4aa798b02f56bb29f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 963fa390e2de43e4592e9072a8973143, type: 2}
+  m_sharedMaterial: {fileID: 1648175968017570283, guid: 963fa390e2de43e4592e9072a8973143, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -165,20 +165,20 @@ public class BossGameBEnemyBoss : BossGameBEnemy
                     var base4 = basePos + new Vector3(ofsX, -ofsY);
 
                     var loopSe = sound.PlaySELoop(se_skill_plasma);
-                    for (var i = 0; i < 10; ++i)
+                    for (var i = 0; i < 5; ++i)
                     {
                         var rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreatePlasmaEffect(base1 + rand);
-                        yield return new WaitForSeconds(0.02f);
+                        yield return new WaitForSeconds(0.04f);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreatePlasmaEffect(base2 + rand);
-                        yield return new WaitForSeconds(0.02f);
+                        yield return new WaitForSeconds(0.04f);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreatePlasmaEffect(base3 + rand);
-                        yield return new WaitForSeconds(0.02f);
+                        yield return new WaitForSeconds(0.04f);
                         rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                         system.CreatePlasmaEffect(base4 + rand);
-                        yield return new WaitForSeconds(0.02f);
+                        yield return new WaitForSeconds(0.04f);
                     }
                     sound.StopLoopSE(loopSe);
                     yield return new WaitForSeconds(0.4f);

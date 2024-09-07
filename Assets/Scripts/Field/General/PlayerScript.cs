@@ -73,8 +73,10 @@ public class PlayerScript : CharacterScript
         if (input.GetKeyPress(InputManager.Keys.South))
         {
             // アクション実行
+            var actionTest = actionCollide.GetComponent<PlayerActionCollider>();
+            actionTest.RemoveDisableEvent();
             var eventPlayed = false;
-            var hitList = actionCollide.GetComponent<PlayerActionCollider>().GetHitList();
+            var hitList = actionTest.GetHitList();
             ActionEventBase closestEv = null;
             var closestDist = 0f;
             foreach (var coll in hitList)

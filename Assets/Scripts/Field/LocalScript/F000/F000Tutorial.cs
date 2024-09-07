@@ -88,6 +88,6 @@ public class F000Tutorial : EventBase
 
         Global.GetSaveData().SetGameData("Tutorial", 1);
 
-        tukuyomiObj.SetMode(TukuyomiScript.TukuyomiMode.Trace);
+        tukuyomiObj.gameObject.SetActive(false);
     }
 }

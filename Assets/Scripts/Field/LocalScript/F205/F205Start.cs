@@ -139,7 +139,7 @@ public class F205Start : EventBase
             menderu.SetDirection(Constant.Direction.Up);
             pierre.SetDirection(Constant.Direction.Up);
 
-            ManagerSceneScript.GetInstance().soundMan.PlayFieldBgm(SoundManager.FieldBgmType.None, helpBgm);
+            ManagerSceneScript.GetInstance().soundMan.PlayFieldBgm(SoundManager.FieldBgmType.Clip, helpBgm);
 
             var cam = ManagerSceneScript.GetInstance().mainCam;
             cam.SetTargetPos(boss_ai1.gameObject);
@@ -374,7 +374,7 @@ public class F205Start : EventBase
             yield return new WaitForSeconds(1f);
 
             // 6êlì¸èÍ
-            sound.PlayFieldBgm(SoundManager.FieldBgmType.None, helpBgm);
+            sound.PlayFieldBgm(SoundManager.FieldBgmType.Clip, helpBgm);
             mati.gameObject.SetActive(true);
             tmp = mati.transform.localPosition;
             tmp.y = p5.GetPosition().y;

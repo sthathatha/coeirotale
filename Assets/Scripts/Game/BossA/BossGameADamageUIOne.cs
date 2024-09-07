@@ -39,7 +39,9 @@ public class BossGameADamageUIOne : MonoBehaviour
         {
             if (!isActive) yield break;
             speed += Y_ACCEL * Time.deltaTime;
-            transform.localPosition += new Vector3(0, speed * Time.deltaTime);
+            var y = transform.localPosition.y + speed * Time.deltaTime;
+            if (y < 0) y = 0f;
+            transform.localPosition = new Vector3(transform.localPosition.x, y);
             yield return null;
         }
         speed = -speed / 3f;
@@ -48,7 +50,9 @@ public class BossGameADamageUIOne : MonoBehaviour
         {
             if (!isActive) yield break;
             speed += Y_ACCEL * Time.deltaTime;
-            transform.localPosition += new Vector3(0, speed * Time.deltaTime);
+            var y = transform.localPosition.y + speed * Time.deltaTime;
+            if (y < 0) y = 0f;
+            transform.localPosition = new Vector3(transform.localPosition.x, y);
             yield return null;
         }
         transform.localPosition = new Vector3(transform.localPosition.x, 0);

@@ -153,7 +153,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
 
                 if (walkLoc.x != 0 || walkLoc.y != 0)
                 {
-                    if (system.CanWalk(GetLocation() + walkLoc))
+                    if (system.CanWalk(GetLocation() + walkLoc, true))
                     {
                         yield return Walk(walkLoc.x, walkLoc.y);
 
@@ -209,12 +209,12 @@ public class BossGameBPlayer : BossGameBCharacterBase
             case BossGameBDataBase.SkillID.Reko1_C: // サイクロトロン
                 sound.PlaySE(se_cycrotron1);
                 // 回転
-                for (var i = 0; i < 16; ++i)
+                for (var i = 0; i < 12; ++i)
                 {
                     model.sprite = sp_leftup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.05f);
                     model.sprite = sp_rightup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.05f);
                 }
                 ResetDirection();
                 // 自分の速度アップ
@@ -308,7 +308,7 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     center + new Vector3(ofsX, -ofsY, 0)
                 };
                 // 回転
-                for (var i = 0; i < 16; ++i)
+                for (var i = 0; i < 12; ++i)
                 {
                     if (i % 2 == 0)
                     {
@@ -317,9 +317,9 @@ public class BossGameBPlayer : BossGameBCharacterBase
                     var effPos = cs[i % 4] + new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
                     system.CreateGeneralEffect(effPos, BossGameBDataObject.EffectKind.Cycrone);
                     model.sprite = sp_leftup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.05f);
                     model.sprite = sp_rightup;
-                    yield return new WaitForSeconds(0.04f);
+                    yield return new WaitForSeconds(0.05f);
                 }
                 ResetDirection();
                 yield return AttackDamage(targetList, skill.Value, false);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerActionCollider : MonoBehaviour
@@ -41,6 +42,14 @@ public class PlayerActionCollider : MonoBehaviour
     public void RemoveActionEventList(ActionEventBase ae)
     {
         hitColliders.Remove(ae);
+    }
+
+    /// <summary>
+    /// ‚·‚Å‚ÉÁ‚¦‚Ä‚éƒ„ƒc‚ª‚½‚Ü‚É‹‚é‚Ì‚ÅœŠO
+    /// </summary>
+    public void RemoveDisableEvent()
+    {
+        hitColliders = hitColliders.Where(ae => ae.gameObject.activeInHierarchy).ToList();
     }
 
     /// <summary>

@@ -373,6 +373,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 0}
+  DEBUG_SERIF: 0
+  DEBUG_A_SKIP: 0
   bgm_scene1: {fileID: 8300000, guid: ecc8ea98f6a15fc4bb96f2b831c8bae0, type: 3}
   bgm_scene2: {fileID: 8300000, guid: 77ceb2cce43bce741ac1d218d9050080, type: 3}
   resource: {fileID: 1076668224}

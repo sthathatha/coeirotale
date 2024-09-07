@@ -706,20 +706,20 @@ public class BossGameSystemB : GameSceneScriptBase
         var base3 = basePos + new Vector3(-ofsX, ofsY);
         var base4 = basePos + new Vector3(ofsX, -ofsY);
 
-        for (var i = 0; i < 5; ++i)
+        for (var i = 0; i < 3; ++i)
         {
             var rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
             CreateGeneralEffect(base1 + rand, BossGameBDataObject.EffectKind.Heal);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
             rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
             CreateGeneralEffect(base2 + rand, BossGameBDataObject.EffectKind.Heal);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
             rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
             CreateGeneralEffect(base3 + rand, BossGameBDataObject.EffectKind.Heal);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
             rand = new Vector3(Util.RandomFloat(-ofsX, ofsX), Util.RandomFloat(-ofsY, ofsY));
             CreateGeneralEffect(base4 + rand, BossGameBDataObject.EffectKind.Heal);
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 

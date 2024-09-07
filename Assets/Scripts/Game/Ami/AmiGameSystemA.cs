@@ -281,7 +281,7 @@ public class AmiGameSystemA : GameSceneScriptBase
             else
             {
                 pressText.SetText(StringMinigameMessage.AmiA_Bad);
-                AddPoint(-1);
+                AddPoint(-2);
             }
             pressText.GetComponent<Animator>().PlayInFixedTime("display", 0, 0);
 
@@ -401,7 +401,7 @@ public class AmiGameSystemA : GameSceneScriptBase
             {
                 list.Remove(bad);
                 Destroy(bad.gameObject);
-                AddPoint(-2);
+                AddPoint(-4);
             }
         }
 
@@ -418,6 +418,7 @@ public class AmiGameSystemA : GameSceneScriptBase
     private void AddPoint(int p)
     {
         point += p;
+        if (point < -maxPoint) point = -maxPoint;
 
         // ゲージ表示更新
         var maskX = ((float)point / maxPoint) * -200f;

@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using static BossGameBCardEffect;
-using static TukuyomiGameSystem;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 /// <summary>
 /// Ç¬Ç≠ÇÊÇ›ÇøÇ·ÇÒêÌ
@@ -15,8 +12,8 @@ public class TukuyomiGameSystem : GameSceneScriptBase
 {
     #region íËêî
 
-    private bool DEBUG_SERIF = true;
-    private bool DEBUG_A_SKIP = false;
+    private readonly bool DEBUG_SERIF = false;
+    private readonly bool DEBUG_A_SKIP = false;
 
     /// <summary></summary>
     public const string START_FLG = "TukuGameShow";
@@ -471,7 +468,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
             else
             {
                 serifUI.Show(StringMinigameMessage.Tuku_Start_Second, resource.voice_start_second);
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(2.5f);
             }
         }
         // âÊñ çï
@@ -523,7 +520,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
             else
             {
                 serifUI.Show(StringMinigameMessage.Tuku_Start2_Second, resource.voice_start2_second);
-                yield return new WaitForSeconds(4f);
+                yield return new WaitForSeconds(2.5f);
             }
             serifUI.Hide();
         }
@@ -1055,7 +1052,6 @@ public class TukuyomiGameSystem : GameSceneScriptBase
         playField.transform.localPosition = new Vector3(0, AFIELD_Y_KYOU);
         playField.ShowCellField(1, 1);
         reko.moveMode = TukuyomiGamePlayer.MoveMode.Disable;
-        reko.ShotEnable = true;
         reko.CellLocation = new Vector2(0, 0);
         reko.gameObject.SetActive(true);
 
@@ -1069,6 +1065,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
 
         yield return new WaitForSeconds(1f);
 
+        reko.ShotEnable = true;
         pressUI.SetActive(true);
         yield return new WaitUntil(() => InputManager.GetInstance().GetKeyPress(InputManager.Keys.South));
         pressUI.SetActive(false);
@@ -1405,7 +1402,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
             {
                 BCreateNormalKoma(itm.idx, itm.koma);
 
-                if (ouIdx > 0 && ouIdx <= itm.idx && kinIdx <= itm.idx)
+                if (ouIdx >= 0 && ouIdx <= itm.idx && kinIdx <= itm.idx)
                 {
                     // éÁÇË
                     bKomaList[kinIdx].SetDefenceKing(bKomaList[ouIdx]);
@@ -1588,12 +1585,22 @@ public class TukuyomiGameSystem : GameSceneScriptBase
             // çÅé‘ÇÆÇÈÇÆÇÈ
             var kyoRotList = new List<float>();
             var startRot = Mathf.PI * 1.5f;
-            for (var i = 0; i < 20f; ++i)
+            for (var i = 0; i < 36f; ++i)
             {
                 kyoRotList.Add(startRot);
-                startRot += Mathf.PI / 10f;
+                startRot += Mathf.PI / 18f;
                 if (startRot > Mathf.PI * 2f) startRot -= Mathf.PI * 2f;
             }
+
+            // åxçêï\é¶
+            resource.PlaySE(resource.se_warning);
+            foreach (var r in kyoRotList)
+            {
+                var p = playField.transform.position - Util.GetVector3IdentityFromRot(r) * 192f;
+                CreateWarning(p, TukuyomiGameKomaSmall.GetKomaColor(Koma.Kyou));
+                yield return new WaitForSeconds(0.03f);
+            }
+            yield return new WaitForSeconds(1f);
 
             // 5é¸
             for (var i = 0; i < 5; ++i)
@@ -1604,7 +1611,7 @@ public class TukuyomiGameSystem : GameSceneScriptBase
                     kyo.CreateParams(TukuyomiGameKomaSmallC.KomaCType.Dmg4Kyou, Vector3.zero, r);
                     StartCoroutine(kyo.ExecAttackCoroutine());
 
-                    yield return new WaitForSeconds(0.05f);
+                    yield return new WaitForSeconds(0.06f);
                 }
             }
 
