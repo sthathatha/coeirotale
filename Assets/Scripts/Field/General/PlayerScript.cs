@@ -120,28 +120,30 @@ public class PlayerScript : CharacterScript
         var v = new Vector3(0, 0, 0);
         var actionV = new Vector3(0, 0, 0);
         var moving = false;
+        //var dashRate = input.GetKey(InputManager.Keys.East) ? DASH_RATE : 1f;
+        var dashRate = DASH_RATE;
         if (input.GetKey(InputManager.Keys.Up))
         {
-            v.y = WALK_VELOCITY;
+            v.y = WALK_VELOCITY * dashRate;
             actionV.y = ACTION_DISTANCE;
             moving = true;
         }
         else if (input.GetKey(InputManager.Keys.Down))
         {
-            v.y = -WALK_VELOCITY;
+            v.y = -WALK_VELOCITY * dashRate;
             actionV.y = -ACTION_DISTANCE;
             moving = true;
         }
 
         if (input.GetKey(InputManager.Keys.Left))
         {
-            v.x = -WALK_VELOCITY;
+            v.x = -WALK_VELOCITY * dashRate;
             actionV.x = -ACTION_DISTANCE;
             moving = true;
         }
         else if (input.GetKey(InputManager.Keys.Right))
         {
-            v.x = WALK_VELOCITY;
+            v.x = WALK_VELOCITY * dashRate;
             actionV.x = ACTION_DISTANCE;
             moving = true;
         }

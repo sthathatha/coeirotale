@@ -47,6 +47,7 @@ public class F002Button : ActionEventBase
         wall4?.Toggle();
 
         StartCoroutine(SeWaitCoroutine(se));
+        yield return new WaitForSeconds(0.5f);
     }
 
     private IEnumerator SeWaitCoroutine(AudioSource se)

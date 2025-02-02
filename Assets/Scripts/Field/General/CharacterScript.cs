@@ -14,6 +14,9 @@ public class CharacterScript : ObjectBase
     /// <summary>移動速度</summary>
     protected const float WALK_VELOCITY = 200f;
 
+    /// <summary>ダッシュ速度</summary>
+    protected const float DASH_RATE = 1.75f;
+
     #endregion
 
     #region 変数
@@ -53,14 +56,20 @@ public class CharacterScript : ObjectBase
     /// </summary>
     protected override void Update()
     {
+        base.Update();
+    }
+
+    /// <summary>
+    /// カメラ更新タイミング
+    /// </summary>
+    private void LateUpdate()
+    {
         if (ManagerSceneScript.GetInstance()?.SceneState == ManagerSceneScript.State.Game)
         {
-            base.Update();
             return;
         }
 
         UpdateCamera();
-        base.Update();
     }
 
     /// <summary>

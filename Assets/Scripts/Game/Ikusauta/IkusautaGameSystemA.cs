@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -59,6 +60,8 @@ public class IkusautaGameSystemA : GameSceneScriptBase
     public GameObject ui_huda_mati = null;
     /// <summary>札マスク</summary>
     public IkusautaGameHudaMask ui_huda_mask = null;
+    /// <summary>タイム表示</summary>
+    public TMP_Text ui_time;
 
     /// <summary>つくよみちゃんマル</summary>
     public GameObject ui_maru_tukuyomi = null;
@@ -117,6 +120,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         ui_maru_mati.SetActive(false);
         ui_batu_tukuyomi.SetActive(false);
         ui_batu_tukuyomi_chara.SetActive(false);
+        ShowPlayTime();
 
         for (var i = 0; i < grasses.transform.childCount; ++i)
         {
@@ -202,22 +206,26 @@ public class IkusautaGameSystemA : GameSceneScriptBase
         ui_bikkuri.SetActive(true);
         // マチの反応速度
         var matiTime = CalcMatiTime();
+        // カウント
+        var playTime = 0f;
 
-        while (matiTime > 0f)
+        while (playTime < matiTime)
         {
             yield return null;
-            
+
             if (input.GetKeyPress(InputManager.Keys.South))
             {
                 // マチより早かったら勝ち
+                ShowPlayTime(playTime);
                 StartCoroutine(TukuyomiWinCoroutine());
                 yield break;
             }
-            
-            matiTime -= Time.deltaTime;
+
+            playTime += Time.deltaTime;
         }
 
         // マチの勝ち
+        ShowPlayTime(matiTime);
         StartCoroutine(MatiWinCoroutine());
     }
 
@@ -294,6 +302,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
             yield return manager.FadeOut();
             UpdateScoreUI();
             ShowCharacter(CharacterPattern.Waiting);
+            ShowPlayTime();
             yield return manager.FadeIn();
             StartCoroutine(GameStart());
         }
@@ -335,6 +344,7 @@ public class IkusautaGameSystemA : GameSceneScriptBase
             yield return manager.FadeOut();
             UpdateScoreUI();
             ShowCharacter(CharacterPattern.Waiting);
+            ShowPlayTime();
             yield return manager.FadeIn();
             StartCoroutine(GameStart());
         }
@@ -441,6 +451,21 @@ public class IkusautaGameSystemA : GameSceneScriptBase
     private void PlaySE(AudioClip se, float startTime = 0f)
     {
         ManagerSceneScript.GetInstance().soundMan.PlaySE(se, startTime);
+    }
+
+    /// <summary>
+    /// 時間表示
+    /// </summary>
+    /// <param name="t"></param>
+    private void ShowPlayTime(float t = -1f)
+    {
+        if (t < 0f)
+        {
+            ui_time.SetText("");
+            return;
+        }
+
+        ui_time.SetText($"{t:F3}");
     }
     #endregion
 }

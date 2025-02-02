@@ -40,6 +40,21 @@ public class OpeningSceneSystem : MainScriptBase
     public override IEnumerator AfterFadeIn(bool init)
     {
         yield return base.AfterFadeIn(init);
+
+        // AfterFadeInで次ロードまでやると、ManagerSceneScriptのFieldState更新タイミングが重なって
+        // 次シーンがすぐState.Mainで始まってしまうため、AfterFadeInは終了して自前コルーチンにする
+        StartCoroutine(OpeningCoroutine());
+    }
+    #endregion
+
+    #region コルーチン
+
+    /// <summary>
+    /// 実行コルーチン
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OpeningCoroutine()
+    {
         yield return new WaitForSeconds(2f);
         // 主人公
         player.MoveTo(Vector3.zero, 1f, DeltaFloat.MoveType.DECEL);
@@ -57,9 +72,6 @@ public class OpeningSceneSystem : MainScriptBase
         // フィールドに移動
         ManagerSceneScript.GetInstance().LoadMainScene("Field000", 0);
     }
-    #endregion
-
-    #region コルーチン
 
     /// <summary>
     /// 背景の星生成コルーチン

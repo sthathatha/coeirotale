@@ -311,7 +311,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             // ターン終了ボタン
             if (pickCount == 0)
             {
-                //todo: 1個も取ってない場合ブブー
+                // 1個も取ってない場合ブブー
+                sound.PlaySE(sound.commonSeError);
             }
             else
             {
@@ -332,7 +333,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
                 seed.Pick();
 
                 pickCount++;
-                if (pickCount >= TURN_PICK_LIMIT)
+                if (pickCount >= TURN_PICK_LIMIT ||
+                    GetEnableList().Count == 0)
                 {
                     // 上限取ったらターン終了
                     yield return EnemyTurnCoroutine();
@@ -341,7 +343,8 @@ public class MenderuGameSystem1 : GameSceneScriptBase
             }
             else
             {
-                //todo: 取れない場合ブブー
+                // 取れない場合ブブー
+                sound.PlaySE(sound.commonSeError);
             }
         }
 
