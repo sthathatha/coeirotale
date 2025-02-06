@@ -27,6 +27,9 @@ public class PierreGamePlayerA : PierreGameRoadObject
     /// <summary>当たり保留ボール</summary>
     private PierreGameBall hitWaitBall = null;
 
+    /// <summary>影</summary>
+    public Transform shadow = null;
+
     private enum PlayerAction : int
     {
         Run = 0,
@@ -48,6 +51,15 @@ public class PierreGamePlayerA : PierreGameRoadObject
         SetFarPosition(0f);
 
         hp = PLAYER_INIT_HP;
+    }
+
+    /// <summary>
+    /// 影の位置を追従
+    /// </summary>
+    void LateUpdate()
+    {
+        // モデル構造的に子供にしたかったが難しいため応急処置的にLateUpdateで無理やり追従
+        shadow.localPosition = new Vector3(transform.localPosition.x, GetFarPosition());
     }
 
     /// <summary>
